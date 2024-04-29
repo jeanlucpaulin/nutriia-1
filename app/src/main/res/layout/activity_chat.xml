@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ChatActivity">
+
+    <!-- Ajout de l'image en haut à gauche -->
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="95dp"
+        android:layout_height="86dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ia" />
+
+    <!-- Ajout du titre en haut à droite -->
+
+    <!-- Votre champ de saisie -->
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="205dp"
+        android:layout_height="88dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="26dp"
+        android:text="Posez votre question a l'Intelligence Artificielle (ChatGPT)"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/inputText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Saisissez votre texte ici"
+        android:layout_below="@id/logoImage"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="16dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
+
+
+    <Button
+        android:id="@+id/sendButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Envoyer"
+        android:layout_below="@id/inputText"
+        android:layout_marginBottom="16dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_below="@id/sendButton"> <!-- Ajout de cette ligne pour placer en dessous du bouton -->
+
+        <TextView
+            android:id="@+id/responseText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginBottom="16dp" />
+
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/titleText2"
+        android:layout_width="292dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="NutriiA"
+        android:textColor="@color/purple_700"
+        android:textSize="38sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="400dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:text="Mon coach Forme et Santé"
+        android:textColor="@color/purple_700"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleText2" />
+
+    <!-- Image -->
+
+    <!-- ScrollView for CardView Grid -->
+
+    <ImageView
+        android:id="@+id/nutriaImage"
+        android:layout_width="400dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/img_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleText" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/nutriaImage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- GridLayout for CardViews (2 columns, 3 rows) -->
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="4"
+            android:padding="6dp">
+
+            <!-- Nouvelle CardView (Aliments Journaliers) -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewApportJournalier"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="16dp"
+                app:cardUseCompatPadding="false"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_margin="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="6dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="96dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/apportjournalier"
+                        android:contentDescription="Image Apport Journalier" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="MES APPORTS"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Nouvelle CardView (Aliments Journaliers) -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewJournalier"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="16dp"
+                app:cardUseCompatPadding="false"
+                android:layout_columnWeight="1"
+                android:layout_margin="16dp"
+                app:layout_constraintTop_toBottomOf="@id/cardView6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="6dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="96dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/assiette"
+                        android:contentDescription="Image Journalier" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="MA JOURNEE"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- CardView 1 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView1"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="16dp"
+                app:cardUseCompatPadding="false"
+                android:layout_columnWeight="1"
+                android:layout_margin="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="6dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="96dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_cardview1"
+                        android:contentDescription="Image 1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MES ALIMENTS"
+                        android:textStyle="bold"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- CardView 4 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="16dp"
+                app:cardUseCompatPadding="false"
+                android:layout_columnWeight="1"
+                android:layout_margin="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="6dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="96dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_cardview4"
+                        android:contentDescription="Image 4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="MA SANTE"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- CardView 3 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView3"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="16dp"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="6dp">
+
+                    <ImageView
+                        android:layout_width="96dp"
+                        android:layout_height="50dp"
+                        android:contentDescription="Image 3"
+                        android:src="@drawable/sport" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MES OBJECTIFS"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- CardView 5 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="16dp"
+                app:cardUseCompatPadding="false"
+                android:layout_columnWeight="1"
+                android:layout_margin="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="6dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="96dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_cardview5"
+                        android:contentDescription="Image 5" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="MON CONSEILLER"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- CardView 6 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="16dp"
+                app:cardUseCompatPadding="false"
+                android:layout_columnWeight="1"
+                android:layout_margin="16dp"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="6dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="96dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ia"
+                        android:contentDescription="Image 6" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="QUESTIONS A L'IA
+"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- CardView 2 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="16dp"
+                app:cardUseCompatPadding="false"
+                android:layout_columnWeight="1"
+                android:layout_margin="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="6dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="96dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/education"
+                        android:contentDescription="Image 2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="FORMATION"
+                        android:textStyle="bold"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+        </GridLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

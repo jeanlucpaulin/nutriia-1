@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Title TextView -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Introduction a la Formation"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="26dp"/>
+
+    <!-- ImageView (Replace with your chosen image) -->
+
+    <!-- Large Text Section (Replace with your text from resources) -->
+    */
+
+    <ImageView
+        android:id="@+id/nutriaImage"
+        android:layout_width="400dp"
+        android:layout_height="120dp"
+        android:src="@drawable/img_1"
+         />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="26dp"
+            android:textSize="18sp"
+            android:justificationMode="inter_word"
+            android:text="@string/nutrition_documentation_text" />
+    </ScrollView>
+    <!-- ... Vos éléments existants ... -->
+
+    <!-- Button to open DocumentationChapitres activity -->
+    <Button
+        android:id="@+id/openDocumentationChapitresButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Voir les Chapitres"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>
