@@ -1,4 +1,4 @@
-package com.example.nutriia1;
+package com.nutriia.nutriia;
 
 import org.junit.Test;
 
