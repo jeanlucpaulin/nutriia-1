@@ -18,7 +18,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/drawer_header">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/nav_recycler_view"
             android:layout_width="match_parent"
@@ -26,5 +25,6 @@
             android:layout_marginTop="?attr/actionBarSize" />
 
     </com.google.android.material.navigation.NavigationView>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
