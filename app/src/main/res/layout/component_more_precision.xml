@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/component_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_more_precision"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/title_optional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/optional"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/component_title" />
+
+    <LinearLayout
+        android:id="@+id/linear_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/component_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/weight"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/weight_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/unknown_information"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/height"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/height_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/unknown_information"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="3">
+
+            <TextView
+                android:id="@+id/body_mass_index"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/body_mass_index"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/body_mass_index_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_information"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/give_more_precision"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/give_more_precision"
+        app:layout_constraintTop_toBottomOf="@id/linear_info"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fill_profile"
+        app:layout_constraintTop_toBottomOf="@id/give_more_precision"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/rounded_button"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
