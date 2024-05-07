@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">nutriia</string>
+    <string name="app_name">NutriiA</string>
+    <string name="menu_objectifs">Mes objectifs</string>
+    <string name="menu_analyse">Analyse de ma journée</string>
+    <string name="menu_rdv">Rendez-vous conseiller</string>
+    <string name="menu_coach">Coach NutriiA</string>
+    <string name="menu_formations">Formations</string>
 </resources>
