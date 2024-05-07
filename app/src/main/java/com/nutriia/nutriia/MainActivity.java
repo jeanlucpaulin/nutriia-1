@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 import com.nutriia.nutriia.adapters.DrawerItemAdapter;
 
-import com.example.nutriia.R;
 
 public class MainActivity extends AppCompatActivity {
 

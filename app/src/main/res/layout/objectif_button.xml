@@ -1,10 +1,11 @@
 <Button
     android:id="@+id/customButton"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:drawableLeft="@drawable/menu_icon_salad"
-    android:text="Perte de\npoids"
+    android:layout_width="170dp"
+    android:layout_height="60dp"
+    android:fontFamily="@font/montserrat_light"
+    android:textSize="15sp"
     android:textColor="@color/black"
-    android:background="@drawable/rounded_button"
+    android:background="@drawable/rounded_objectifbutton"
+    android:elevation="10dp"
+    android:clickable="true"
     xmlns:android="http://schemas.android.com/apk/res/android" />
-

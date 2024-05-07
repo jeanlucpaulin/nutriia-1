@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_main"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -36,6 +37,113 @@
         android:id="@+id/buttonList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/subTitle" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/subTitle"
+        />
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="255dp"
+        android:orientation="vertical"
+        android:background="@drawable/linear_rounded"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:elevation="6dp"
+        app:layout_constraintTop_toBottomOf="@id/buttonList"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="8dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/orange_circle" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="15dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2.5dp"
+                    android:src="@drawable/menu_icon_robot"
+                    android:scaleType="centerInside" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/coachTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Coach NutriiA"
+                android:textColor="@color/orange"
+                android:textSize="15sp"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="5dp"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/coachResponse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="L'objectif de la remise en forme est d'améliorer la santé et la condition physique générale. Cela implique un programme d'exercices variés, comprenant à la fois des exercices cardiovasculaires et de renforcement musculaire, ainsi qu'une alimentation équilibrée. La remise en forme vise à renforcer le cœur, les muscles et les articulations, à augmenter l'endurance et la flexibilité, et à favoriser le bien-être mental. L'objectif est d'adopter un mode de vie actif et sain pour maintenir une bonne forme physique à long terme."
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:layout_marginTop="7dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="6dp"
+            android:justificationMode="inter_word"
+            android:lineSpacingExtra="4sp"
+        />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/plusdinfo"
+        android:layout_width="290dp"
+        android:layout_height="55dp"
+        android:text="Donnez nous plus d'informations"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_with_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/decrouvrirSansObjectif"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/montserrat_light"
+        android:elevation="5dp"
+        android:clickable="true"
+        android:paddingTop="0dp"
+        android:paddingBottom="2dp"
+        />
+
+    <TextView
+        android:id="@+id/decrouvrirSansObjectif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Décrouvrir sans objectif"
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat_light"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="true">
+    </TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

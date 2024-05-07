@@ -1,0 +1,17 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Lorsque le bouton est sélectionné -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" /> <!-- Couleur de fond -->
+            <stroke android:width="2dp" android:color="@color/lime" /> <!-- Contour vert -->
+            <corners android:radius="17dp" />
+        </shape>
+    </item>
+    <!-- Par défaut -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" /> <!-- Couleur de fond -->
+            <corners android:radius="17dp" />
+        </shape>
+    </item>
+</selector>
