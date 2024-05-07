@@ -81,4 +81,6 @@
     <string name="give_me_new_menu">Propose moi un menu différent</string>
     <string name="set_my_meal_by_my_self">Rentrer mon propre menu</string>
     <string name="set_my_goal">Définir mon objectif ?</string>
+    <string name="disconnect">Déconnexion</string>
+    <string name="app_version">Version %s</string>
 </resources>

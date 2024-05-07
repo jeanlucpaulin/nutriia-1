@@ -15,10 +15,36 @@ import com.nutriia.nutriia.R;
 
 public class DrawerItemAdapter extends RecyclerView.Adapter<DrawerItemAdapter.ViewHolder> {
 
+    public interface OnItemClickListener {
+        void onItemClick(MenuItem item);
+    }
+
     private Menu menuItems;
+    private OnItemClickListener listener;
+
 
     public DrawerItemAdapter(Menu menuItems) {
         this.menuItems = menuItems;
+        this.setOnItemClickListener(new DrawerItemAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.side_navigation_target) {
+                    Log.d("Drawer", "Target clicked");
+                } else if (item.getItemId() == R.id.side_navigation_sante) {
+                    Log.d("Drawer", "Sante clicked");
+                } else if (item.getItemId() == R.id.side_navigation_meet) {
+                    Log.d("Drawer", "Meet clicked");
+                } else if (item.getItemId() == R.id.side_navigation_follow_daily) {
+                    Log.d("Drawer", "Follow Daily clicked");
+                } else if (item.getItemId() == R.id.side_navigation_follow_monthly) {
+                    Log.d("Drawer", "Follow Monthly clicked");
+                } else if (item.getItemId() == R.id.side_navigation_forum) {
+                    Log.d("Drawer", "Forum clicked");
+                } else if (item.getItemId() == R.id.side_navigation_invite_friends) {
+                    Log.d("Drawer", "Invite Friends clicked");
+                }
+            }
+        });
     }
 
     @NonNull
@@ -30,15 +56,23 @@ public class DrawerItemAdapter extends RecyclerView.Adapter<DrawerItemAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MenuItem menuItem = menuItems.getItem(position);
+        final MenuItem menuItem = menuItems.getItem(position);
         holder.title.setText(menuItem.getTitle());
-        Log.d("DrawerItemAdapter", "Binding item at position " + position);
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(menuItem);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        Log.d("DrawerItemAdapter", "Item number " + menuItems.size());
         return menuItems.size();
+    }
+
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

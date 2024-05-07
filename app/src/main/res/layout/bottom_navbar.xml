@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
+    android:layout_height="72dp"
     android:background="@color/white"
     android:elevation="15dp"
     android:gravity="center_horizontal">
 
     <LinearLayout
+        android:id="@+id/navbar_target"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -15,6 +16,7 @@
         android:layout_margin="5dp">
 
         <ImageView
+            android:id="@+id/navbar_target_image"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginTop="5dp"
@@ -23,17 +25,20 @@
             android:scaleType="fitCenter"
             />
         <TextView
+            android:id="@+id/navbar_target_text"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/menu_target"
-            android:textSize="11sp"
+            android:fontFamily="@font/montserrat"
+            android:textSize="10sp"
             android:gravity="center"
             android:textColor="@color/black"
             />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/navbar_analysis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -41,6 +46,7 @@
         android:layout_margin="5dp">
 
         <ImageView
+            android:id="@+id/navbar_analysis_image"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginTop="5dp"
@@ -50,16 +56,19 @@
             />
 
         <TextView
-            android:layout_width="72dp"
+            android:id="@+id/navbar_analysis_text"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="@string/menu_analysis"
+            android:fontFamily="@font/montserrat"
             android:textColor="@color/black"
-            android:textSize="11sp" />
+            android:textSize="10sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/navbar_meet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -67,6 +76,7 @@
         android:layout_margin="5dp">
 
         <ImageView
+            android:id="@+id/navbar_meet_image"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginTop="5dp"
@@ -75,16 +85,19 @@
             android:scaleType="fitCenter"
             />
         <TextView
+            android:id="@+id/navbar_meet_text"
             android:layout_width="70dp"
             android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
             android:text="@string/menu_meet"
-            android:textSize="11sp"
+            android:fontFamily="@font/montserrat"
+            android:textSize="10sp"
             android:gravity="center"
             android:textColor="@color/black"
             />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/navbar_coach"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -92,6 +105,7 @@
         android:layout_margin="5dp">
 
         <ImageView
+            android:id="@+id/navbar_coach_image"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginTop="5dp"
@@ -100,16 +114,19 @@
             android:scaleType="fitCenter"
             />
         <TextView
+            android:id="@+id/navbar_coach_text"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/menu_coach"
-            android:textSize="11sp"
+            android:textSize="10sp"
+            android:fontFamily="@font/montserrat"
             android:gravity="center"
             android:textColor="@color/black"
             />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/navbar_learn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -117,6 +134,7 @@
         android:layout_margin="5dp">
 
         <ImageView
+            android:id="@+id/navbar_learn_image"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginTop="5dp"
@@ -125,15 +143,16 @@
             android:scaleType="fitCenter"
             />
         <TextView
+            android:id="@+id/navbar_learn_text"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/menu_learn"
-            android:textSize="11sp"
+            android:fontFamily="@font/montserrat"
+            android:textSize="10sp"
             android:gravity="center"
             android:textColor="@color/black"
             />
     </LinearLayout>
-
 
 </LinearLayout>
