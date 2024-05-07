@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nutriia.R;
+import com.nutriia.nutriia.R;
 
 import java.util.List;
 

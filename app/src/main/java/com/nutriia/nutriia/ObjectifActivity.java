@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.nutriia.R;
+import com.nutriia.nutriia.R;
 
 import java.util.ArrayList;
 import java.util.List;
