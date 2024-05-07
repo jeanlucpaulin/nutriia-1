@@ -1,20 +1,30 @@
 package com.nutriia.nutriia;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.nutriia.nutriia.adapters.DrawerItemAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,23 +52,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                if (id == R.id.navigation_home) {
-                    // Handle the home action
-                    return true;
-                } else if (id == R.id.navigation_dashboard) {
-                    // Handle the dashboard action
-                    return true;
-                } else if (id == R.id.navigation_notifications) {
-                    // Handle the notifications action
-                    return true;
-                }
-                return false;
-            }
-        });
+        PopupMenu tempMenu = new PopupMenu(this, null);
+        Menu menu = tempMenu.getMenu();
+        getMenuInflater().inflate(R.menu.drawer_items, menu);
+        RecyclerView navRecyclerView = findViewById(R.id.nav_recycler_view);
+        navRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Ajoutez ces lignes pour ajouter un séparateur
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(navRecyclerView.getContext(),
+                new LinearLayoutManager(this).getOrientation());
+        navRecyclerView.addItemDecoration(dividerItemDecoration);
+
+        DrawerItemAdapter navAdapter = new DrawerItemAdapter(menu);
+        navRecyclerView.setAdapter(navAdapter);
+
+
     }
 }
