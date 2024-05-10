@@ -1,17 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Lorsque le bouton est sélectionné -->
-    <item android:state_selected="true">
+    <item android:state_pressed="true">
+        <!-- Couleur lorsque le bouton est pressé -->
         <shape android:shape="rectangle">
-            <solid android:color="@color/white" /> <!-- Couleur de fond -->
-            <stroke android:width="2dp" android:color="@color/lime" /> <!-- Contour vert -->
-            <corners android:radius="17dp" />
+            <solid android:color="#00CC00" />
         </shape>
     </item>
-    <!-- Par défaut -->
-    <item>
+    <item android:state_selected="true">
+        <!-- Couleur lorsque le bouton est sélectionné -->
         <shape android:shape="rectangle">
-            <solid android:color="@color/white" /> <!-- Couleur de fond -->
-            <corners android:radius="17dp" />
+            <solid android:color="#00CC00" />
+        </shape>
+    </item>
+    <item>
+        <!-- Couleur par défaut -->
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" />
         </shape>
     </item>
 </selector>

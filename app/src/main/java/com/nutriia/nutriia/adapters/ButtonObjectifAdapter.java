@@ -53,6 +53,12 @@ public class ButtonObjectifAdapter extends RecyclerView.Adapter<ButtonObjectifAd
                 notifyDataSetChanged(); // Update the adapter to reflect the changes
             }
         });
+
+        if (buttonData.isSelected()) {
+            holder.button.setAlpha(0.5f); // 50% transparent
+        } else {
+            holder.button.setAlpha(1.0f); // Fully opaque
+        }
     }
 
     @Override

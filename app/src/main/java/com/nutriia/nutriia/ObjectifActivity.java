@@ -2,8 +2,11 @@ package com.nutriia.nutriia;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.nutriia.nutriia.adapters.ButtonObjectifAdapter;
@@ -32,6 +35,23 @@ public class ObjectifActivity extends AppCompatActivity {
 
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-    }
 
+        recyclerView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
+
+        Button submitButton = (Button) findViewById(R.id.plusdinfo);
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Parcourez la liste des boutons
+                for (ButtonObjectif buttonData : buttonDataList) {
+                    // Si le bouton est sélectionné, affichez son texte
+                    if (buttonData.isSelected()) {
+                        String message = "Objectif choisi : " + buttonData.getText();
+                        Toast.makeText(ObjectifActivity.this, message, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+    }
 }
