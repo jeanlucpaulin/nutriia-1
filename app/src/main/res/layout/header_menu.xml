@@ -17,12 +17,15 @@
         android:layout_marginStart="20dp"
         />
 
-    <androidx.constraintlayout.widget.Guideline
+    <LinearLayout
         android:id="@+id/center_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="205dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/lateral_open"
+        app:layout_constraintEnd_toStartOf="@id/account"/>
 
     <ImageView
         android:id="@+id/logo_bird"

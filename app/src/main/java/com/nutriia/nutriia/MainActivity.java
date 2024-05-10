@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
+        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.white));
 
         drawerLayout = findViewById(R.id.drawer_layout);
         lateralOpenButton = findViewById(R.id.lateral_open);

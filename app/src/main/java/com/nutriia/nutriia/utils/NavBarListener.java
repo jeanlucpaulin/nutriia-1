@@ -1,5 +1,7 @@
 package com.nutriia.nutriia.utils;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,14 +11,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.nutriia.nutriia.MainActivity;
+import com.nutriia.nutriia.MeetActivity;
 import com.nutriia.nutriia.R;
 
 public class NavBarListener {
 
-    private static boolean isInit = false;
+    private static AppCompatActivity activity;
 
     public static void init(AppCompatActivity activity, int current){
-        if(isInit) return;
+        NavBarListener.activity = activity;
         LinearLayout layout = activity.findViewById(R.id.navbar_target);
         if (layout != null) {
             if (R.id.navbar_target == current) {
@@ -66,11 +70,12 @@ public class NavBarListener {
                 ((ImageView) activity.findViewById(R.id.navbar_learn_image)).setImageDrawable(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.menu_icon_formation_full, activity.getTheme()));
             } else layout.setOnClickListener(NavBarListener::eventLearn);
         }
-        isInit = true;
     }
 
     private static void eventTarget(View v){
-        Log.d("NavBarListener", "eventTarget: " + v.getId());
+        Intent intent = new Intent(activity, MainActivity.class);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     private static void eventAnalysis(View v){
@@ -78,7 +83,9 @@ public class NavBarListener {
     }
 
     private static void eventMeets(View v){
-        Log.d("NavBarListener", "eventMeets: " + v.getId());
+        Intent intent = new Intent(activity, MeetActivity.class);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     private static void eventCoach(View v){

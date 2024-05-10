@@ -17,6 +17,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+
+
     <include
         android:id="@+id/bottom_navbar"
         layout="@layout/bottom_navbar"

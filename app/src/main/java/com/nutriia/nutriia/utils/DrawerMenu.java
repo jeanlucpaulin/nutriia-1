@@ -1,0 +1,53 @@
+package com.nutriia.nutriia.utils;
+
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.view.Menu;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.adapters.DrawerItemAdapter;
+
+public class DrawerMenu {
+
+    private static AppCompatActivity activity;
+
+    public static void init(AppCompatActivity activity){
+        DrawerMenu.activity = activity;
+
+        DrawerLayout drawerLayout = activity.findViewById(R.id.drawer_layout);
+        ImageButton lateralOpenButton = activity.findViewById(R.id.lateral_open);
+        ImageButton lateralCloseButton = activity.findViewById(R.id.lateral_close);
+        Button disconnectButton = activity.findViewById(R.id.disconnect_button);
+
+        lateralOpenButton.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+        lateralCloseButton.setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.START));
+
+        Menu menu = new PopupMenu(activity, null).getMenu();
+        activity.getMenuInflater().inflate(R.menu.drawer_items, menu);
+        RecyclerView navRecyclerView = activity.findViewById(R.id.drawer_nav_recycler_view);
+        navRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        DrawerItemAdapter navAdapter = new DrawerItemAdapter(menu);
+        navRecyclerView.setAdapter(navAdapter);
+
+        TextView appVersionDrawer = activity.findViewById(R.id.app_version_drawer);
+
+        try {
+            PackageInfo packageInfo = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0);
+            String version = packageInfo.versionName;
+            appVersionDrawer.setText(activity.getString(R.string.app_version, version));
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
