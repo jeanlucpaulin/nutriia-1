@@ -89,4 +89,6 @@
     <string name="dish_suggestion">Suggestions de plats</string>
     <string name="more_dish_suggestions">Plus de suggestions</string>
     <string name="composition_d_un_aliment">Composition d\'un aliment</string>
+    <string name="validate_my_day">Valider ma journée</string>
+    <string name="my_real_day">Ma journée réelle</string>
 </resources>

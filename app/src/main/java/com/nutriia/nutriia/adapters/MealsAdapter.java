@@ -19,9 +19,16 @@ public class MealsAdapter extends BaseAdapter {
     private Context context;
     private List<Meal> meals;
 
+    private boolean allowEdit = false;
+
     public MealsAdapter(Context context, List<Meal> meals) {
+        this(context, meals, false);
+    }
+
+    public MealsAdapter(Context context, List<Meal> meals, boolean allowEdit) {
         this.context = context;
         this.meals = meals;
+        this.allowEdit = allowEdit;
     }
 
     @Override
@@ -51,8 +58,8 @@ public class MealsAdapter extends BaseAdapter {
         mealName.setText(meal.getName());
 
         EditText mealContent = convertView.findViewById(R.id.meal_content);
-        mealContent.setActivated(false);
-        mealContent.setFocusable(false);
+        mealContent.setActivated(allowEdit);
+        mealContent.setFocusable(allowEdit);
 
         String mealContentString = getMealContent(position);
 
