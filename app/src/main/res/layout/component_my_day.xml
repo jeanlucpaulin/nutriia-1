@@ -9,24 +9,26 @@
         android:id="@+id/component_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Meal"
-        android:textSize="20sp"
-        android:textStyle="bold"
-
+        android:text="@string/macronutrients_of_my_day"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/goal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        app:layout_constraintTop_toBottomOf="@id/component_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/meal_content"
-        android:hint="Enter your meal here"
-        app:layout_constraintTop_toBottomOf="@id/component_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:autofillHints="meal"
-        android:inputType="textMultiLine"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.nutriia.nutriia.Slide;
@@ -16,7 +17,7 @@ import android.widget.TextView;
 
 import com.nutriia.nutriia.R;
 
-public class SlideAdapter extends PagerAdapter {
+public class SlideAdapter extends RecyclerView.Adapter<SlideAdapter.SlideViewHolder> {
 
     private final Context context;
     private final List<Slide> slides;
@@ -26,31 +27,35 @@ public class SlideAdapter extends PagerAdapter {
         this.slides = slides;
     }
 
-    @Override
-    public int getCount() {
-        return this.slides.size();
-    }
+    public static class SlideViewHolder extends RecyclerView.ViewHolder {
+        TextView title;
+        TextView description;
 
-    @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view.equals(object);
+        public SlideViewHolder(@NonNull View itemView) {
+            //Creation of the view holder from the layout of the slide item
+            super(itemView);
+            title = itemView.findViewById(R.id.titleTextView);
+            description = itemView.findViewById(R.id.contentTextView);
+        }
     }
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        Slide slide = this.slides.get(position);
-        View view = LayoutInflater.from(this.context).inflate(R.layout.slide_tips_item, container, false);
-        TextView title = view.findViewById(R.id.titleTextView);
-        TextView description = view.findViewById(R.id.contentTextView);
-        title.setText(slide.getTitle());
-        description.setText(slide.getDescription());
-        container.addView(view);
-        return view;
+    public SlideViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.slide_tips_item, parent, false);
+        return new SlideViewHolder(view);
     }
 
     @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View) object);
+    public void onBindViewHolder(@NonNull SlideViewHolder holder, int position) {
+        //Binding of the data to the view holder
+        Slide slide = slides.get(position);
+        holder.title.setText(slide.getTitle());
+        holder.description.setText(slide.getDescription());
+    }
+
+    @Override
+    public int getItemCount() {
+        return slides.size();
     }
 }

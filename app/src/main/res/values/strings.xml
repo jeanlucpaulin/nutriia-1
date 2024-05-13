@@ -31,7 +31,7 @@
     <string name="energy">Énergie</string>
     <string name="macronutrients">Macronutriments</string>
     <string name="micronutrients">Micronutriments</string>
-    <string-array name="list_macronutriments">
+    <string-array name="list_macronutrients">
         <item>@string/carbohydrates</item>
         <item>@string/proteins</item>
         <item>@string/lipids</item>
@@ -45,7 +45,7 @@
     <string name="sugars">Sucres</string>
     <string name="saturated_fats">Acides gras saturés</string>
     <string name="fibers">Fibres</string>
-    <string-array name="list_micronutriments">
+    <string-array name="list_micronutrients">
         <item>@string/salt</item>
         <item>@string/vitamin_a</item>
         <item>@string/vitamin_b_12</item>
@@ -83,4 +83,6 @@
     <string name="set_my_goal">Définir mon objectif ?</string>
     <string name="disconnect">Déconnexion</string>
     <string name="app_version">Version %s</string>
+    <string name="macronutrients_of_my_day">Macronuments de ma journée</string>
+    <string name="goal">Objectif</string>
 </resources>
