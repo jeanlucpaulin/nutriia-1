@@ -1,6 +1,5 @@
 package com.nutriia.nutriia.utils;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
