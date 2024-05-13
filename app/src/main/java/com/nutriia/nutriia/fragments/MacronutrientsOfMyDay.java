@@ -19,7 +19,7 @@ import com.nutriia.nutriia.adapters.DayProgressionAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NutrientsOfMyDay extends Fragment {
+public class MacronutrientsOfMyDay extends Fragment {
 
     @Nullable
     @Override
