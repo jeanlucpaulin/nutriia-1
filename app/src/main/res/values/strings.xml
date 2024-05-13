@@ -22,7 +22,7 @@
     <string name="height">Taille</string>
     <string name="body_mass_index">IMC</string>
     <string name="give_more_precision">Si vous souhaitez des renseignements plus précis, veuillez nous renseigner votre profil.</string>
-    <string name="give_more_precision_goal">Si vous souaitez des renseignement plus précis, veuillez nous renseigner votre objectif.</string>
+    <string name="give_more_precision_goal">Si vous souhaitez des renseignement plus précis, veuillez nous renseigner votre objectif.</string>
     <string name="fill_profile">Renseigner mon profil</string>
     <string name="fill_goal">Renseigner mon objectif</string>
     <string name="unknown_information">\?</string>
@@ -91,5 +91,7 @@
     <string name="composition_d_un_aliment">Composition d\'un aliment</string>
     <string name="validate_my_day">Valider ma journée</string>
     <string name="my_real_day">Ma journée réelle</string>
-    <string name="welcolme_message">Bonjour, vous souhaitez découvrir l\'application</string>
+    <string name="welcolme_message">Bonjour, vous souhaitez découvrir l\'application !</string>
+    <string name="enter_something_to_eat">Entrez un plat ou un aliment</string>
+    <string name="show_composition">Voir la composition</string>
 </resources>

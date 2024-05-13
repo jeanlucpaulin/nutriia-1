@@ -3,17 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/linear_rounded"
-    android:elevation="5dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/component_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_more_precision"
-        android:fontFamily="@font/montserrat_semibold"
-        android:textSize="23sp"
+        android:fontFamily="@font/montserrat_medium"
+        android:textSize="20sp"
         android:layout_marginStart="20sp"
         android:layout_marginTop="15sp"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,7 +24,7 @@
         android:fontFamily="@font/montserrat_light"
         android:textStyle="italic"
         android:text="@string/optional"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:layout_marginTop="15sp"
         android:layout_marginStart="5sp"
         android:layout_marginBottom="10sp"
@@ -49,7 +47,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:orientation="vertical"
             android:layout_weight="2"
             android:background="@drawable/green_rounded"
@@ -63,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/weight"
                 android:fontFamily="@font/montserrat"
-                android:textSize="20sp"
+                android:textSize="18sp"
 
                 android:layout_marginStart="10sp"
                 android:layout_marginEnd="10sp"
@@ -74,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/unknown_information"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:layout_marginStart="10sp"
                 android:layout_marginEnd="10sp"
                 android:fontFamily="@font/montserrat_bold"
@@ -84,7 +82,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:orientation="vertical"
             android:background="@drawable/orange_rounded"
             android:layout_weight="2"
@@ -98,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/height"
                 android:fontFamily="@font/montserrat"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_marginStart="10sp"
                 android:layout_marginEnd="10sp"
                 android:textAlignment="center" />
@@ -108,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/unknown_information"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:layout_marginStart="10sp"
                 android:layout_marginEnd="10sp"
                 android:fontFamily="@font/montserrat_bold"
@@ -118,7 +116,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:orientation="vertical"
             android:background="@drawable/light_orange_rounded"
             android:layout_weight="2"
@@ -131,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/body_mass_index"
                 android:fontFamily="@font/montserrat"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_marginStart="10sp"
                 android:layout_marginEnd="10sp"
                 android:textAlignment="center"/>
@@ -144,7 +142,7 @@
                 android:fontFamily="@font/montserrat"
                 android:layout_marginStart="10sp"
                 android:layout_marginEnd="10sp"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:textAlignment="center" />
 
         </LinearLayout>
@@ -156,8 +154,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/give_more_precision"
+        android:justificationMode="inter_word"
         android:fontFamily="@font/montserrat"
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:layout_marginStart="20sp"
         android:layout_marginEnd="20sp"
         android:layout_marginTop="10sp"

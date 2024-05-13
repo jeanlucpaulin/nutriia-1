@@ -34,7 +34,9 @@ public class TipsTricks extends Fragment {
         viewPager = view.findViewById(R.id.viewPager);
 
         slides = new ArrayList<>();
-        slides.add(new Slide("Title 1", "Description 1"));
+        slides.add(new Slide("Alimentation", "Consomme une alimentation riche en protéines pour favoriser " +
+                "la croissance musculaire. Les sources de protéines incluent la viande maigre, le poisson, les œufs, " +
+                "les produits laitiers et les légumineuses."));
         slides.add(new Slide("Title 2", "Description 2"));
         slides.add(new Slide("Title 3", "Description 3"));
 

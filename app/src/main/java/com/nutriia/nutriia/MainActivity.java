@@ -29,9 +29,14 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.nutriia.nutriia.adapters.DrawerItemAdapter;
 import com.nutriia.nutriia.adapters.FragmentsAdapter;
+import com.nutriia.nutriia.fragments.DefineMyGoal;
+import com.nutriia.nutriia.fragments.DishSuggestions;
 import com.nutriia.nutriia.fragments.ExampleTypicalDay;
+import com.nutriia.nutriia.fragments.FoodComposition;
 import com.nutriia.nutriia.fragments.MacronutrientsOfMyDay;
 import com.nutriia.nutriia.fragments.MicronutrientsOfMyDay;
+import com.nutriia.nutriia.fragments.MorePrecision;
+import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
 import com.nutriia.nutriia.fragments.TipsTricks;
 import com.nutriia.nutriia.utils.NavBarListener;
@@ -101,9 +106,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new MacronutrientsOfMyDay());
-        fragments.add(new MicronutrientsOfMyDay());
-
+        fragments.add(new PageTitle());
+        fragments.add(new TipsTricks());
+        fragments.add(new MorePrecision());
+        fragments.add(new DefineMyGoal());
+        fragments.add(new RecommendedDailyAmount());
+        fragments.add(new ExampleTypicalDay());
+        fragments.add(new FoodComposition());
+        fragments.add(new DishSuggestions());
 
         FragmentsAdapter adapter = new FragmentsAdapter(getSupportFragmentManager(), fragments);
         recyclerView.setAdapter(adapter);

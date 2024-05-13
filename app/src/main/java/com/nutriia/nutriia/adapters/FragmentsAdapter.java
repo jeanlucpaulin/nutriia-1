@@ -19,6 +19,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.adapter.FragmentViewHolder;
 
 import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.fragments.PageTitle;
 
 import java.util.List;
 
@@ -69,6 +70,9 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
         Fragment fragment = fragments.get(position);
         if (fragment.isAdded()) {
             return;
+        }
+        if (fragment instanceof PageTitle) {
+            holder.getContainer().setBackground(null);
         }
         fragmentManager.beginTransaction()
                 .replace(holder.getContainer().getId(), fragment)
