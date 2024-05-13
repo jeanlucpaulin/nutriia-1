@@ -1,49 +1,50 @@
-package com.nutriia.nutriia;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
+package com.nutriia.nutriia.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.Slide;
 import com.nutriia.nutriia.adapters.SlideAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoalsActivity extends AppCompatActivity {
+public class TipsTricks extends Fragment {
     private ViewPager2 viewPager;
     private SlideAdapter slideAdapter;
     private List<Slide> slides;
-
     private ImageButton previousButton;
-
     private ImageButton nextButton;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.component_tips);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        viewPager = findViewById(R.id.viewPager);
+        View view = inflater.inflate(R.layout.component_tips, container, false);
 
-        // Exemple of a list of slides
-        //TODO : DELETE THIS EXAMPLE
+        viewPager = view.findViewById(R.id.viewPager);
+
         slides = new ArrayList<>();
         slides.add(new Slide("Title 1", "Description 1"));
         slides.add(new Slide("Title 2", "Description 2"));
         slides.add(new Slide("Title 3", "Description 3"));
 
-        slideAdapter = new SlideAdapter(this, slides);
+        slideAdapter = new SlideAdapter(getContext(), slides);
 
         viewPager.setAdapter(slideAdapter);
 
-        previousButton = findViewById(R.id.previousButton);
-        nextButton = findViewById(R.id.nextButton);
+        previousButton = view.findViewById(R.id.previousButton);
+        nextButton = view.findViewById(R.id.nextButton);
 
-        // Previous and next buttons to navigate through the slides
         previousButton.setOnClickListener(v -> {
             int currentItem = viewPager.getCurrentItem();
             if (currentItem > 0) {
@@ -61,5 +62,7 @@ public class GoalsActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(0);
             }
         });
+
+        return view;
     }
 }
