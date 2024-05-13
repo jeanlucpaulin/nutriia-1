@@ -29,6 +29,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.nutriia.nutriia.adapters.DrawerItemAdapter;
 import com.nutriia.nutriia.adapters.FragmentsAdapter;
+import com.nutriia.nutriia.fragments.ExampleTypicalDay;
 import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
 import com.nutriia.nutriia.fragments.TipsTricks;
 import com.nutriia.nutriia.utils.NavBarListener;
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new RecommendedDailyAmount());
+        fragments.add(new ExampleTypicalDay());
         fragments.add(new TipsTricks());
         fragments.add(new RecommendedDailyAmount());
 
