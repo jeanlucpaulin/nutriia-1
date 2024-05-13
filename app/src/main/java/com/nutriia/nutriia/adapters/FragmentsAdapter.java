@@ -46,7 +46,10 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
     @NonNull
     @Override
     public FragmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        FrameLayout container = new FrameLayout(parent.getContext());
+        FrameLayout container = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_fragment, parent, false)
+                .findViewById(R.id.frame_layout);
+
         container.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
