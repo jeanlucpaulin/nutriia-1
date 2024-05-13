@@ -37,7 +37,7 @@
             android:contentDescription="@string/button_previous_tips_description"
             android:background="@android:color/transparent"
             />
-
+        
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="0dp"

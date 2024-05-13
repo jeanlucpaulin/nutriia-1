@@ -21,10 +21,20 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.google.android.material.navigation.NavigationView;
 import com.nutriia.nutriia.adapters.DrawerItemAdapter;
+import com.nutriia.nutriia.adapters.FragmentsAdapter;
+import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
+import com.nutriia.nutriia.fragments.TipsTricks;
 import com.nutriia.nutriia.utils.NavBarListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton lateralCloseButton;
     private Button disconnectButton;
     private TextView appVersionDrawer;
+
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +90,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         NavBarListener.init(this, R.id.navbar_target);
+
+
+        //Partie composants
+
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new RecommendedDailyAmount());
+        fragments.add(new TipsTricks());
+        fragments.add(new RecommendedDailyAmount());
+
+
+        FragmentsAdapter adapter = new FragmentsAdapter(getSupportFragmentManager(), fragments);
+        recyclerView.setAdapter(adapter);
+
 
 
     }
