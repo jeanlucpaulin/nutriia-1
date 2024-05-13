@@ -31,25 +31,37 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
     }
 
     public static class FragmentViewHolder extends RecyclerView.ViewHolder {
-        public FragmentViewHolder(@NonNull View container) {
+        private final FrameLayout container;
+
+        public FragmentViewHolder(@NonNull FrameLayout container) {
             super(container);
+            this.container = container;
+        }
+
+        public FrameLayout getContainer() {
+            return container;
         }
     }
 
     @NonNull
     @Override
     public FragmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fragment, parent, false);
-        return new FragmentViewHolder(view);
+        FrameLayout container = new FrameLayout(parent.getContext());
+        container.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+        container.setId(View.generateViewId());
+        return new FragmentViewHolder(container);
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull FragmentViewHolder holder, int position) {
         Fragment fragment = fragments.get(position);
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
-        fragmentTransaction.commit();
+        fragmentManager.beginTransaction()
+                .replace(holder.getContainer().getId(), fragment)
+                .commit();
     }
 
     @Override
