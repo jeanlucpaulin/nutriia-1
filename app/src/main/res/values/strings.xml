@@ -91,4 +91,5 @@
     <string name="composition_d_un_aliment">Composition d\'un aliment</string>
     <string name="validate_my_day">Valider ma journée</string>
     <string name="my_real_day">Ma journée réelle</string>
+    <string name="welcolme_message">Bonjour, vous souhaitez découvrir l\'application</string>
 </resources>
