@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -50,10 +51,14 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
                 .inflate(R.layout.item_fragment, parent, false)
                 .findViewById(R.id.frame_layout);
 
-        container.setLayoutParams(new ViewGroup.LayoutParams(
+        ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
-        ));
+        );
+
+        layoutParams.setMargins(40, 20, 40, 20);
+
+        container.setLayoutParams(layoutParams);
         container.setId(View.generateViewId());
         return new FragmentViewHolder(container);
     }
