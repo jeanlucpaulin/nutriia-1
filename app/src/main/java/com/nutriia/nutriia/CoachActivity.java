@@ -24,9 +24,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Request;
-import okhttp3.RequestBody;
-
 public class CoachActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
@@ -93,7 +90,6 @@ public class CoachActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        RequestBody body = RequestBody.create(json.toString(), okhttp3.MediaType.parse("application/json; charset=utf-8"));
 
     }
 }

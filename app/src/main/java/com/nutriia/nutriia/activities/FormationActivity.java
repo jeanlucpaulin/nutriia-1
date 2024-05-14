@@ -10,6 +10,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 
 import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
 
 public class FormationActivity extends AppCompatActivity {
@@ -21,7 +22,7 @@ public class FormationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formation);
 
-        //   DrawerMenu.init(this);
+        // DrawerMenu.init(this);
         NavBarListener.init(this, R.id.navbar_learn);
 
         Button button1 = findViewById(R.id.customButton);

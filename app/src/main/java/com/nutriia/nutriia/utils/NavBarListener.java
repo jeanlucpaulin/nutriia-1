@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.nutriia.nutriia.CoachActivity;
 import com.nutriia.nutriia.activities.FormationActivity;
 import com.nutriia.nutriia.activities.MainActivity;
 import com.nutriia.nutriia.activities.MeetActivity;
@@ -89,7 +90,9 @@ public class NavBarListener {
     }
 
     private static void eventCoach(View v){
-        Log.d("NavBarListener", "eventCoach: " + v.getId());
+        Intent intent = new Intent(activity, CoachActivity.class);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     private static void eventLearn(View v){
