@@ -41,6 +41,9 @@
         <activity android:name=".activities.FoodCompositionActivity"
             android:exported="true">
         </activity>
+        <activity android:name=".activities.CoachActivity"
+            android:exported="true">
+        </activity>
 
         <!-- Déclaration de MeetActivity -->
         <activity android:name=".activities.MeetActivity"

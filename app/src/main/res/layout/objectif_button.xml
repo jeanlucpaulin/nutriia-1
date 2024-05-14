@@ -11,5 +11,4 @@
     android:stateListAnimator="@null"
     android:clickable="true"
     android:textAlignment="viewStart"
-    android:justificationMode="inter_word"
     xmlns:android="http://schemas.android.com/apk/res/android" />

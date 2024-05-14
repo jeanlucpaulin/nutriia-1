@@ -96,12 +96,12 @@
     <string name="show_composition">Voir la composition</string>
     <string-array name="goals">
         <item>Pas d\'objectifs</item>
-        <item>Perdre du poids</item>
-        <item>Prendre du muscle</item>
-        <item>Se remettre en forme</item>
-        <item>Améliorer son endurance</item>
-        <item>Améliorer son sommeil</item>
-        <item>Conseils de prévention santé</item>
+        <item>Perte de poids</item>
+        <item>Prise de muscles</item>
+        <item>Remise en forme</item>
+        <item>Meilleur endurance</item>
+        <item>Qualité du sommeil</item>
+        <item>Prévention santé</item>
     </string-array>
     <string-array name="welcome_messages">
         <item>Bonjour, vous souhaitez découvrir l\'application !</item>
