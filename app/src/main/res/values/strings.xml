@@ -172,4 +172,13 @@
         <item>Moyen</item>
         <item>Élevé</item>
     </string-array>
+    <string-array name="imc_indicator">
+        <item>Dénutrition</item>
+        <item>Insuffisance pondérale</item>
+        <item>Normal</item>
+        <item>Surpoids</item>
+        <item>Obésité modérée</item>
+        <item>Obésité sévère</item>
+        <item>Obésité massive</item>
+    </string-array>
 </resources>

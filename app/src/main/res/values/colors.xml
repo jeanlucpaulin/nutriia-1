@@ -5,4 +5,12 @@
     <color name="background_main">#F2F2F2</color>
     <color name="lime">#00CC00</color>
     <color name="orange">#FF7500</color>
+
+    <color name="IMC1">#54B9E8</color>
+    <color name="IMC2">#91ECE7</color>
+    <color name="IMC3">#95ED9E</color>
+    <color name="IMC4">#EADF86</color>
+    <color name="IMC5">#ECB479</color>
+    <color name="IMC6">#EA9081</color>
+    <color name="IMC7">#D5658D</color>
 </resources>
