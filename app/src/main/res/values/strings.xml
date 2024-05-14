@@ -94,4 +94,45 @@
     <string name="welcolme_message">Bonjour, vous souhaitez découvrir l\'application !</string>
     <string name="enter_something_to_eat">Entrez un plat ou un aliment</string>
     <string name="show_composition">Voir la composition</string>
+    <string-array name="goals">
+        <item>Pas d\'objectifs</item>
+        <item>Perdre du poids</item>
+        <item>Prendre du muscle</item>
+        <item>Se remettre en forme</item>
+        <item>Améliorer son endurance</item>
+        <item>Améliorer son sommeil</item>
+        <item>Conseils de prévention santé</item>
+    </string-array>
+    <string-array name="welcome_messages">
+        <item>Bonjour, vous souhaitez découvrir l\'application !</item>
+        <item>Bonjour, vous souhaitez perdre du poids !</item>
+        <item>Bonjour, vous souhaitez prendre du muscle !</item>
+        <item>Bonjour, vous souhaitez vous remettre en forme !</item>
+        <item>Bonjour, vous souhaitez avoir une meilleure endurance !</item>
+        <item>Bonjour, vous souhaitez avoir un meilleur sommeil !</item>
+        <item>Bonjour, vous souhaitez avoir des conseils de prévention santé !</item>
+    </string-array>
+    <string-array name="icons_goals">
+        <item>menu_icon_target_outline</item>
+        <item>icon_goal_weight_lost</item>
+        <item>icon_goal_muscle_gain</item>
+        <item>icon_goal_shape</item>
+        <item>icon_goal_improve_stamina</item>
+        <item>icon_goal_sleep_quality</item>
+        <item>icon_goal_health_tips</item>
+    </string-array>
+    <string-array name="genders">
+        <item>Homme</item>
+        <item>Femme</item>
+    </string-array>
+    <string-array name="activity_levels">
+        <item>Faible</item>
+        <item>Moyen</item>
+        <item>Élevé</item>
+    </string-array>
+    <string-array name="progression_levels">
+        <item>Faible</item>
+        <item>Moyen</item>
+        <item>Élevé</item>
+    </string-array>
 </resources>

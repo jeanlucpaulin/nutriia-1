@@ -1,4 +1,4 @@
-package com.nutriia.nutriia;
+package com.nutriia.nutriia.activities;
 
 import android.os.Bundle;
 import android.webkit.WebView;
@@ -11,6 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
 

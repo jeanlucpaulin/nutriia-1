@@ -1,5 +1,6 @@
-package com.nutriia.nutriia;
+package com.nutriia.nutriia.activities;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.ContextCompat;
@@ -27,6 +30,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.google.android.material.navigation.NavigationView;
+import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.DrawerItemAdapter;
 import com.nutriia.nutriia.adapters.FragmentsAdapter;
 import com.nutriia.nutriia.fragments.DefineMyGoal;
@@ -38,13 +42,17 @@ import com.nutriia.nutriia.fragments.MicronutrientsOfMyDay;
 import com.nutriia.nutriia.fragments.MorePrecision;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
+import com.nutriia.nutriia.fragments.RedefineMyGoal;
 import com.nutriia.nutriia.fragments.TipsTricks;
+import com.nutriia.nutriia.user.UserSharedPreferences;
 import com.nutriia.nutriia.utils.NavBarListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int REQUEST_CODE = 1;
 
     private DrawerLayout drawerLayout;
     private ImageButton lateralOpenButton;
@@ -74,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         lateralCloseButton = findViewById(R.id.lateral_close);
         disconnectButton = findViewById(R.id.disconnect_button);
 
+
         this.setDrawerListeners();
 
         Menu menu = new PopupMenu(this, null).getMenu();
@@ -84,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
         navRecyclerView.setAdapter(navAdapter);
 
         disconnectButton.setOnClickListener(v -> {
-            Log.d("Disconnect", "Disconnect button clicked");
+            UserSharedPreferences.getInstance(getApplicationContext()).clear();
+            startActivity(new Intent(this, AppLaunchActivity.class));
         });
 
         appVersionDrawer = findViewById(R.id.app_version_drawer);
@@ -109,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new PageTitle());
         fragments.add(new TipsTricks());
         fragments.add(new MorePrecision());
-        fragments.add(new DefineMyGoal());
+        if(UserSharedPreferences.getInstance(getApplicationContext()).getGoal() == 0) fragments.add(new DefineMyGoal());
         fragments.add(new RecommendedDailyAmount());
         fragments.add(new ExampleTypicalDay());
         fragments.add(new FoodComposition());

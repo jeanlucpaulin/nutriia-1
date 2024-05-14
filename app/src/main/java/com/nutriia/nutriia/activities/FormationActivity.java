@@ -1,25 +1,16 @@
-package com.nutriia.nutriia;
+package com.nutriia.nutriia.activities;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import android.webkit.WebView;
 import android.widget.Button;
 
-import com.nutriia.nutriia.adapters.SlideAdapter;
-import com.nutriia.nutriia.utils.DrawerMenu;
+import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.utils.NavBarListener;
-
-import java.util.ArrayList;
 
 public class FormationActivity extends AppCompatActivity {
 

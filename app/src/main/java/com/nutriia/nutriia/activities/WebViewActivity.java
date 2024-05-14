@@ -1,4 +1,4 @@
-package com.nutriia.nutriia;
+package com.nutriia.nutriia.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.utils.NavBarListener;
 
 public class WebViewActivity extends AppCompatActivity {

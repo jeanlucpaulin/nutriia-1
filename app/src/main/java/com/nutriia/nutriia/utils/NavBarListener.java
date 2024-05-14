@@ -10,9 +10,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
-import com.nutriia.nutriia.FormationActivity;
-import com.nutriia.nutriia.MainActivity;
-import com.nutriia.nutriia.MeetActivity;
+import com.nutriia.nutriia.activities.FormationActivity;
+import com.nutriia.nutriia.activities.MainActivity;
+import com.nutriia.nutriia.activities.MeetActivity;
 import com.nutriia.nutriia.R;
 
 public class NavBarListener {

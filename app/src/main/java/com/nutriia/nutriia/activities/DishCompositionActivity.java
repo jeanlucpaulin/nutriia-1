@@ -1,4 +1,4 @@
-package com.nutriia.nutriia;
+package com.nutriia.nutriia.activities;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.FoodCompositionAdapter;
 
 import java.util.ArrayList;
