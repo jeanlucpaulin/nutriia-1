@@ -48,6 +48,8 @@ public class CoachActivity extends AppCompatActivity {
         editText = findViewById(R.id.editText);
         sendButton = findViewById(R.id.sendButton);
 
+        messageList.add(new Message("Salut ! 😊", Message.SENT_BY_BOT));
+        messageList.add(new Message("Je suis ton coach NutriIA, pose moi toutes tes questions. J’y répondrai avec plaisir.", Message.SENT_BY_BOT));
 
         // Set up the RecyclerView
         messageAdapter = new MessageAdapter(messageList);

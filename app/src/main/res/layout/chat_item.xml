@@ -14,9 +14,11 @@
         android:padding="8dp"
         android:elevation="5dp"
         android:layout_marginEnd="80dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="6dp"
-        android:layout_marginTop="6dp">
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp">
+
+
         <TextView
             android:id="@+id/left_chat_text_view"
             android:layout_width="wrap_content"
@@ -38,10 +40,11 @@
         android:backgroundTint="#FFFFFF"
         android:padding="8dp"
         android:elevation="5dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginStart="80dp"
-        android:layout_marginBottom="6dp"
-        android:layout_marginTop="6dp">
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp">
+
         <TextView
             android:id="@+id/right_chat_text_view"
             android:layout_width="wrap_content"
