@@ -1,6 +1,7 @@
 package com.nutriia.nutriia.activities;
 
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,9 @@ public class DishCompositionActivity extends AppCompatActivity {
 
         TextView headerBackTitle = findViewById(R.id.title);
         headerBackTitle.setText("Composition \ndu plat");
+
+        ImageButton backButton = findViewById(R.id.lateral_open);
+        backButton.setOnClickListener(click -> finish());
 
         // Dish Composition
 
