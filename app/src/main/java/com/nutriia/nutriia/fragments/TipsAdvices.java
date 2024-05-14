@@ -1,6 +1,7 @@
 package com.nutriia.nutriia.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +15,17 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.Slide;
 import com.nutriia.nutriia.adapters.SlideAdapter;
+import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class TipsTricks extends Fragment {
+public class TipsAdvices extends Fragment {
     private ViewPager2 viewPager;
     private SlideAdapter slideAdapter;
-    private List<Slide> slides;
     private ImageButton previousButton;
     private ImageButton nextButton;
 
@@ -33,12 +37,20 @@ public class TipsTricks extends Fragment {
 
         viewPager = view.findViewById(R.id.viewPager);
 
-        slides = new ArrayList<>();
-        slides.add(new Slide("Alimentation", "Consomme une alimentation riche en protéines pour favoriser " +
-                "la croissance musculaire. Les sources de protéines incluent la viande maigre, le poisson, les œufs, " +
-                "les produits laitiers et les légumineuses."));
-        slides.add(new Slide("Title 2", "Description 2"));
-        slides.add(new Slide("Title 3", "Description 3"));
+        int goalIndex = UserSharedPreferences.getInstance(getContext()).getGoal();
+
+        //nom des tips dans le fichier strings.xml
+        List<String> tipsNames = Arrays.asList(getResources().getStringArray(R.array.tips_names));
+
+
+        List<String> tipsTitles = Arrays.asList(getResources().getStringArray(R.array.tips_titles));
+        List<Slide> slides = new ArrayList<>();
+
+        for(int i = 0; i < tipsNames.size(); i++) {
+            List<String> tips = Arrays.asList(getResources().getStringArray(getResources().getIdentifier(tipsNames.get(i), "array", getContext().getPackageName())));
+            slides.add(new Slide(tipsTitles.get(i), tips.get(goalIndex)));
+        }
+
 
         slideAdapter = new SlideAdapter(getContext(), slides);
 

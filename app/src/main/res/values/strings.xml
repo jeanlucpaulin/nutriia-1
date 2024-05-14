@@ -121,6 +121,43 @@
         <item>icon_goal_sleep_quality</item>
         <item>icon_goal_health_tips</item>
     </string-array>
+    <string-array name="tips_titles">
+        <item>Alimentation</item>
+        <item>Activité</item>
+        <item>Récupération</item>
+    </string-array>
+    <string-array name="tips_names">
+        <item>tips_feed</item>
+        <item>tips_activity</item>
+        <item>tips_recovery</item>
+    </string-array>
+    <string-array name="tips_feed">
+        <item>Conseil Alimentation général</item>
+        <item>Conseil Alimentation perte de poids</item>
+        <item>Conseil Alimentation prise de muscle</item>
+        <item>Conseil Alimentation remise en forme</item>
+        <item>Conseil Alimentation endurance</item>
+        <item>Conseil Alimentation sommeil</item>
+        <item>Conseil Alimentation prévention santé</item>
+    </string-array>
+    <string-array name="tips_activity">
+        <item>Conseil Activité général</item>
+        <item>Conseil Activité perte de poids</item>
+        <item>Conseil Activité prise de muscle</item>
+        <item>Conseil Activité remise en forme</item>
+        <item>Conseil Activité endurance</item>
+        <item>Conseil Activité sommeil</item>
+        <item>Conseil Activité prévention santé</item>
+    </string-array>
+    <string-array name="tips_recovery">
+        <item>Conseil Récupération général</item>
+        <item>Conseil Récupération perte de poids</item>
+        <item>Conseil Récupération prise de muscle</item>
+        <item>Conseil Récupération remise en forme</item>
+        <item>Conseil Récupération endurance</item>
+        <item>Conseil Récupération sommeil</item>
+        <item>Conseil Récupération prévention santé</item>
+    </string-array>
     <string-array name="genders">
         <item>Homme</item>
         <item>Femme</item>

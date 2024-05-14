@@ -4,16 +4,12 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.ContextCompat;
@@ -24,12 +20,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.google.android.material.navigation.NavigationView;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.DrawerItemAdapter;
 import com.nutriia.nutriia.adapters.FragmentsAdapter;
@@ -37,13 +29,10 @@ import com.nutriia.nutriia.fragments.DefineMyGoal;
 import com.nutriia.nutriia.fragments.DishSuggestions;
 import com.nutriia.nutriia.fragments.ExampleTypicalDay;
 import com.nutriia.nutriia.fragments.FoodComposition;
-import com.nutriia.nutriia.fragments.MacronutrientsOfMyDay;
-import com.nutriia.nutriia.fragments.MicronutrientsOfMyDay;
 import com.nutriia.nutriia.fragments.MorePrecision;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
-import com.nutriia.nutriia.fragments.RedefineMyGoal;
-import com.nutriia.nutriia.fragments.TipsTricks;
+import com.nutriia.nutriia.fragments.TipsAdvices;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 import com.nutriia.nutriia.utils.NavBarListener;
 
@@ -117,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new PageTitle());
-        fragments.add(new TipsTricks());
+        fragments.add(new TipsAdvices());
         fragments.add(new MorePrecision());
         if(UserSharedPreferences.getInstance(getApplicationContext()).getGoal() == 0) fragments.add(new DefineMyGoal());
         fragments.add(new RecommendedDailyAmount());
