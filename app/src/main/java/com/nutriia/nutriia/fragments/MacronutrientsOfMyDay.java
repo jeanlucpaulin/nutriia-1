@@ -12,14 +12,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.nutriia.nutriia.Nutrients;
+import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.DayProgressionAdapter;
+import com.nutriia.nutriia.interfaces.IItemRDA;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MacronutrientsOfMyDay extends Fragment {
+    private List<Nutrient> nutrients;
+
+    public MacronutrientsOfMyDay(List<Nutrient> nutrients) {
+        this.nutrients = nutrients;
+    }
 
     @Nullable
     @Override
@@ -33,9 +39,9 @@ public class MacronutrientsOfMyDay extends Fragment {
         textView.setText(R.string.macronutrients_of_my_day);
 
 
-        List<Nutrients> nutrientsList = new ArrayList<>();
+        List<Nutrient> nutrientsList = new ArrayList<>();
         for(String macronutrient : resources.getStringArray(R.array.list_macronutrients)) {
-            nutrientsList.add(new Nutrients(macronutrient, 100, resources.getString(R.string.grams_unit), 50));
+            nutrientsList.add(new Nutrient(macronutrient, 100, resources.getString(R.string.grams_unit), 50));
         }
 
 

@@ -1,59 +1,75 @@
 package com.nutriia.nutriia.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.interfaces.IItemRDA;
+import com.nutriia.nutriia.interfaces.onItemClickListener;
 
 import java.util.List;
 
-public class ItemRDAAdapter extends BaseAdapter {
+public class ItemRDAAdapter extends RecyclerView.Adapter<ItemRDAAdapter.ItemRDAViewHolder> {
 
-    private Context context;
-    private List<IItemRDA> items;
+    private final FragmentManager fragmentManager;
+    private final List<Fragment> fragments;
 
-    public ItemRDAAdapter(Context context, List<IItemRDA> items) {
-        this.context = context;
-        this.items = items;
+    public ItemRDAAdapter(FragmentManager fragmentManager, List<Fragment> fragments) {
+        this.fragmentManager = fragmentManager;
+        this.fragments = fragments;
+    }
+
+    @NonNull
+    @Override
+    public ItemRDAViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        FrameLayout container = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_fragment, parent, false)
+                .findViewById(R.id.frame_layout);
+
+        container.setId(View.generateViewId());
+        return new ItemRDAViewHolder(container);
     }
 
     @Override
-    public int getCount() {
-        return items.size();
-    }
-
-    @Override
-    public IItemRDA getItem(int position) {
-        return items.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_recommanded_daily_amount, parent, false);
+    public void onBindViewHolder(@NonNull ItemRDAViewHolder holder, int position) {
+        Fragment fragment = fragments.get(position);
+        if (fragment.isAdded()) {
+            return;
         }
 
-        IItemRDA item = getItem(position);
+        fragmentManager.beginTransaction()
+                .replace(holder.getContainer().getId(), fragment)
+                .commit();
+    }
 
-        TextView itemName = convertView.findViewById(R.id.name);
-        itemName.setText(item.getName());
+    @Override
+    public int getItemCount() {
+        return fragments.size();
+    }
 
-        TextView itemAmount = convertView.findViewById(R.id.amount);
-        itemAmount.setText(String.valueOf(item.getAmount()));
+    public static class ItemRDAViewHolder extends RecyclerView.ViewHolder {
+        private final FrameLayout container;
 
-        TextView itemUnit = convertView.findViewById(R.id.unit);
-        itemUnit.setText(item.getUnit());
+        ItemRDAViewHolder(@NonNull FrameLayout container) {
+            super(container);
+            this.container = container;
+        }
 
-        return convertView;
+        public FrameLayout getContainer() {
+            return container;
+        }
     }
 }

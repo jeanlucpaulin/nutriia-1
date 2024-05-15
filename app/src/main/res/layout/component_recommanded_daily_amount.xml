@@ -7,9 +7,14 @@
 
     <TextView
         android:id="@+id/component_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/recommended_daily_amount"
+        android:fontFamily="@font/montserrat_medium"
+        android:textSize="20sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginTop="15sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -18,7 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/component_title"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,13 +35,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="5dp">
 
                 <TextView
                     android:id="@+id/energy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/energy" />
+                    android:text="@string/energy"
+                    android:fontFamily="@font/montserrat"
+                    android:layout_marginStart="50dp"
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/energy_amount"
@@ -42,14 +54,23 @@
                     android:layout_height="wrap_content"
                     android:text="@string/unknown_information"
                     android:layout_weight="1"
-                    android:gravity="end"/>
+                    android:gravity="end"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="5dp"
+                    android:textColor="@color/orange"
+                    />
 
                 <TextView
                     android:id="@+id/energy_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/calories_unit"
-                    android:gravity="end"/>
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="20dp"
+                    android:textColor="@color/orange"
+                    android:gravity="end" />
 
             </LinearLayout>
 
@@ -58,13 +79,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/macronutrients"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_medium"
+                android:layout_marginStart="30dp"
                 app:layout_constraintTop_toBottomOf="@+id/energy_layout"
                 app:layout_constraintStart_toStartOf="@+id/amounts_layout"/>
 
-            <ListView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/macronutrients_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="20dp"
                 app:layout_constraintTop_toBottomOf="@+id/macronutrients"
                 app:layout_constraintStart_toStartOf="@+id/amounts_layout"/>
 
@@ -73,13 +99,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/micronutrients"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_medium"
+                android:layout_marginStart="30dp"
                 app:layout_constraintTop_toBottomOf="@+id/macronutrients"
                 app:layout_constraintStart_toStartOf="@+id/amounts_layout"/>
 
-            <ListView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/micronutrients_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="20dp"
                 app:layout_constraintTop_toBottomOf="@+id/micronutrients"
                 app:layout_constraintStart_toStartOf="@+id/amounts_layout"/>
 

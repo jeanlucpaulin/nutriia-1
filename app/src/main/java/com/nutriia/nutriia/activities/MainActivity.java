@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
         fragments.add(new TipsAdvices());
         fragments.add(new MorePrecision());
         if(UserSharedPreferences.getInstance(getApplicationContext()).getGoal() == 0) fragments.add(new DefineMyGoal(this, this));
-        fragments.add(new RecommendedDailyAmount());
+        fragments.add(new RecommendedDailyAmount(this));
         fragments.add(new ExampleTypicalDay());
 
         recyclerView.setAdapter(adapter);
