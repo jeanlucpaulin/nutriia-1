@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nutriia.nutriia.Nutrients;
+import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
 
 import java.util.List;
@@ -16,9 +16,9 @@ import java.util.List;
 public class DayProgressionAdapter extends BaseAdapter {
     private Context context;
 
-    private List<Nutrients> nutrientsList;
+    private List<Nutrient> nutrientsList;
 
-    public DayProgressionAdapter(Context context, List<Nutrients> nutrientsList) {
+    public DayProgressionAdapter(Context context, List<Nutrient> nutrientsList) {
         this.context = context;
         this.nutrientsList = nutrientsList;
     }
@@ -40,7 +40,7 @@ public class DayProgressionAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Nutrients nutrients = nutrientsList.get(position);
+        Nutrient nutrients = nutrientsList.get(position);
 
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

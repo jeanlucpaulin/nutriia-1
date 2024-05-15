@@ -9,21 +9,26 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.interfaces.IItemRDA;
+import com.nutriia.nutriia.interfaces.onItemClickListener;
 
 import java.util.List;
 
 public class ItemRDAAdapter extends RecyclerView.Adapter<ItemRDAAdapter.ItemRDAViewHolder> {
 
-    private Context context;
-    private List<IItemRDA> items;
+    private final FragmentManager fragmentManager;
+    private final List<Fragment> fragments;
 
-    public ItemRDAAdapter(Context context, List<IItemRDA> items) {
-        this.context = context;
-        this.items = items;
+    public ItemRDAAdapter(FragmentManager fragmentManager, List<Fragment> fragments) {
+        this.fragmentManager = fragmentManager;
+        this.fragments = fragments;
     }
 
     @NonNull
@@ -40,27 +45,31 @@ public class ItemRDAAdapter extends RecyclerView.Adapter<ItemRDAAdapter.ItemRDAV
 
     @Override
     public void onBindViewHolder(@NonNull ItemRDAViewHolder holder, int position) {
-        IItemRDA item = items.get(position);
-        holder.itemName.setText(item.getName());
-        holder.itemAmount.setText(String.valueOf(item.getAmount()));
-        holder.itemUnit.setText(item.getUnit());
+        Fragment fragment = fragments.get(position);
+        if (fragment.isAdded()) {
+            return;
+        }
+
+        fragmentManager.beginTransaction()
+                .replace(holder.getContainer().getId(), fragment)
+                .commit();
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return fragments.size();
     }
 
-    static class ItemRDAViewHolder extends RecyclerView.ViewHolder {
-        TextView itemName;
-        TextView itemAmount;
-        TextView itemUnit;
+    public static class ItemRDAViewHolder extends RecyclerView.ViewHolder {
+        private final FrameLayout container;
 
-        ItemRDAViewHolder(View itemView) {
-            super(itemView);
-            itemName = itemView.findViewById(R.id.name);
-            itemAmount = itemView.findViewById(R.id.amount);
-            itemUnit = itemView.findViewById(R.id.unit);
+        ItemRDAViewHolder(@NonNull FrameLayout container) {
+            super(container);
+            this.container = container;
+        }
+
+        public FrameLayout getContainer() {
+            return container;
         }
     }
 }

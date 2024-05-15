@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.nutriia.nutriia.Nutrients;
+import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.DayProgressionAdapter;
 
@@ -33,9 +33,9 @@ public class MicronutrientsOfMyDay extends Fragment {
         textView.setText(R.string.micronutrients_of_my_day);
 
 
-        List<Nutrients> nutrientsList = new ArrayList<>();
+        List<Nutrient> nutrientsList = new ArrayList<>();
         for(String micronutrient : resources.getStringArray(R.array.list_micronutrients)) {
-            nutrientsList.add(new Nutrients(micronutrient, 100, resources.getString(R.string.grams_unit), 50));
+            nutrientsList.add(new Nutrient(micronutrient, 100, resources.getString(R.string.grams_unit), 50));
         }
 
 

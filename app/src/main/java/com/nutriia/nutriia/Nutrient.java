@@ -1,6 +1,6 @@
 package com.nutriia.nutriia;
 
-public class Nutrients {
+public class Nutrient {
     private String name;
     private int value;
 
@@ -8,7 +8,13 @@ public class Nutrients {
 
     private int progress;
 
-    public Nutrients(String name, int value, String unit, int progress) {
+    public Nutrient(String name, int value, String unit) {
+        this.name = name;
+        this.value = value;
+        this.unit = unit;
+    }
+
+    public Nutrient(String name, int value, String unit, int progress) {
         this.name = name;
         this.value = value;
         this.unit = unit;
