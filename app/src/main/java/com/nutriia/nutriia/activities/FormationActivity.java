@@ -1,68 +1,88 @@
 package com.nutriia.nutriia.activities;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.webkit.WebView;
 import android.widget.Button;
 
+import com.nutriia.nutriia.FormationItem;
 import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.adapters.FragmentsAdapter;
+import com.nutriia.nutriia.fragments.Formation;
+import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class FormationActivity extends AppCompatActivity {
 
-    private WebView webView;
+    private RecyclerView recyclerView;
+
+    private FragmentsAdapter adapter;
+
+    private final List<Fragment> fragments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_formation);
+        setContentView(R.layout.activity_main);
 
-        // DrawerMenu.init(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
+        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.white));
+
+        DrawerMenu.init(this);
         NavBarListener.init(this, R.id.navbar_learn);
 
-        Button button1 = findViewById(R.id.customButton);
-        Drawable drawable1 = getResources().getDrawable(R.drawable.menu_icon_plant);
-        drawable1.setBounds(0, 0, 90, 90);
-        button1.setCompoundDrawables(drawable1, null, null, null);
-        button1.setOnClickListener(v -> {
-            Intent intent = new Intent(this, WebViewActivity.class);
-            intent.putExtra("url", "https://nutriia.fr/fr/fundamentals-of-nutrition/");
-            startActivity(intent);
-        });
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Button button2 = findViewById(R.id.customButton2);
-        Drawable drawable2 = getResources().getDrawable(R.drawable.menu_icon_macronutriment);
-        drawable2.setBounds(0, 0, 90, 90);
-        button2.setCompoundDrawables(drawable2, null, null, null);
-        button2.setOnClickListener(v -> {
-            Intent intent = new Intent(this, WebViewActivity.class);
-            intent.putExtra("url", "https://nutriia.fr/fr/macronutrients/");
-            startActivity(intent);
-        });
+        this.adapter = new FragmentsAdapter(getSupportFragmentManager(), fragments);
 
-        Button button3 = findViewById(R.id.customButton3);
-        Drawable drawable3 = getResources().getDrawable(R.drawable.menu_icon_micronutriment);
-        drawable3.setBounds(0, 0, 90, 90);
-        button3.setCompoundDrawables(drawable3, null, null, null);
-        button3.setOnClickListener(v -> {
-            Intent intent = new Intent(this, WebViewActivity.class);
-            intent.putExtra("url", "https://nutriia.fr/fr/micronutrients/");
-            startActivity(intent);
-        });
+        this.setFragments(recyclerView);
+    }
 
-        Button button4 = findViewById(R.id.customButton4);
-        Drawable drawable4 = getResources().getDrawable(R.drawable.menu_icon_nutrition);
-        drawable4.setBounds(0, 0, 90, 90);
-        button4.setCompoundDrawables(drawable4, null, null, null);
-        button4.setOnClickListener(v -> {
-            Intent intent = new Intent(this, WebViewActivity.class);
-            intent.putExtra("url", "https://nutriia.fr/fr/impact-of-nutrition/");
-            startActivity(intent);
-        });
+    private void setFragments(RecyclerView recyclerView) {
+        fragments.clear();
+
+        fragments.add(new PageTitle(PageTitle.ActivityType.FORMATION));
+        getItems().forEach(item -> fragments.add(new Formation(item)));
+
+        recyclerView.setAdapter(adapter);
+    }
+
+    private List<FormationItem> getItems() {
+        List<FormationItem> items = new ArrayList<>();
+
+        List<String> urls = Arrays.asList(getResources().getStringArray(R.array.formation_urls));
+        List<String> titles = Arrays.asList(getResources().getStringArray(R.array.formation_titles));
+        List<String> iconsNames = Arrays.asList(getResources().getStringArray(R.array.formation_icons));
+
+        for(int i = 0; i < urls.size(); i++) {
+            int iconId = getResources().getIdentifier(iconsNames.get(i), "drawable", getPackageName());
+            items.add(new FormationItem(urls.get(i), titles.get(i), iconId));
+        }
+
+        return items;
     }
 }
