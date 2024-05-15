@@ -35,19 +35,13 @@ import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
 import com.nutriia.nutriia.fragments.TipsAdvices;
 import com.nutriia.nutriia.interfaces.onActivityFinishListener;
 import com.nutriia.nutriia.user.UserSharedPreferences;
+import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements onActivityFinishListener {
-
-    private DrawerLayout drawerLayout;
-    private ImageButton lateralOpenButton;
-    private ImageButton lateralCloseButton;
-    private Button disconnectButton;
-    private TextView appVersionDrawer;
-
     private RecyclerView recyclerView;
 
     private final List<Fragment> fragments = new ArrayList<>();
@@ -74,35 +68,7 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
         getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.white));
 
-        drawerLayout = findViewById(R.id.drawer_layout);
-        lateralOpenButton = findViewById(R.id.lateral_open);
-        lateralCloseButton = findViewById(R.id.lateral_close);
-        disconnectButton = findViewById(R.id.disconnect_button);
-
-
-        this.setDrawerListeners();
-
-        Menu menu = new PopupMenu(this, null).getMenu();
-        getMenuInflater().inflate(R.menu.drawer_items, menu);
-        RecyclerView navRecyclerView = findViewById(R.id.drawer_nav_recycler_view);
-        navRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DrawerItemAdapter navAdapter = new DrawerItemAdapter(menu, this, this);
-        navRecyclerView.setAdapter(navAdapter);
-
-        disconnectButton.setOnClickListener(v -> {
-            UserSharedPreferences.getInstance(getApplicationContext()).clear();
-            startActivity(new Intent(this, AppLaunchActivity.class));
-        });
-
-        appVersionDrawer = findViewById(R.id.app_version_drawer);
-
-        try {
-            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            String version = packageInfo.versionName;
-            appVersionDrawer.setText(getString(R.string.app_version, version));
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        DrawerMenu.init(this, this);
 
         NavBarListener.init(this, R.id.navbar_target);
 
@@ -115,11 +81,6 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
         this.adapter = new FragmentsAdapter(getSupportFragmentManager(), fragments);
 
         this.setFragments(recyclerView);
-    }
-
-    private void setDrawerListeners(){
-        lateralOpenButton.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
-        lateralCloseButton.setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.START));
     }
 
     private void setFragments(RecyclerView recyclerView) {

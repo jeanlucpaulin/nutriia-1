@@ -35,6 +35,7 @@ public class MeetActivity extends AppCompatActivity {
         getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.white));
 
         NavBarListener.init(this, R.id.navbar_meet);
+
         DrawerMenu.init(this);
 
         webView = findViewById(R.id.webview);
