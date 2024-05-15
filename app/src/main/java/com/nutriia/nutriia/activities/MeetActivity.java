@@ -31,9 +31,6 @@ public class MeetActivity extends AppCompatActivity {
             return insets;
         });
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
-        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.white));
-
         NavBarListener.init(this, R.id.navbar_meet);
 
         DrawerMenu.init(this);

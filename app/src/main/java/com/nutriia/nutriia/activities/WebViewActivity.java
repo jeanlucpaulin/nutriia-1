@@ -20,7 +20,7 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
 
-        //DrawerMenu.init(this);
+        DrawerMenu.init(this);
         NavBarListener.init(this, R.id.navbar_learn);
 
         WebView webView = findViewById(R.id.webView);

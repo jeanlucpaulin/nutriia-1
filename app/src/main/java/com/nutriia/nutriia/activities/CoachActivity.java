@@ -47,6 +47,9 @@ public class CoachActivity extends AppCompatActivity {
 
         NavBarListener.init(this, R.id.navbar_coach);
 
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
+        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.white));
+
         messageList = new ArrayList<>();
 
         recyclerView = findViewById(R.id.recyclerView);
