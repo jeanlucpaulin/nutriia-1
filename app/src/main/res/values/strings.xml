@@ -95,7 +95,7 @@
     <string name="enter_something_to_eat">Entrez un plat ou un aliment</string>
     <string name="show_composition">Voir la composition</string>
     <string-array name="goals">
-        <item>Pas d\'objectifs</item>
+        <item>Sans objectif</item>
         <item>Perte de poids</item>
         <item>Prise de muscles</item>
         <item>Remise en forme</item>
@@ -181,4 +181,7 @@
         <item>Obésité sévère</item>
         <item>Obésité massive</item>
     </string-array>
+    <string name="define_goal">Définir mon objectif</string>
+    <string name="redefine_goal">Redéfinir mon objectif</string>
+    <string name="validate">Valider</string>
 </resources>

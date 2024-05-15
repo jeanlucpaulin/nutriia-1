@@ -4,21 +4,20 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.nutriia.nutriia.ButtonObjectif;
+import com.nutriia.nutriia.Goal;
 import com.nutriia.nutriia.R;
 
 import java.util.List;
 
 public class ButtonObjectifAdapter extends RecyclerView.Adapter<ButtonObjectifAdapter.ViewHolder> {
-    private List<ButtonObjectif> buttonDataList;
+    private List<Goal> buttonDataList;
 
-    public ButtonObjectifAdapter(List<ButtonObjectif> buttonDataList) {
+    public ButtonObjectifAdapter(List<Goal> buttonDataList) {
         this.buttonDataList = buttonDataList;
     }
 
@@ -30,7 +29,7 @@ public class ButtonObjectifAdapter extends RecyclerView.Adapter<ButtonObjectifAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ButtonObjectif buttonData = buttonDataList.get(position);
+        Goal buttonData = buttonDataList.get(position);
         Drawable img = ContextCompat.getDrawable(holder.button.getContext(), buttonData.getImageResId());
         if (img != null) {
             img.setBounds(0, 0, (int)(img.getIntrinsicWidth()*0.5),
@@ -43,7 +42,7 @@ public class ButtonObjectifAdapter extends RecyclerView.Adapter<ButtonObjectifAd
             @Override
             public void onClick(View v) {
                 // Deselect all other buttons
-                for (ButtonObjectif otherButtonData : buttonDataList) {
+                for (Goal otherButtonData : buttonDataList) {
                     if (otherButtonData != buttonData) {
                         otherButtonData.setSelected(false);
                     }

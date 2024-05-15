@@ -1,5 +1,7 @@
 package com.nutriia.nutriia.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -8,10 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.activities.HealthInformationActivity;
+import com.nutriia.nutriia.activities.ObjectifActivity;
+import com.nutriia.nutriia.activities.RedefineGoalActivity;
+import com.nutriia.nutriia.fragments.DefineMyGoal;
+import com.nutriia.nutriia.fragments.RedefineMyGoal;
+import com.nutriia.nutriia.interfaces.onActivityFinishListener;
 
 public class DrawerItemAdapter extends RecyclerView.Adapter<DrawerItemAdapter.ViewHolder> {
 
@@ -22,16 +33,30 @@ public class DrawerItemAdapter extends RecyclerView.Adapter<DrawerItemAdapter.Vi
     private Menu menuItems;
     private OnItemClickListener listener;
 
+    private Context context;
 
-    public DrawerItemAdapter(Menu menuItems) {
+    private onActivityFinishListener activityFinishListener;
+
+    private AppCompatActivity activity;
+
+
+    public DrawerItemAdapter(Menu menuItems, AppCompatActivity activity, onActivityFinishListener activityFinishListener) {
         this.menuItems = menuItems;
+        this.context = activity.getApplicationContext();
+        this.activityFinishListener = activityFinishListener;
+        ActivityResultLauncher<Intent> activityLauncher = activity.registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (activityFinishListener != null) activityFinishListener.onActivityFinish();
+                }
+        );
         this.setOnItemClickListener(new DrawerItemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.side_navigation_target) {
-                    Log.d("Drawer", "Target clicked");
+                    activityLauncher.launch(new Intent(context, RedefineGoalActivity.class));
                 } else if (item.getItemId() == R.id.side_navigation_sante) {
-                    Log.d("Drawer", "Sante clicked");
+                    activityLauncher.launch(new Intent(context, HealthInformationActivity.class));
                 } else if (item.getItemId() == R.id.side_navigation_meet) {
                     Log.d("Drawer", "Meet clicked");
                 } else if (item.getItemId() == R.id.side_navigation_follow_daily) {

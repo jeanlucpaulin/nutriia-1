@@ -1,30 +1,38 @@
 package com.nutriia.nutriia;
 
 public class Goal {
-    private String name;
+    private int imageResId;
+    private String text;
+    private boolean selected;
+
     private boolean isActual;
 
-    private String icon;
+    public Goal(int imageResId, String text) {
+        this(imageResId, text, false);
+    }
 
-    public Goal(String name, String icon, boolean isActual) {
-        this.name = name;
-        this.icon = icon;
+    public Goal(int imageResId, String text, boolean isActual) {
+        this.imageResId = imageResId;
+        this.text = text;
+        this.selected = false;
         this.isActual = isActual;
     }
 
-    public Goal(String goalName, String icon) {
-        this(goalName, icon, false);
+    public int getImageResId() {
+        return imageResId;
     }
 
-    public String getName() {
-        return name;
+    public String getText() {
+        return text;
     }
 
-    public String getIcon() {
-        return icon;
+    public boolean isSelected() {
+        return selected;
     }
 
-    public boolean isActual() {
-        return isActual;
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
+
+    public boolean isActual() { return isActual; }
 }

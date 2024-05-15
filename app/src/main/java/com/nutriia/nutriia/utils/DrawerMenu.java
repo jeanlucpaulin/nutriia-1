@@ -36,7 +36,7 @@ public class DrawerMenu {
         activity.getMenuInflater().inflate(R.menu.drawer_items, menu);
         RecyclerView navRecyclerView = activity.findViewById(R.id.drawer_nav_recycler_view);
         navRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        DrawerItemAdapter navAdapter = new DrawerItemAdapter(menu);
+        DrawerItemAdapter navAdapter = new DrawerItemAdapter(menu, activity, null);
         navRecyclerView.setAdapter(navAdapter);
 
         TextView appVersionDrawer = activity.findViewById(R.id.app_version_drawer);

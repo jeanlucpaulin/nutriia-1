@@ -33,15 +33,14 @@ import com.nutriia.nutriia.fragments.MorePrecision;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
 import com.nutriia.nutriia.fragments.TipsAdvices;
+import com.nutriia.nutriia.interfaces.onActivityFinishListener;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 import com.nutriia.nutriia.utils.NavBarListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-
-    private static final int REQUEST_CODE = 1;
+public class MainActivity extends AppCompatActivity implements onActivityFinishListener {
 
     private DrawerLayout drawerLayout;
     private ImageButton lateralOpenButton;
@@ -50,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
     private TextView appVersionDrawer;
 
     private RecyclerView recyclerView;
+
+    private final List<Fragment> fragments = new ArrayList<>();
+
+    private FragmentsAdapter adapter;
+
+    @Override
+    public void onActivityFinish() {
+        setFragments(recyclerView);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.drawer_items, menu);
         RecyclerView navRecyclerView = findViewById(R.id.drawer_nav_recycler_view);
         navRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DrawerItemAdapter navAdapter = new DrawerItemAdapter(menu);
+        DrawerItemAdapter navAdapter = new DrawerItemAdapter(menu, this, this);
         navRecyclerView.setAdapter(navAdapter);
 
         disconnectButton.setOnClickListener(v -> {
@@ -104,26 +112,30 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new PageTitle());
-        fragments.add(new TipsAdvices());
-        fragments.add(new MorePrecision());
-        if(UserSharedPreferences.getInstance(getApplicationContext()).getGoal() == 0) fragments.add(new DefineMyGoal());
-        fragments.add(new RecommendedDailyAmount());
-        fragments.add(new ExampleTypicalDay());
-        fragments.add(new FoodComposition());
-        fragments.add(new DishSuggestions());
+        this.adapter = new FragmentsAdapter(getSupportFragmentManager(), fragments);
 
-        FragmentsAdapter adapter = new FragmentsAdapter(getSupportFragmentManager(), fragments);
-        recyclerView.setAdapter(adapter);
-
-
-
+        this.setFragments(recyclerView);
     }
 
     private void setDrawerListeners(){
         lateralOpenButton.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
         lateralCloseButton.setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.START));
+    }
+
+    private void setFragments(RecyclerView recyclerView) {
+        fragments.clear();
+        fragments.add(new PageTitle());
+        fragments.add(new TipsAdvices());
+        fragments.add(new MorePrecision());
+        if(UserSharedPreferences.getInstance(getApplicationContext()).getGoal() == 0) fragments.add(new DefineMyGoal(this, this));
+        fragments.add(new RecommendedDailyAmount());
+        fragments.add(new ExampleTypicalDay());
+        fragments.add(new FoodComposition());
+        fragments.add(new DishSuggestions());
+
+
+
+        recyclerView.setAdapter(adapter);
     }
 
 }

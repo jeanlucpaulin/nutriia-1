@@ -33,6 +33,10 @@ public class UserSharedPreferences {
         return sharedPreferences.getInt(KEY_GOAL, -1);
     }
 
+    public boolean isUserGoalDefined() {
+        return sharedPreferences.getInt(KEY_GOAL, -1) > 0;
+    }
+
     public void setHeight(int height) { sharedPreferences.edit().putInt(KEY_HEIGHT, height).apply(); }
 
     public int getHeight() { return sharedPreferences.getInt(KEY_HEIGHT, -1); }
