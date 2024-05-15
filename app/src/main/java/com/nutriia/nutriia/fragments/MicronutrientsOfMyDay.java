@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
@@ -28,19 +30,19 @@ public class MicronutrientsOfMyDay extends Fragment {
 
         Resources resources = getResources();
 
-        ListView listView = view.findViewById(R.id.listView);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         TextView textView = view.findViewById(R.id.component_title);
         textView.setText(R.string.micronutrients_of_my_day);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         List<Nutrient> nutrientsList = new ArrayList<>();
         for(String micronutrient : resources.getStringArray(R.array.list_micronutrients)) {
             nutrientsList.add(new Nutrient(micronutrient, 100, resources.getString(R.string.grams_unit), 50));
         }
 
-
         DayProgressionAdapter dayProgressionAdapter = new DayProgressionAdapter(getContext(), nutrientsList);
-        listView.setAdapter(dayProgressionAdapter);
+        recyclerView.setAdapter(dayProgressionAdapter);
 
         return view;
 
