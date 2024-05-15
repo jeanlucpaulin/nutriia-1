@@ -21,11 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MacronutrientsOfMyDay extends Fragment {
-    private List<Nutrient> nutrients;
-
-    public MacronutrientsOfMyDay(List<Nutrient> nutrients) {
-        this.nutrients = nutrients;
-    }
 
     @Nullable
     @Override
