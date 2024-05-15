@@ -39,6 +39,7 @@ public class Formation extends Fragment {
         view.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), WebViewActivity.class);
             intent.putExtra("url", formationItem.getUrl());
+            intent.putExtra("title", formationItem.getTitle());
             startActivity(intent);
         });
 
