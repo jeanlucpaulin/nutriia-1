@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
 
     private void setFragments(RecyclerView recyclerView) {
         fragments.clear();
-        fragments.add(new PageTitle());
+        fragments.add(new PageTitle(PageTitle.ActivityType.MAIN));
         fragments.add(new TipsAdvices());
         fragments.add(new MorePrecision());
         if(UserSharedPreferences.getInstance(getApplicationContext()).getGoal() == 0) fragments.add(new DefineMyGoal(this, this));

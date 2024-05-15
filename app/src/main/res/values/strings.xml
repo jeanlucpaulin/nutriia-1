@@ -184,4 +184,23 @@
     <string name="define_goal">Définir mon objectif</string>
     <string name="redefine_goal">Redéfinir mon objectif</string>
     <string name="validate">Valider</string>
+    <string-array name="formation_urls">
+        <item>https://nutriia.fr/fr/fundamentals-of-nutrition</item>
+        <item>https://nutriia.fr/fr/macronutrients</item>
+        <item>https://nutriia.fr/fr/micronutrients</item>
+        <item>https://nutriia.fr/fr/impact-of-nutrition</item>
+    </string-array>
+    <string-array name="formation_titles">
+        <item>Fondamentaux de la nutrition</item>
+        <item>Macronutriments</item>
+        <item>Micronutriments</item>
+        <item>L\'impact de la nutrition</item>
+    </string-array>
+    <string-array name="formation_icons">
+        <item>menu_icon_plant</item>
+        <item>menu_icon_macronutriment</item>
+        <item>menu_icon_micronutriment</item>
+        <item>menu_icon_nutrition</item>
+    </string-array>
+    <string name="formation_page_title">Documentez-vous !</string>
 </resources>

@@ -52,7 +52,7 @@ public class CoachActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
         getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.white));
 
-        DrawerMenu.init(this);
+        //DrawerMenu.init(this);
 
         NavBarListener.init(this, R.id.navbar_coach);
 
