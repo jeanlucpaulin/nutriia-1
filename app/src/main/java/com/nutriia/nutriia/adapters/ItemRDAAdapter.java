@@ -1,18 +1,22 @@
 package com.nutriia.nutriia.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.interfaces.IItemRDA;
 
 import java.util.List;
 
-public class ItemRDAAdapter extends BaseAdapter {
+public class ItemRDAAdapter extends RecyclerView.Adapter<ItemRDAAdapter.ItemRDAViewHolder> {
 
     private Context context;
     private List<IItemRDA> items;
@@ -22,38 +26,41 @@ public class ItemRDAAdapter extends BaseAdapter {
         this.items = items;
     }
 
+    @NonNull
     @Override
-    public int getCount() {
+    public ItemRDAViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        FrameLayout container = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_fragment, parent, false)
+                .findViewById(R.id.frame_layout);
+
+        container.setId(View.generateViewId());
+        return new ItemRDAViewHolder(container);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ItemRDAViewHolder holder, int position) {
+        IItemRDA item = items.get(position);
+        holder.itemName.setText(item.getName());
+        holder.itemAmount.setText(String.valueOf(item.getAmount()));
+        holder.itemUnit.setText(item.getUnit());
+    }
+
+    @Override
+    public int getItemCount() {
         return items.size();
     }
 
-    @Override
-    public IItemRDA getItem(int position) {
-        return items.get(position);
-    }
+    static class ItemRDAViewHolder extends RecyclerView.ViewHolder {
+        TextView itemName;
+        TextView itemAmount;
+        TextView itemUnit;
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_recommanded_daily_amount, parent, false);
+        ItemRDAViewHolder(View itemView) {
+            super(itemView);
+            itemName = itemView.findViewById(R.id.name);
+            itemAmount = itemView.findViewById(R.id.amount);
+            itemUnit = itemView.findViewById(R.id.unit);
         }
-
-        IItemRDA item = getItem(position);
-
-        TextView itemName = convertView.findViewById(R.id.name);
-        itemName.setText(item.getName());
-
-        TextView itemAmount = convertView.findViewById(R.id.amount);
-        itemAmount.setText(String.valueOf(item.getAmount()));
-
-        TextView itemUnit = convertView.findViewById(R.id.unit);
-        itemUnit.setText(item.getUnit());
-
-        return convertView;
     }
 }
