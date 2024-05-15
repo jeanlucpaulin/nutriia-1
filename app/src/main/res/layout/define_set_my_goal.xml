@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/define_goal"
-        android:text="@string/fill_profile"
+        android:text="@string/fill_goal"
         android:fontFamily="@font/montserrat"
         app:layout_constraintTop_toBottomOf="@id/give_more_precision"
         app:layout_constraintStart_toStartOf="parent"

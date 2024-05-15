@@ -65,9 +65,6 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
             return insets;
         });
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
-        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.white));
-
         DrawerMenu.init(this, this);
 
         NavBarListener.init(this, R.id.navbar_target);
