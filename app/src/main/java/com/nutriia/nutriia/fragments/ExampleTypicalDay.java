@@ -40,7 +40,7 @@ public class ExampleTypicalDay extends Fragment {
         meals.add(new Meal("Diner", "1 plate of pasta 1 glass of milk 1 piece of cake"));
         meals.add(new Meal("Collations", "1 yogurt 1 banana 1 cup of tea"));
 
-        LinearLayout mealLayout = view.findViewById(R.id.mealLayout);
+        /*LinearLayout mealLayout = view.findViewById(R.id.mealLayout);
         for (int i = 0; i < meals.size(); i++) {
             LinearLayout row = (LinearLayout) mealLayout.getChildAt(i / 2);
             View mealView = ((ViewGroup) row).getChildAt(i % 2);
@@ -60,7 +60,7 @@ public class ExampleTypicalDay extends Fragment {
                     textView.setText(meals.get(i).getContent());
                 }
             }
-        });
+        });*/
 
         LinearLayout layout = view.findViewById(R.id.linearLayoutMeal);
         layout.setOnClickListener(click -> startActivity(new Intent(getContext(), DayAnalysisActivity.class)));

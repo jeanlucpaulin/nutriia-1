@@ -36,7 +36,7 @@ public class ItemRDAAdapter extends RecyclerView.Adapter<ItemRDAAdapter.ItemRDAV
     public ItemRDAViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         FrameLayout container = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_fragment, parent, false)
+                .inflate(R.layout.nostyle_item_fragment, parent, false)
                 .findViewById(R.id.frame_layout);
 
         container.setId(View.generateViewId());
