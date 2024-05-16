@@ -52,7 +52,6 @@ public class DrawerMenu {
             activity.startActivity(new Intent(activity, AppLaunchActivity.class));
         });
 
-
         TextView appVersionDrawer = activity.findViewById(R.id.app_version_drawer);
 
         try {
@@ -63,5 +62,4 @@ public class DrawerMenu {
             e.printStackTrace();
         }
     }
-
 }

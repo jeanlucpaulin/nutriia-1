@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <include layout="@layout/item_meal"
+    <include layout="@layout/item_meal_real_day"
         android:id="@+id/breakfast"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toStartOf="@id/lunch"
         app:layout_constraintTop_toBottomOf="@id/component_title"/>
 
-    <include layout="@layout/item_meal"
+    <include layout="@layout/item_meal_real_day"
         android:id="@+id/lunch"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -42,7 +42,7 @@
         app:layout_constraintStart_toEndOf="@id/breakfast"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <include layout="@layout/item_meal"
+    <include layout="@layout/item_meal_real_day"
         android:id="@+id/dinner"
         android:layout_width="0dp"
         android:layout_marginEnd="5dp"
@@ -54,7 +54,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/snack"/>
 
-    <include layout="@layout/item_meal"
+    <include layout="@layout/item_meal_real_day"
         android:id="@+id/snack"
         android:layout_width="0dp"
         android:layout_marginStart="5dp"

@@ -20,6 +20,7 @@ import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.activities.HealthInformationActivity;
 import com.nutriia.nutriia.activities.ObjectifActivity;
 import com.nutriia.nutriia.activities.RedefineGoalActivity;
+import com.nutriia.nutriia.activities.WebViewActivity;
 import com.nutriia.nutriia.fragments.DefineMyGoal;
 import com.nutriia.nutriia.fragments.RedefineMyGoal;
 import com.nutriia.nutriia.interfaces.onActivityFinishListener;
@@ -64,7 +65,10 @@ public class DrawerItemAdapter extends RecyclerView.Adapter<DrawerItemAdapter.Vi
                 } else if (item.getItemId() == R.id.side_navigation_follow_monthly) {
                     Log.d("Drawer", "Follow Monthly clicked");
                 } else if (item.getItemId() == R.id.side_navigation_forum) {
-                    Log.d("Drawer", "Forum clicked");
+                    Intent intent = new Intent(context, WebViewActivity.class);
+                    intent.putExtra("url", "https://nutriia.fr/fr/Forum/");
+                    intent.putExtra("title", "Forum");
+                    activityLauncher.launch(intent);
                 } else if (item.getItemId() == R.id.side_navigation_invite_friends) {
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
@@ -99,7 +103,6 @@ public class DrawerItemAdapter extends RecyclerView.Adapter<DrawerItemAdapter.Vi
     public int getItemCount() {
         return menuItems.size();
     }
-
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;

@@ -11,8 +11,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.utils.DrawerMenu;
-import com.nutriia.nutriia.utils.NavBarListener;
 
 public class WebViewActivity extends AppCompatActivity {
 
@@ -39,6 +37,7 @@ public class WebViewActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient());
         WebSettings webSettings = webView.getSettings();
         ((WebSettings) webSettings).setJavaScriptEnabled(true);
+        assert url != null;
         webView.loadUrl(url);
 
     }
