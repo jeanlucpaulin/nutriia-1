@@ -25,6 +25,10 @@ public class UserSharedPreferences {
         return instance;
     }
 
+    public boolean isUserProfileDefined() {
+        return isUserHeightDefined() && isUserWeightDefined();
+    }
+
     public void setGoal(int goal) {
         sharedPreferences.edit().putInt(KEY_GOAL, goal).apply();
     }

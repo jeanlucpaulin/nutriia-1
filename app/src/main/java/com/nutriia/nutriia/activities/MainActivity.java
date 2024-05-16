@@ -33,6 +33,7 @@ import com.nutriia.nutriia.fragments.MorePrecision;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
 import com.nutriia.nutriia.fragments.TipsAdvices;
+import com.nutriia.nutriia.fragments.UserProfile;
 import com.nutriia.nutriia.interfaces.onActivityFinishListener;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 import com.nutriia.nutriia.utils.DrawerMenu;
@@ -84,7 +85,8 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
         fragments.clear();
         fragments.add(new PageTitle(PageTitle.ActivityType.MAIN));
         fragments.add(new TipsAdvices());
-        fragments.add(new MorePrecision());
+        if(UserSharedPreferences.getInstance(getApplicationContext()).isUserProfileDefined()) fragments.add(new UserProfile(this, this));
+        else fragments.add(new MorePrecision(this, this));
         if(UserSharedPreferences.getInstance(getApplicationContext()).getGoal() == 0) fragments.add(new DefineMyGoal(this, this));
         fragments.add(new RecommendedDailyAmount(this));
         fragments.add(new ExampleTypicalDay());
