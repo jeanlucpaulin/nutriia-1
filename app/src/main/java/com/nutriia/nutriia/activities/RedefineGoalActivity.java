@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nutriia.nutriia.Goal;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.FragmentsAdapter;
+import com.nutriia.nutriia.builders.GoalsBuilder;
 import com.nutriia.nutriia.fragments.DefineMyGoal;
 import com.nutriia.nutriia.fragments.RedefineMyGoal;
 import com.nutriia.nutriia.interfaces.OnClickOnGoal;
@@ -53,16 +54,10 @@ public class RedefineGoalActivity extends AppCompatActivity implements OnClickOn
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<Fragment> fragments = new ArrayList<>();
-        List<String> icons = Arrays.asList(getResources().getStringArray(R.array.icons_goals));
-        List<String> goals = Arrays.asList(getResources().getStringArray(R.array.goals));
-        List<String> goalsDescriptions = Arrays.asList(getResources().getStringArray(R.array.goals_descriptions));
 
-        List<Goal> goalsList = new ArrayList<>();
+        GoalsBuilder goalsBuilder = new GoalsBuilder(getResources(), getPackageName(), UserSharedPreferences.getInstance(getApplicationContext()));
 
-        for(int i = 0; i < icons.size(); i++) {
-            boolean isActual = UserSharedPreferences.getInstance(getApplicationContext()).getGoal() == i;
-            goalsList.add(new Goal(getResources().getIdentifier(icons.get(i), "drawable", getPackageName()), goals.get(i), goalsDescriptions.get(i), isActual));
-        }
+        List<Goal> goalsList = goalsBuilder.getGoals(getResources(), getPackageName());
 
         goalsList.forEach(goal -> {
             fragments.add(new RedefineMyGoal(goal));

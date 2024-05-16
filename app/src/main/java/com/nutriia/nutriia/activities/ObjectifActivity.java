@@ -14,6 +14,7 @@ import com.nutriia.nutriia.Goal;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.SpacesItemDecoration;
 import com.nutriia.nutriia.adapters.ButtonObjectifAdapter;
+import com.nutriia.nutriia.builders.GoalsBuilder;
 import com.nutriia.nutriia.interfaces.OnClickOnGoal;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
@@ -59,11 +60,9 @@ public class ObjectifActivity extends AppCompatActivity implements OnClickOnGoal
 
         goals.clear();
 
-        List<String> icons = Arrays.asList(getResources().getStringArray(R.array.icons_goals));
-        List<String> goalsNames = Arrays.asList(getResources().getStringArray(R.array.goals));
-        List<String> goalsDescriptions = Arrays.asList(getResources().getStringArray(R.array.goals_descriptions));
+        GoalsBuilder goalsBuilder = new GoalsBuilder(getResources(), getPackageName(), UserSharedPreferences.getInstance(getApplicationContext()));
 
-        for(int i = 1; i < icons.size(); i++) goals.add(new Goal(getResources().getIdentifier(icons.get(i), "drawable", getPackageName()), goalsNames.get(i), goalsDescriptions.get(i)));
+        goals.addAll(goalsBuilder.getGoals(getResources(), getPackageName(), true));
 
         adapter = new ButtonObjectifAdapter(this.goals, this);
 
