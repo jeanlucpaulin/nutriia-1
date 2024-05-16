@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp">
 
     <TextView
         android:id="@+id/component_title"
@@ -12,18 +13,57 @@
         android:text="@string/my_real_day"
         android:textSize="20sp"
         android:layout_marginStart="20sp"
-        android:layout_marginTop="15sp"
+        android:layout_marginTop="10sp"
         android:fontFamily="@font/montserrat_medium"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <GridView
-        android:id="@+id/gridView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="2"
-        app:layout_constraintTop_toBottomOf="@id/component_title"
+    <include layout="@layout/item_meal"
+        android:id="@+id/breakfast"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/lunch"
+        app:layout_constraintTop_toBottomOf="@id/component_title"/>
+
+    <include layout="@layout/item_meal"
+        android:id="@+id/lunch"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="20dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/component_title"
+        app:layout_constraintStart_toEndOf="@id/breakfast"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <include layout="@layout/item_meal"
+        android:id="@+id/dinner"
+        android:layout_width="0dp"
+        android:layout_marginEnd="5dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toBottomOf="@id/breakfast"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/snack"/>
+
+    <include layout="@layout/item_meal"
+        android:id="@+id/snack"
+        android:layout_width="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/lunch"
+        app:layout_constraintStart_toEndOf="@id/dinner"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
@@ -31,12 +71,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/validate_my_day"
-        app:layout_constraintTop_toBottomOf="@id/gridView"
+        app:layout_constraintTop_toBottomOf="@id/dinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:backgroundTint="@color/lime"
+        android:fontFamily="@font/montserrat"
         android:elevation="10dp"
-        android:translationZ="10dp"
+        android:translationZ="5dp"
+        android:layout_marginTop="10dp"
         android:stateListAnimator="@null"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

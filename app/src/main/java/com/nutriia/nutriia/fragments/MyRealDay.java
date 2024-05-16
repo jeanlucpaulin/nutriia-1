@@ -34,10 +34,11 @@ public class MyRealDay extends Fragment {
         meals.add(new Meal("Dinner"));
         meals.add(new Meal("Snack"));
 
+        /*
         GridView mealsListView = view.findViewById(R.id.gridView);
         MealsAdapter mealsAdapter = new MealsAdapter(getContext(), meals, true);
         mealsListView.setAdapter(mealsAdapter);
-
+        */
         return view;
     }
 }
