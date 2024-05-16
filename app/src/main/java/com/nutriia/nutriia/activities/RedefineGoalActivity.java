@@ -55,12 +55,13 @@ public class RedefineGoalActivity extends AppCompatActivity implements OnClickOn
         List<Fragment> fragments = new ArrayList<>();
         List<String> icons = Arrays.asList(getResources().getStringArray(R.array.icons_goals));
         List<String> goals = Arrays.asList(getResources().getStringArray(R.array.goals));
+        List<String> goalsDescriptions = Arrays.asList(getResources().getStringArray(R.array.goals_descriptions));
 
         List<Goal> goalsList = new ArrayList<>();
 
         for(int i = 0; i < icons.size(); i++) {
             boolean isActual = UserSharedPreferences.getInstance(getApplicationContext()).getGoal() == i;
-            goalsList.add(new Goal(getResources().getIdentifier(icons.get(i), "drawable", getPackageName()), goals.get(i), isActual));
+            goalsList.add(new Goal(getResources().getIdentifier(icons.get(i), "drawable", getPackageName()), goals.get(i), goalsDescriptions.get(i), isActual));
         }
 
         goalsList.forEach(goal -> {

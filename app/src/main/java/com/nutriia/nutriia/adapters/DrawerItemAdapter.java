@@ -66,7 +66,12 @@ public class DrawerItemAdapter extends RecyclerView.Adapter<DrawerItemAdapter.Vi
                 } else if (item.getItemId() == R.id.side_navigation_forum) {
                     Log.d("Drawer", "Forum clicked");
                 } else if (item.getItemId() == R.id.side_navigation_invite_friends) {
-                    Log.d("Drawer", "Invite Friends clicked");
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, activity.getResources().getString(R.string.share_app_message));
+                    sendIntent.setType("text/plain");
+                    Intent shareIntent = Intent.createChooser(sendIntent, null);
+                    activity.startActivity(shareIntent);
                 }
             }
         });

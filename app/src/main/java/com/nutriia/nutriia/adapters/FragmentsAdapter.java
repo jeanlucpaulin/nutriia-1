@@ -100,7 +100,7 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
     public void onBindViewHolder(@NonNull FragmentViewHolder holder, int position) {
         Fragment fragment = fragments.get(position);
         if (fragment.isAdded()) {
-            return;
+            fragmentManager.beginTransaction().show(fragment).commit();
         }
         if (fragment instanceof PageTitle) {
             holder.getContainer().setBackground(null);

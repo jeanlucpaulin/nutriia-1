@@ -121,6 +121,15 @@
         <item>icon_goal_sleep_quality</item>
         <item>icon_goal_health_tips</item>
     </string-array>
+    <string-array name="goals_descriptions">
+        <item>Découvrir sans objectif</item>
+        <item>L\'objectif de perte de poids est de perdre du poids pour améliorier...</item>
+        <item>L\'objectif de prise de muscle est de gagner en masse musculaire...</item>
+        <item>L\'objectif de remise en forme est d\'améliorer la santé et la condition physique...</item>
+        <item>L\'objectif d\'endurance est d\'améliorer la capacité du corps à fournir de l\'énergie...</item>
+        <item>L\'objectif de qualité de sommeil est d\'améliorer la qualité et la durée du sommeil...</item>
+        <item>L\'objectif de prévention santé est de prévenir les maladies et de promouvoir la santé...</item>
+    </string-array>
     <string-array name="tips_titles">
         <item>Alimentation</item>
         <item>Activité</item>
@@ -203,4 +212,6 @@
         <item>menu_icon_nutrition</item>
     </string-array>
     <string name="formation_page_title">Documentez-vous !</string>
+    <string name="share_app_message">Hey, j\'utilise Nutriia ! Viens décourvrir l\'application ! https://nutriia.fr</string>
+    <string name="no_goal_selected">Bienvenue sur l\'application, tu n\'as pas séléctionné d\'objectif. Si tu souhaites avoir plus de précisious tu peux cliquer sur un des objectifs si dessus je te donnerai des indications. Bonne découverte !!</string>
 </resources>

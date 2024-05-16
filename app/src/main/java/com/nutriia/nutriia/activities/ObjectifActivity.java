@@ -3,6 +3,7 @@ package com.nutriia.nutriia.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -13,39 +14,70 @@ import com.nutriia.nutriia.Goal;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.SpacesItemDecoration;
 import com.nutriia.nutriia.adapters.ButtonObjectifAdapter;
+import com.nutriia.nutriia.interfaces.OnClickOnGoal;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ObjectifActivity extends AppCompatActivity {
+public class ObjectifActivity extends AppCompatActivity implements OnClickOnGoal {
+
+    private final List<Goal> goals = new ArrayList<>();
+
+    private RecyclerView recyclerView;
+
+    private ButtonObjectifAdapter adapter;
+
+    private Button submitButton;
+
+    private TextView goalDescription;
+
+    @Override
+    public void onClickOnGoal(boolean isSelected) {
+        submitButton.setEnabled(isSelected);
+        if(isSelected) {
+            for (Goal buttonGoal : goals) {
+                if (buttonGoal.isSelected()) goalDescription.setText(buttonGoal.getDescription());
+            }
+        }
+        else {
+            goalDescription.setText(getResources().getString(R.string.no_goal_selected));
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_objectif);
 
-        List<String> icons = Arrays.asList(getResources().getStringArray(R.array.icons_goals));
-        List<String> goals = Arrays.asList(getResources().getStringArray(R.array.goals));
-
-        List<Goal> buttonDataList = new ArrayList<>();
-
-        for(int i = 1; i < icons.size(); i++) {
-            buttonDataList.add(new Goal(getResources().getIdentifier(icons.get(i), "drawable", getPackageName()), goals.get(i)));
-        }
-
-        RecyclerView recyclerView = findViewById(R.id.buttonList);
+        recyclerView = findViewById(R.id.buttonList);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        ButtonObjectifAdapter adapter = new ButtonObjectifAdapter(buttonDataList);
+
+        goalDescription = findViewById(R.id.coachResponse);
+        goalDescription.setText(getResources().getString(R.string.no_goal_selected));
+
+        goals.clear();
+
+        List<String> icons = Arrays.asList(getResources().getStringArray(R.array.icons_goals));
+        List<String> goalsNames = Arrays.asList(getResources().getStringArray(R.array.goals));
+        List<String> goalsDescriptions = Arrays.asList(getResources().getStringArray(R.array.goals_descriptions));
+
+        for(int i = 1; i < icons.size(); i++) goals.add(new Goal(getResources().getIdentifier(icons.get(i), "drawable", getPackageName()), goalsNames.get(i), goalsDescriptions.get(i)));
+
+        adapter = new ButtonObjectifAdapter(this.goals, this);
+
         recyclerView.setAdapter(adapter);
+
 
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
         recyclerView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
 
-        Button submitButton = (Button) findViewById(R.id.plusdinfo);
+        submitButton = (Button) findViewById(R.id.plusdinfo);
+
+        submitButton.setEnabled(false);
 
         Button tryWithoutGoal = (Button) findViewById(R.id.decrouvrirSansObjectif);
         tryWithoutGoal.setOnClickListener(v -> {
@@ -56,7 +88,7 @@ public class ObjectifActivity extends AppCompatActivity {
         submitButton.setOnClickListener(v -> {
             // Parcourez la liste des boutons
             int goal_id = 1;
-            for (Goal buttonData : buttonDataList) {
+            for (Goal buttonData : this.goals) {
                 // Si le bouton est sélectionné, affichez son texte
                 if (buttonData.isSelected()) {
                     UserSharedPreferences.getInstance(getApplicationContext()).setGoal(goal_id);
