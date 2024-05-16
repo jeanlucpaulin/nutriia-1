@@ -94,6 +94,7 @@
     <string name="welcolme_message">Bonjour, vous souhaitez découvrir l\'application !</string>
     <string name="enter_something_to_eat">Entrez un plat ou un aliment</string>
     <string name="show_composition">Voir la composition</string>
+    <string name="objective">Objectif</string>
     <string-array name="goals">
         <item>Sans objectif</item>
         <item>Perte de poids</item>
