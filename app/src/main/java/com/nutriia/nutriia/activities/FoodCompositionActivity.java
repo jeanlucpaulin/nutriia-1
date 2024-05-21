@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -13,7 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.FoodCompositionAdapter;
-
+import android.view.View;
+import android.widget.ProgressBar;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +26,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.net.ssl.HostnameVerifier;
@@ -40,7 +43,7 @@ public class FoodCompositionActivity extends AppCompatActivity {
     private List<String> microNutrients;
     private TextView foodCalorie;
     private TextView foodName;
-
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +71,16 @@ public class FoodCompositionActivity extends AppCompatActivity {
         microNutrientAdapter = new FoodCompositionAdapter(microNutrients);
         microNutrientsRecyclerView.setAdapter(microNutrientAdapter);
 
+        progressBar = findViewById(R.id.progress_bar);
+
         String foodNameStr = getIntent().getStringExtra("food_name");
         fetchFoodComposition(foodNameStr);
     }
 
     @SuppressLint("StaticFieldLeak")
     private void fetchFoodComposition(String foodName) {
+        progressBar.setVisibility(View.VISIBLE); // Show the progress bar
+
         new AsyncTask<String, Void, String>() {
             @Override
             protected String doInBackground(String... strings) {
@@ -110,23 +117,45 @@ public class FoodCompositionActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(String response) {
+                progressBar.setVisibility(View.GONE); // Hide the progress bar
+
                 if (response != null) {
                     try {
                         JSONObject jsonResponse = new JSONObject(response);
-                        foodCalorie.setText(jsonResponse.getString("calories"));
-                        FoodCompositionActivity.this.foodName.setText(jsonResponse.getString("food_name"));
+                        JSONObject foodData = jsonResponse.getJSONObject("foodData");
 
-                        JSONArray macroArray = jsonResponse.getJSONArray("macro_nutrients");
-                        for (int i = 0; i < macroArray.length(); i++) {
-                            macroNutrients.add(macroArray.getString(i));
+                        if (foodData.has("calories")) {
+                            foodCalorie.setText(foodData.getString("calories") + " Kcal / 100g");
+                        } else {
+                            foodCalorie.setText("N/A");
                         }
-                        macroNutrientAdapter.notifyDataSetChanged();
 
-                        JSONArray microArray = jsonResponse.getJSONArray("micro_nutrients");
-                        for (int i = 0; i < microArray.length(); i++) {
-                            microNutrients.add(microArray.getString(i));
+                        if (foodData.has("food_name")) {
+                            FoodCompositionActivity.this.foodName.setText(foodData.getString("food_name"));
+                        } else {
+                            FoodCompositionActivity.this.foodName.setText("N/A");
                         }
-                        microNutrientAdapter.notifyDataSetChanged();
+
+                        if (foodData.has("macro_nutrients")) {
+                            JSONObject macroNutrientsObj = foodData.getJSONObject("macro_nutrients");
+                            macroNutrients.clear(); // Clear the existing data
+                            for (Iterator<String> it = macroNutrientsObj.keys(); it.hasNext(); ) {
+                                String key = it.next();
+                                macroNutrients.add(key + " (" + macroNutrientsObj.getString(key) + ") ");
+                            }
+                            macroNutrientAdapter.notifyDataSetChanged();
+                        }
+
+                        if (foodData.has("micro_nutrients")) {
+                            JSONObject microNutrientsObj = foodData.getJSONObject("micro_nutrients");
+                            microNutrients.clear(); // Clear the existing data
+                            for (Iterator<String> it = microNutrientsObj.keys(); it.hasNext(); ) {
+                                String key = it.next();
+                                microNutrients.add(key + " (" + microNutrientsObj.getString(key) + ") ");
+                            }
+                            microNutrientAdapter.notifyDataSetChanged();
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -134,7 +163,6 @@ public class FoodCompositionActivity extends AppCompatActivity {
                     Log.e("HTTP_ERROR", "Failed to fetch food composition");
                 }
             }
-
         }.execute(foodName);
     }
 }
