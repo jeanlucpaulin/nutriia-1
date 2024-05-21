@@ -75,4 +75,12 @@ public class UserSharedPreferences {
     public void clear() {
         sharedPreferences.edit().clear().apply();
     }
+
+    public String getAccessToken() {
+        return sharedPreferences.getString("access_token", "");
+    }
+
+    public void setAccessToken(String accessToken) {
+        sharedPreferences.edit().putString("access_token", accessToken).apply();
+    }
 }

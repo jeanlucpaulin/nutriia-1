@@ -19,6 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
+
+
 rootProject.name = "nutriia"
 include(":app")
- 

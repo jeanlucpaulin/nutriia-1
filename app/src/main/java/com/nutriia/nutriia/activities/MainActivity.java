@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -35,12 +36,21 @@ import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
 import com.nutriia.nutriia.fragments.TipsAdvices;
 import com.nutriia.nutriia.fragments.UserProfile;
 import com.nutriia.nutriia.interfaces.onActivityFinishListener;
+import com.nutriia.nutriia.network.APIRequest;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements onActivityFinishListener {
     private RecyclerView recyclerView;
@@ -65,6 +75,27 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Requete API
+        new APIRequest("connect", new JSONObject(), this).send(
+                new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        // Handle the error
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()) {
+                            String responseBody = response.body() != null ? response.body().string() : null;
+                            Log.d("API", responseBody);
+                        } else {
+                            Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+                        }
+                    }
+                }
+        );
+
 
         DrawerMenu.init(this, this);
 

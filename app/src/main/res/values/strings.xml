@@ -215,4 +215,5 @@
     <string name="formation_page_title">Documentez-vous !</string>
     <string name="share_app_message">Hey, j\'utilise Nutriia ! Viens décourvrir l\'application ! https://nutriia.fr</string>
     <string name="no_goal_selected">Bienvenue sur l\'application, tu n\'as pas séléctionné d\'objectif. Si tu souhaites avoir plus de précisious tu peux cliquer sur un des objectifs si dessus je te donnerai des indications. Bonne découverte !!</string>
+    <string name="api_client_url">https://nutriia.fr/api/client</string>
 </resources>
