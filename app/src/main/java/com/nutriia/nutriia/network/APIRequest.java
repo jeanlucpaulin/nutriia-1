@@ -7,6 +7,8 @@ import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import okhttp3.*;
 
 public class APIRequest {
@@ -34,6 +36,7 @@ public class APIRequest {
 
             Request request = new Request.Builder()
                     .url(url)
+                    .addHeader("Authorization", "Bearer " + UserSharedPreferences.getInstance(this.context).getAccessToken())
                     .build();
 
             client.newCall(request).enqueue(callback);

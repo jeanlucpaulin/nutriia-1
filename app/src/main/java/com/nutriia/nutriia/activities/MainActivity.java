@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.Button;
@@ -37,6 +38,7 @@ import com.nutriia.nutriia.fragments.TipsAdvices;
 import com.nutriia.nutriia.fragments.UserProfile;
 import com.nutriia.nutriia.interfaces.onActivityFinishListener;
 import com.nutriia.nutriia.network.APIRequest;
+import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
@@ -77,31 +79,29 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
             return insets;
         });
 
-        String data = "{\"login\": \"\", \"password\": \"\"}";
+        //APISend.sendConnect("Louis", "Nutriiaemf", getApplicationContext());
 
-        // Requete API
-        new APIRequest("connect", data, this).send(
-                new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        // Handle the error
-                    }
+        //APISend.obtainAccountInfos(getApplicationContext());
 
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        if (response.isSuccessful()) {
-                            String responseBody = response.body() != null ? response.body().string() : null;
-                            Log.d("API", responseBody);
-                        } else {
-                            Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
-                        }
-                    }
-                }
-        );
+        //APISend.obtainsProfileInfos(getApplicationContext());
+
+/*
+        ArrayMap<String, Integer> data = new ArrayMap<>();
+        data.put("age", 28);
+        data.put("weight", 70);
+        data.put("height", 185);
+        data.put("gender", 0);
+        data.put("goal", 3);
+        data.put("activity", 1);
+        data.put("progression", 2);
+
+
+        APISend.sendProfileInfos(this, data);
+*/
+        APISend.obtainsNewGoalAJR(getApplicationContext());
 
 
         DrawerMenu.init(this, this);
-
         NavBarListener.init(this, R.id.navbar_target);
 
 
