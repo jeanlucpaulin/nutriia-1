@@ -46,6 +46,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -76,8 +77,10 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
             return insets;
         });
 
+        String data = "{\"login\": \"\", \"password\": \"\"}";
+
         // Requete API
-        new APIRequest("connect", new JSONObject(), this).send(
+        new APIRequest("connect", data, this).send(
                 new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
