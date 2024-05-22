@@ -28,13 +28,18 @@
 
         <TextView
             android:id="@+id/food_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:fontFamily="@font/montserrat"
             android:textStyle="bold"
-            android:layout_marginEnd="150dp"
-            android:textSize="35sp" />
+            android:textSize="35sp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:singleLine="false"
+            android:layout_toStartOf="@id/food_calorie"
+            android:layout_alignParentStart="true"
+            />
 
         <TextView
             android:id="@+id/food_calorie"
@@ -44,9 +49,9 @@
             android:fontFamily="@font/montserrat"
             android:textSize="23sp"
             android:layout_alignParentEnd="true"
-            android:layout_alignBaseline="@+id/food_name"
-            />
+            android:layout_alignBaseline="@+id/food_name" />
     </RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/macroList"
