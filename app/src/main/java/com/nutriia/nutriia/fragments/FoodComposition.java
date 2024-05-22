@@ -38,20 +38,21 @@ public class FoodComposition extends Fragment {
         layout.setOnClickListener(click -> {
             String foodName = editTextPlat.getText().toString().trim();
             if (!foodName.isEmpty()) {
-                checkFoodExists(foodName);
+                showCustomToast("Recherche de l'aliment en cours...", Toast.LENGTH_LONG);
+                fetchFoodComposition(foodName);
             } else {
-                showCustomToast("Veuillez saisir un nom d'aliment");
+                showCustomToast("Veuillez saisir un nom d'aliment", Toast.LENGTH_SHORT);
             }
         });
 
         return view;
     }
 
-    private void checkFoodExists(String foodName) {
+    private void fetchFoodComposition(String foodName) {
         new Thread(() -> {
             try {
                 String encodedFoodName = URLEncoder.encode(foodName, "UTF-8");
-                URL url = new URL("https://nutriia.fr/api/ciqual/check_food.php?food=" + encodedFoodName);
+                URL url = new URL("https://nutriia.fr/api/ciqual/index.php?food=" + encodedFoodName);
 
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
@@ -67,33 +68,31 @@ public class FoodComposition extends Fragment {
                     bufferedReader.close();
 
                     JSONObject jsonResponse = new JSONObject(response.toString());
+                    Log.d("FoodComposition", "Response JSON: " + jsonResponse.toString()); // Log JSON response
+
                     if (jsonResponse.has("error")) {
                         String errorMessage = jsonResponse.getString("error");
-                        if (errorMessage.equals("Aucun aliment correspondant trouvé")) {
-                            getActivity().runOnUiThread(() -> showCustomToast("Aucun aliment correspondant trouvé"));
-                        } else {
-                            getActivity().runOnUiThread(() -> showCustomToast(errorMessage));
-                        }
+                        getActivity().runOnUiThread(() -> showCustomToast(errorMessage, Toast.LENGTH_SHORT));
                     } else {
-                        launchFoodCompositionActivity(foodName);
+                        getActivity().runOnUiThread(() -> launchFoodCompositionActivity(jsonResponse));
                     }
                 } else {
-                    getActivity().runOnUiThread(() -> showCustomToast("Erreur de connexion"));
+                    getActivity().runOnUiThread(() -> showCustomToast("Erreur de connexion", Toast.LENGTH_SHORT));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                getActivity().runOnUiThread(() -> showCustomToast("Une erreur est survenue"));
+                getActivity().runOnUiThread(() -> showCustomToast("Une erreur est survenue", Toast.LENGTH_SHORT));
             }
         }).start();
     }
 
-    private void launchFoodCompositionActivity(String foodName) {
+    private void launchFoodCompositionActivity(JSONObject foodData) {
         Intent intent = new Intent(getContext(), FoodCompositionActivity.class);
-        intent.putExtra("food_name", foodName);
+        intent.putExtra("food_data", foodData.toString());
         startActivity(intent);
     }
 
-    private void showCustomToast(String message) {
+    private void showCustomToast(String message, int duration) {
         getActivity().runOnUiThread(() -> {
             LayoutInflater inflater = getLayoutInflater();
             View layout = inflater.inflate(R.layout.toast_layout, getActivity().findViewById(R.id.toast_layout_root));
@@ -102,7 +101,7 @@ public class FoodComposition extends Fragment {
             textView.setText(message);
 
             Toast toast = new Toast(getContext());
-            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setDuration(duration);
             toast.setView(layout);
             toast.show();
         });
