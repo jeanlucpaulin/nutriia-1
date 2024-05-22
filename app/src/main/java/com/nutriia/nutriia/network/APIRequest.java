@@ -14,10 +14,10 @@ public class APIRequest {
     private static final OkHttpClient client = new OkHttpClient();
 
     private String action;
-    private JSONObject data;
+    private String data;
     private Context context;
 
-    public APIRequest(String action, JSONObject data, Context context) {
+    public APIRequest(String action, String data, Context context) {
         this.action = action;
         this.data = data;
         this.context = context;
@@ -25,20 +25,15 @@ public class APIRequest {
 
     public void send(Callback callback) {
         try {
-            String encodedData = data == null ? "" : data.toString();
+            String encodedData = data == null ? "" : data;
 
-            FormBody.Builder formBuilder = new FormBody.Builder()
-                    .add("action", this.action)
-                    .add("request", encodedData);
+            String data = "action=" + this.action + "&request=" + encodedData;
 
-            RequestBody requestBody = formBuilder.build();
 
-            String url = this.context.getString(R.string.api_client_url);
+            String url = this.context.getString(R.string.api_client_url) + "?" + data;
 
             Request request = new Request.Builder()
                     .url(url)
-                    .addHeader("Authorization", "Bearer " + UserSharedPreferences.getInstance(this.context).getAccessToken())
-                    .post(requestBody)
                     .build();
 
             client.newCall(request).enqueue(callback);
