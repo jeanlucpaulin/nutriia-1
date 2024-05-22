@@ -35,7 +35,7 @@
             android:textStyle="bold"
             android:textSize="35sp"
             android:ellipsize="end"
-            android:maxLines="3"
+            android:maxLines="5"
             android:singleLine="false"
             android:layout_toStartOf="@id/food_calorie"
             android:layout_alignParentStart="true"
