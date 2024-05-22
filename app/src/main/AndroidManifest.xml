@@ -50,6 +50,9 @@
         <activity android:name=".activities.DayAnalysisActivity"
             android:exported="true">
         </activity>
+        <activity android:name=".activities.LoginActivity"
+            android:exported="true">
+        </activity>
 
         <!-- Déclaration de MeetActivity -->
         <activity android:name=".activities.MeetActivity"

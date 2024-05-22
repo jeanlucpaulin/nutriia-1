@@ -216,4 +216,7 @@
     <string name="share_app_message">Hey, j\'utilise Nutriia ! Viens décourvrir l\'application ! https://nutriia.fr</string>
     <string name="no_goal_selected">Bienvenue sur l\'application, tu n\'as pas séléctionné d\'objectif. Si tu souhaites avoir plus de précisious tu peux cliquer sur un des objectifs si dessus je te donnerai des indications. Bonne découverte !!</string>
     <string name="api_client_url">https://nutriia.fr/api</string>
+    <string name="email_ou_nom_d_utilisateur">Email ou nom d\'utilisateur</string>
+    <string name="mot_de_passe">Mot de passe</string>
+    <string name="mot_de_passe_oubli"><u>Mot de passe oublié ?</u></string>
 </resources>

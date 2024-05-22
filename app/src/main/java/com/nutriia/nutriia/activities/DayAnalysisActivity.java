@@ -37,6 +37,7 @@ import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
 import com.nutriia.nutriia.fragments.TipsAdvices;
 import com.nutriia.nutriia.user.UserSharedPreferences;
+import com.nutriia.nutriia.utils.AccountMenu;
 import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
 
@@ -68,6 +69,7 @@ public class DayAnalysisActivity extends AppCompatActivity {
 
         NavBarListener.init(this, R.id.navbar_analysis);
 
+        AccountMenu.init(this);
 
         //Partie composants
 

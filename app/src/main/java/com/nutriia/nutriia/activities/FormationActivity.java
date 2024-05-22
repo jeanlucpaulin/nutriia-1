@@ -23,6 +23,7 @@ import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.FragmentsAdapter;
 import com.nutriia.nutriia.fragments.Formation;
 import com.nutriia.nutriia.fragments.PageTitle;
+import com.nutriia.nutriia.utils.AccountMenu;
 import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
 
@@ -52,6 +53,7 @@ public class FormationActivity extends AppCompatActivity {
 
         DrawerMenu.init(this);
         NavBarListener.init(this, R.id.navbar_learn);
+        AccountMenu.init(this);
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

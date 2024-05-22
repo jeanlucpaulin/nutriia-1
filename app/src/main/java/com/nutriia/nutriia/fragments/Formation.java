@@ -45,5 +45,4 @@ public class Formation extends Fragment {
 
         return view;
     }
-
 }

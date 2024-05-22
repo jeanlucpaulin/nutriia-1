@@ -40,6 +40,7 @@ import com.nutriia.nutriia.interfaces.onActivityFinishListener;
 import com.nutriia.nutriia.network.APIRequest;
 import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.user.UserSharedPreferences;
+import com.nutriia.nutriia.utils.AccountMenu;
 import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
 
@@ -104,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
         DrawerMenu.init(this, this);
         NavBarListener.init(this, R.id.navbar_target);
 
+        AccountMenu.init(this);
 
         //Partie composants
 
