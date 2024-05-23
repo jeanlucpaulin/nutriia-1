@@ -1,17 +1,24 @@
 package com.nutriia.nutriia.network;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.ArrayMap;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
+import com.nutriia.nutriia.Nutrient;
+import com.nutriia.nutriia.fragments.NutrientAJR;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.function.Consumer;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -55,9 +62,9 @@ public class APISend {
 
                     try {
                         JSONObject jsonObject = new JSONObject(responseBody);
-                        String firstname = jsonObject.getString("firstname");
-                        String lastname = jsonObject.getString("lastname");
-                        String mail = jsonObject.getString("mail");
+                        String firstname = jsonObject.getString("first_name");
+                        String lastname = jsonObject.getString("last_name");
+                        String mail = jsonObject.getString("email");
                         String login = jsonObject.getString("login");
                         Log.d("API", "Firstname: " + firstname + ", Lastname: " + lastname + ", Mail: " + mail + ", Login: " + login);
                     } catch (JSONException e) { e.printStackTrace(); }
@@ -129,19 +136,23 @@ public class APISend {
         });
     }
 
-    public static void obtainsNewGoalAJR(Context context) {
-        StringBuilder data = new StringBuilder("{");
-        data.append("\"height\": ").append(UserSharedPreferences.getInstance(context).getHeight()).append(", ");
-        data.append("\"weight\": ").append(UserSharedPreferences.getInstance(context).getWeight()).append(", ");
-        data.append("\"goal_type\": ").append(UserSharedPreferences.getInstance(context).getGoal()).append(", ");
-        data.append("\"progression\": ").append(UserSharedPreferences.getInstance(context).getProgression()).append(", ");
-        data.append("\"activity_level\": ").append(UserSharedPreferences.getInstance(context).getActivityLevel()).append(", ");
+    public static void obtainsNewGoalAJR(Activity activity, Consumer<ArrayList<Fragment>> callbackMacro, Consumer<ArrayList<Fragment>> callbackMicro, Consumer<String> callbackCalories) {
+
+        // TODO RETIRER QUAND ON STOCKE BIEN POUR EVITER LES REQUETES INUTILES
+        /*
+
+        StringBuilder data = new StringBuilder("{\"user_profile\": {");
+        data.append("\"height\": ").append(UserSharedPreferences.getInstance(activity).getHeight()).append(", ");
+        data.append("\"weight\": ").append(UserSharedPreferences.getInstance(activity).getWeight()).append(", ");
+        data.append("\"goal_type\": ").append(UserSharedPreferences.getInstance(activity).getGoal()).append(", ");
+        data.append("\"progression\": ").append(UserSharedPreferences.getInstance(activity).getProgression()).append(", ");
+        data.append("\"activity_level\": ").append(UserSharedPreferences.getInstance(activity).getActivityLevel()).append(", ");
         data.delete(data.length() - 2, data.length());
-        data.append("}");
+        data.append("}}");
 
         Log.d("API", "Data: " + data);
 
-        new APIRequest("get_new_goal", data.toString(), context).send(new Callback() {
+        new APIRequest("get_new_goal", data.toString(), activity).send(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
             }
@@ -153,9 +164,39 @@ public class APISend {
 
                     Log.d("API", "Response: " + responseBody);
 
+                    try {
+                        JSONObject jsonObject = new JSONObject(responseBody);
+                        ArrayList<Fragment> macronutrients = new ArrayList<>();
+                        ArrayList<Fragment> micronutrients = new ArrayList<>();
+
+                        JSONObject macronutrientsJSON = jsonObject.getJSONObject("macronutrients");
+                        for (Iterator<String> it = macronutrientsJSON.keys(); it.hasNext(); ) {
+                            String key = it.next();
+                            JSONObject nutrient = macronutrientsJSON.getJSONObject(key);
+                            macronutrients.add(new NutrientAJR(new Nutrient(key, nutrient.getInt("value"), nutrient.getString("unit"))));
+                        }
+
+                        JSONObject micronutrientsJSON = jsonObject.getJSONObject("micronutrients");
+                        for (Iterator<String> it = micronutrientsJSON.keys(); it.hasNext(); ) {
+                            String key = it.next();
+                            JSONObject nutrient = micronutrientsJSON.getJSONObject(key);
+                            micronutrients.add(new NutrientAJR(new Nutrient(key, nutrient.getInt("value"), nutrient.getString("unit"))));
+                        }
+
+                        String calories = jsonObject.getJSONObject("calories").getString("value");
+
+                        activity.runOnUiThread(() -> callbackMacro.accept(macronutrients));
+                        activity.runOnUiThread(() -> callbackMicro.accept(micronutrients));
+                        activity.runOnUiThread(() -> callbackCalories.accept(calories));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 } else Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
             }
         });
+
+        */
     }
 
 }

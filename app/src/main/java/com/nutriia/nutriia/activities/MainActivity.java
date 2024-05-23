@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
 
         //APISend.sendConnect("Louis", "Nutriiaemf", getApplicationContext());
 
-        //APISend.obtainAccountInfos(getApplicationContext());
+        APISend.obtainAccountInfos(getApplicationContext());
 
         //APISend.obtainsProfileInfos(getApplicationContext());
 
@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
 
         APISend.sendProfileInfos(this, data);
 */
-        APISend.obtainsNewGoalAJR(getApplicationContext());
 
 
         DrawerMenu.init(this, this);
