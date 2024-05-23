@@ -106,18 +106,27 @@ public class HealthInformationActivity extends AppCompatActivity {
             String height = editTaille.getText().toString();
             String weight = editPoids.getText().toString();
             String age = spinnerAge.getSelectedItem().toString();
-
+            boolean hasChanged = false;
+            UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(getApplicationContext());
             if(!height.isEmpty()) {
                 try {
                     int heightInt = Integer.parseInt(height);
-                    UserSharedPreferences.getInstance(getApplicationContext()).setHeight(heightInt);
+                    if(userSharedPreferences.getHeight() != heightInt)
+                    {
+                        hasChanged = true;
+                        userSharedPreferences.setHeight(heightInt);
+                    }
                 } catch (NumberFormatException ignored) {}
             }
 
             if(!weight.isEmpty()) {
                 try {
                     int weightInt = Integer.parseInt(weight);
-                    UserSharedPreferences.getInstance(getApplicationContext()).setWeight(weightInt);
+                    if(userSharedPreferences.getWeight() != weightInt)
+                    {
+                        hasChanged = true;
+                        userSharedPreferences.setWeight(weightInt);
+                    }
                 } catch (NumberFormatException ignored) {}
             }
 
@@ -126,21 +135,42 @@ public class HealthInformationActivity extends AppCompatActivity {
                 try {
                     int ageInt = Integer.parseInt(age);
                     if(ageInt < 1 || ageInt > 100) {
-                        UserSharedPreferences.getInstance(getApplicationContext()).setAge(ageInt);
+                        if(userSharedPreferences.getAge() != ageInt)
+                        {
+                            hasChanged = true;
+                            userSharedPreferences.setAge(ageInt);
+                        }
                     }
                 } catch (NumberFormatException ignored) {}
             }
 
             if(positionGenderSpinner != -1) {
-                UserSharedPreferences.getInstance(getApplicationContext()).setGender(positionGenderSpinner);
+                if(userSharedPreferences.getGender() != positionGenderSpinner)
+                {
+                    hasChanged = true;
+                    userSharedPreferences.setGender(positionGenderSpinner);
+                }
             }
 
             if(positionActivityLevelSpinner != -1) {
-                UserSharedPreferences.getInstance(getApplicationContext()).setActivityLevel(positionActivityLevelSpinner);
+                if(userSharedPreferences.getActivityLevel() != positionActivityLevelSpinner)
+                {
+                    hasChanged = true;
+                    userSharedPreferences.setActivityLevel(positionActivityLevelSpinner);
+                }
             }
 
             if(positionProgressionSpinner != -1) {
-                UserSharedPreferences.getInstance(getApplicationContext()).setProgression(positionProgressionSpinner);
+                if(userSharedPreferences.getProgression() != positionProgressionSpinner)
+                {
+                    hasChanged = true;
+                    userSharedPreferences.setProgression(positionProgressionSpinner);
+                }
+            }
+
+            if(hasChanged)
+            {
+                userSharedPreferences.clearRDA();
             }
 
             setResult(RESULT_OK, new Intent());
