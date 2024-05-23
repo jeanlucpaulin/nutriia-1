@@ -17,7 +17,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import okhttp3.Call;
@@ -138,8 +140,30 @@ public class APISend {
 
     public static void obtainsNewGoalAJR(Activity activity, Consumer<ArrayList<Fragment>> callbackMacro, Consumer<ArrayList<Fragment>> callbackMicro, Consumer<String> callbackCalories) {
 
-        // TODO RETIRER QUAND ON STOCKE BIEN POUR EVITER LES REQUETES INUTILES
-        /*
+        UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(activity);
+        if(userSharedPreferences.isRDADefined())
+        {
+            Log.d("API", "User profile already defined");
+            ArrayList<String> macronutrients = new ArrayList<>(userSharedPreferences.getMacronutrients());
+            ArrayList<String> micronutrients = new ArrayList<>(userSharedPreferences.getMicronutrients());
+
+            ArrayList<Fragment> macronutrientsFragments = new ArrayList<>();
+            ArrayList<Fragment> micronutrientsFragments = new ArrayList<>();
+
+            for (String macronutrient : macronutrients) {
+                macronutrientsFragments.add(new NutrientAJR(new Nutrient(macronutrient, (int) userSharedPreferences.getRDANutrient(macronutrient), "g")));
+            }
+
+            for (String micronutrient : micronutrients) {
+                micronutrientsFragments.add(new NutrientAJR(new Nutrient(micronutrient, (int) userSharedPreferences.getRDANutrient(micronutrient), "mg")));
+            }
+
+            activity.runOnUiThread(() -> callbackMacro.accept(macronutrientsFragments));
+            activity.runOnUiThread(() -> callbackMicro.accept(micronutrientsFragments));
+            activity.runOnUiThread(() -> callbackCalories.accept(String.valueOf(userSharedPreferences.getRDACalories())));
+
+            return;
+        }
 
         StringBuilder data = new StringBuilder("{\"user_profile\": {");
         data.append("\"height\": ").append(UserSharedPreferences.getInstance(activity).getHeight()).append(", ");
@@ -168,22 +192,34 @@ public class APISend {
                         JSONObject jsonObject = new JSONObject(responseBody);
                         ArrayList<Fragment> macronutrients = new ArrayList<>();
                         ArrayList<Fragment> micronutrients = new ArrayList<>();
+                        Set<String> macronutrientsList = new HashSet<>();
+                        Set<String> micronutrientsList = new HashSet<>();
 
                         JSONObject macronutrientsJSON = jsonObject.getJSONObject("macronutrients");
                         for (Iterator<String> it = macronutrientsJSON.keys(); it.hasNext(); ) {
                             String key = it.next();
                             JSONObject nutrient = macronutrientsJSON.getJSONObject(key);
+                            macronutrientsList.add(key);
+                            userSharedPreferences.setRDANutrient(key, nutrient.getInt("value"));
                             macronutrients.add(new NutrientAJR(new Nutrient(key, nutrient.getInt("value"), nutrient.getString("unit"))));
                         }
+
+                        userSharedPreferences.setMacronutrients(macronutrientsList);
 
                         JSONObject micronutrientsJSON = jsonObject.getJSONObject("micronutrients");
                         for (Iterator<String> it = micronutrientsJSON.keys(); it.hasNext(); ) {
                             String key = it.next();
                             JSONObject nutrient = micronutrientsJSON.getJSONObject(key);
+                            micronutrientsList.add(key);
+                            userSharedPreferences.setRDANutrient(key, nutrient.getInt("value"));
                             micronutrients.add(new NutrientAJR(new Nutrient(key, nutrient.getInt("value"), nutrient.getString("unit"))));
                         }
 
+                        userSharedPreferences.setMicronutrients(micronutrientsList);
+
                         String calories = jsonObject.getJSONObject("calories").getString("value");
+
+                        userSharedPreferences.setRDACalories(jsonObject.getJSONObject("calories").getInt("value"));
 
                         activity.runOnUiThread(() -> callbackMacro.accept(macronutrients));
                         activity.runOnUiThread(() -> callbackMicro.accept(micronutrients));
@@ -195,8 +231,6 @@ public class APISend {
                 } else Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
             }
         });
-
-        */
     }
 
 }

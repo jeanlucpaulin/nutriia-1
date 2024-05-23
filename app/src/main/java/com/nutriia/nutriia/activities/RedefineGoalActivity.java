@@ -73,6 +73,7 @@ public class RedefineGoalActivity extends AppCompatActivity implements OnClickOn
             for (int i = 0; i < fragments.size(); i++) {
                 if (((RedefineMyGoal) fragments.get(i)).getGoal().isSelected()) {
                     UserSharedPreferences.getInstance(getApplicationContext()).setGoal(i);
+                    UserSharedPreferences.getInstance(getApplicationContext()).clearRDA();
                     finish();
                     return;
                 }
