@@ -8,10 +8,12 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.nutriia.nutriia.Dish;
 import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.fragments.NutrientAJR;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.List;
 import java.util.function.Consumer;
 
 import okhttp3.Call;
@@ -233,4 +236,114 @@ public class APISend {
         });
     }
 
+    public static void obtainsNewDish(Activity activity, Consumer<List<Dish>> callbackDishes) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("action", "get_dish_suggestion");
+
+            JSONObject userGoal = new JSONObject();
+            userGoal.put("calories", new JSONArray());
+            userGoal.put("proteins", new JSONArray());
+            data.put("user_goal", userGoal);
+
+            JSONObject userRegistrations = new JSONObject();
+            userRegistrations.put("breakfast",  new JSONArray());
+            userRegistrations.put("lunch", new JSONArray());
+            userRegistrations.put("snack", new JSONArray());
+            userRegistrations.put("dinner", new JSONArray());
+            data.put("user_registrations", userRegistrations);
+
+            JSONObject userProfile = new JSONObject();
+            userProfile.put("height", UserSharedPreferences.getInstance(activity).getHeight());
+            userProfile.put("weight", UserSharedPreferences.getInstance(activity).getWeight());
+            userProfile.put("goal_type", UserSharedPreferences.getInstance(activity).getGoal());
+            userProfile.put("progression", UserSharedPreferences.getInstance(activity).getProgression());
+            userProfile.put("activity_level", UserSharedPreferences.getInstance(activity).getActivityLevel());
+            data.put("user_profile", userProfile);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new APIRequest("get_dish_suggestion", data.toString(), activity).send(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseBody = response.body() != null ? response.body().string() : null;
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(responseBody);
+                        String dishName = jsonObject.getString("dish");
+                        List<Dish> dishes = new ArrayList<>();
+                        dishes.add(new Dish(dishName));
+
+                        activity.runOnUiThread(() -> callbackDishes.accept(dishes));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+            }
+        });
+    }
+
+    public static void obtainsTypicalDay(Activity activity, Consumer<List<Dish>> callbackDishes) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("action", "get_menu_suggestion");
+
+            JSONObject userGoal = new JSONObject();
+            userGoal.put("calories", new JSONArray());
+            userGoal.put("proteins", new JSONArray());
+            data.put("user_goal", userGoal);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new APIRequest("get_menu_suggestion", data.toString(), activity).send(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseBody = response.body() != null ? response.body().string() : null;
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(responseBody);
+                        List<Dish> breakfastDishes = parseDishes(jsonObject.getJSONArray("breakfast"));
+                        List<Dish> lunchDishes = parseDishes(jsonObject.getJSONArray("lunch"));
+                        List<Dish> snackDishes = parseDishes(jsonObject.getJSONArray("snack"));
+                        List<Dish> dinnerDishes = parseDishes(jsonObject.getJSONArray("dinner"));
+
+                        List<Dish> allDishes = new ArrayList<>();
+                        allDishes.addAll(breakfastDishes);
+                        allDishes.addAll(lunchDishes);
+                        allDishes.addAll(snackDishes);
+                        allDishes.addAll(dinnerDishes);
+
+
+                        activity.runOnUiThread(() -> callbackDishes.accept(allDishes));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+            }
+        });
+    }
+
+    private static List<Dish> parseDishes(JSONArray jsonArray) throws JSONException {
+        List<Dish> dishes = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            dishes.add(new Dish(jsonArray.getString(i)));
+        }
+        return dishes;
+    }
 }

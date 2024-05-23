@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,38 +19,68 @@ import com.nutriia.nutriia.Dish;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.activities.DishCompositionActivity;
 import com.nutriia.nutriia.adapters.DishSuggestionAdapter;
+import com.nutriia.nutriia.network.APISend;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DishSuggestions extends Fragment {
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.component_dish_suggestions, container, false);
 
-        List<Dish> dishes = new ArrayList<>();
-
-        dishes.add(new Dish("Poulet grillé avec quinoa et légumes grillés"));
-        dishes.add(new Dish("Salade de thon aux haricots et aux légumes"));
-        dishes.add(new Dish("Omelette aux légumes et fromage cottage"));
-
-
         LinearLayout listView = view.findViewById(R.id.dish_suggestions_list);
 
-        for (Dish dish : dishes) {
-            View itemView = LayoutInflater.from(getContext()).inflate(R.layout.item_component_dish_suggestions, listView, false);
+        APISend.obtainsNewDish(getActivity(), dishes -> {
+            for (Dish dish : dishes) {
+                View itemView = LayoutInflater.from(getContext()).inflate(R.layout.item_component_dish_suggestions, listView, false);
 
-            TextView dishName = itemView.findViewById(R.id.item_content);
-            dishName.setText(dish.getName());
+                TextView dishName = itemView.findViewById(R.id.item_content);
+                dishName.setText(dish.getName());
 
-            ImageButton imageButton = itemView.findViewById(R.id.item_button);
-            imageButton.setOnClickListener(click -> startActivity(new Intent(getContext(), DishCompositionActivity.class)));
+                ImageButton imageButton = itemView.findViewById(R.id.item_button);
+                imageButton.setOnClickListener(click -> startActivity(new Intent(getContext(), DishCompositionActivity.class)));
 
-            listView.addView(itemView);
-        }
+                listView.addView(itemView);
+            }
+        });
+
+        ImageButton moreDishButton = view.findViewById(R.id.more_dish_suggestions_button);
+        moreDishButton.setOnClickListener(v -> {
+            showCustomToast("Génération du plat idéal en cours...", Toast.LENGTH_SHORT);
+
+            APISend.obtainsNewDish(getActivity(), dishes -> {
+                for (Dish dish : dishes) {
+                    View itemView = LayoutInflater.from(getContext()).inflate(R.layout.item_component_dish_suggestions, listView, false);
+
+                    TextView dishName = itemView.findViewById(R.id.item_content);
+                    dishName.setText(dish.getName());
+
+                    ImageButton imageButton = itemView.findViewById(R.id.item_button);
+                    imageButton.setOnClickListener(click -> startActivity(new Intent(getContext(), DishCompositionActivity.class)));
+
+                    listView.addView(itemView);
+                }
+            });
+        });
 
         return view;
+    }
+
+    private void showCustomToast(String message, int duration) {
+        getActivity().runOnUiThread(() -> {
+            LayoutInflater inflater = getLayoutInflater();
+            View layout = inflater.inflate(R.layout.toast_layout, getActivity().findViewById(R.id.toast_layout_root));
+
+            TextView textView = layout.findViewById(R.id.toast_text);
+            textView.setText(message);
+
+            Toast toast = new Toast(getContext());
+            toast.setDuration(duration);
+            toast.setView(layout);
+            toast.show();
+        });
     }
 }

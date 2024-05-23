@@ -27,15 +27,15 @@ public class DishCompositionActivity extends AppCompatActivity {
         ImageButton backButton = findViewById(R.id.lateral_open);
         backButton.setOnClickListener(click -> finish());
 
+        TextView dishName = findViewById(R.id.dish_name);
+        TextView dishCalories = findViewById(R.id.dish_calorie);
+
         // Dish Composition
 
         RecyclerView dishCompositionRecyclerView = findViewById(R.id.dishCompostion);
         dishCompositionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<String> Nutrients = new ArrayList<>();
-        Nutrients.add("Protein");
-        Nutrients.add("Carbs");
-        Nutrients.add("Fat");
 
         FoodCompositionAdapter dishAdapter = new FoodCompositionAdapter(Nutrients);
         dishCompositionRecyclerView.setAdapter(dishAdapter);
@@ -46,13 +46,9 @@ public class DishCompositionActivity extends AppCompatActivity {
         foodListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<String> foodComposition = new ArrayList<>();
-        foodComposition.add("Vitamin A");
-        foodComposition.add("Vitamin B");
-        foodComposition.add("Vitamin C");
 
         FoodCompositionAdapter foodAdapter = new FoodCompositionAdapter(foodComposition);
         foodListRecyclerView.setAdapter(foodAdapter);
-
 
         // Recipe
 
@@ -60,9 +56,6 @@ public class DishCompositionActivity extends AppCompatActivity {
         RecipeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<String> recipeList = new ArrayList<>();
-        recipeList.add("Vitamin A");
-        recipeList.add("Vitamin B");
-        recipeList.add("Vitamin C");
 
         FoodCompositionAdapter recipeAdapter = new FoodCompositionAdapter(recipeList);
         RecipeRecyclerView.setAdapter(recipeAdapter);

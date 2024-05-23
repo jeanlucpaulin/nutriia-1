@@ -128,5 +128,4 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
 
         recyclerView.setAdapter(adapter);
     }
-
 }
