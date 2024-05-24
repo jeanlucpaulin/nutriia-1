@@ -88,8 +88,9 @@ public class ExampleTypicalDay extends Fragment implements APIResponseRDA {
         textView.setText(Translator.translate(typicalDay.getName()));
 
         StringBuilder stringBuilder = new StringBuilder();
-        for (Dish dish : typicalDay.getDishes()) {
-            stringBuilder.append(dish.getName()).append("\n");
+        for (int i = 0; i < typicalDay.getDishes().size(); i++) {
+            Dish dish = typicalDay.getDishes().get(i);
+            stringBuilder.append(dish.getName()).append(i == typicalDay.getDishes().size()-1 ? "" : "\n");
         }
         editText.setText(stringBuilder.toString());
     }
