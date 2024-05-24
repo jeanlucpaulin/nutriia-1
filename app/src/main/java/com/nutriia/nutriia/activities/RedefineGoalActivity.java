@@ -72,8 +72,11 @@ public class RedefineGoalActivity extends AppCompatActivity implements OnClickOn
         validateButton.setOnClickListener(click -> {
             for (int i = 0; i < fragments.size(); i++) {
                 if (((RedefineMyGoal) fragments.get(i)).getGoal().isSelected()) {
-                    UserSharedPreferences.getInstance(getApplicationContext()).setGoal(i);
-                    UserSharedPreferences.getInstance(getApplicationContext()).clearRDA();
+                    UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(getApplicationContext());
+                    userSharedPreferences.setGoal(i);
+                    userSharedPreferences.clearRDA();
+                    userSharedPreferences.clearTypicalDay();
+
                     finish();
                     return;
                 }

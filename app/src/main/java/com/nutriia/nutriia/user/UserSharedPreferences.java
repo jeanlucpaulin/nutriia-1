@@ -55,6 +55,11 @@ public class UserSharedPreferences {
     private static final String KEY_MY_DAY_SNACK = "user_my_day_snack";
     private static final String KEY_MY_DAY_CALORIES = "user_my_day_calories";
 
+    private static final String KEY_TYPICAL_DAY_BREAKFAST = "user_typical_day_breakfast";
+    private static final String KEY_TYPICAL_DAY_LUNCH = "user_typical_day_lunch";
+    private static final String KEY_TYPICAL_DAY_DINNER = "user_typical_day_dinner";
+    private static final String KEY_TYPICAL_DAY_SNACK = "user_typical_day_snack";
+
 
     private final SharedPreferences sharedPreferences;
     private static UserSharedPreferences instance;
@@ -172,6 +177,50 @@ public class UserSharedPreferences {
         sharedPreferences.edit().putString("access_token", accessToken).apply();
     }
 
+    public void setTypicalDayBreakfast(Set<String> dish){
+        sharedPreferences.edit().putStringSet(KEY_TYPICAL_DAY_BREAKFAST, dish).apply();
+    }
+
+    public void setTypicalDayLunch(Set<String> dish){
+        sharedPreferences.edit().putStringSet(KEY_TYPICAL_DAY_LUNCH, dish).apply();
+    }
+
+    public void setTypicalDayDinner(Set<String> dish){
+        sharedPreferences.edit().putStringSet(KEY_TYPICAL_DAY_DINNER, dish).apply();
+    }
+
+    public void setTypicalDaySnack(Set<String> dish){
+        sharedPreferences.edit().putStringSet(KEY_TYPICAL_DAY_SNACK, dish).apply();
+    }
+
+    public Set<String> getTypicalDayBreakfast(){
+        return sharedPreferences.getStringSet(KEY_TYPICAL_DAY_BREAKFAST, new HashSet<>());
+    }
+
+    public Set<String> getTypicalDayLunch(){
+        return sharedPreferences.getStringSet(KEY_TYPICAL_DAY_LUNCH, new HashSet<>());
+    }
+
+    public Set<String> getTypicalDayDinner(){
+        return sharedPreferences.getStringSet(KEY_TYPICAL_DAY_DINNER, new HashSet<>());
+    }
+
+    public Set<String> getTypicalDaySnack(){
+        return sharedPreferences.getStringSet(KEY_TYPICAL_DAY_SNACK, new HashSet<>());
+    }
+
+    public boolean isTypicalDayDefined(){
+        return !getTypicalDayBreakfast().isEmpty() && !getTypicalDayLunch().isEmpty() && !getTypicalDayDinner().isEmpty() && !getTypicalDaySnack().isEmpty();
+    }
+
+    public void clearTypicalDay(){
+        sharedPreferences.edit().remove(KEY_TYPICAL_DAY_BREAKFAST).apply();
+        sharedPreferences.edit().remove(KEY_TYPICAL_DAY_LUNCH).apply();
+        sharedPreferences.edit().remove(KEY_TYPICAL_DAY_DINNER).apply();
+        sharedPreferences.edit().remove(KEY_TYPICAL_DAY_SNACK).apply();
+    }
+
+
     public void setBreakfastMyDay(HashSet<String> dish){
         sharedPreferences.edit().putStringSet(KEY_MY_DAY_BREAKFAST, dish).apply();
     }
@@ -204,13 +253,6 @@ public class UserSharedPreferences {
         return sharedPreferences.getStringSet(KEY_MY_DAY_SNACK, new HashSet<>());
     }
 
-    public void setMyDayCalories(String calories){
-        sharedPreferences.edit().putString(KEY_MY_DAY_CALORIES, calories).apply();
-    }
-
-    public String getMyDayCalories(){
-        return sharedPreferences.getString(KEY_MY_DAY_CALORIES, "0");
-    }
 
     public void clearBreakfastMyDay(){
         sharedPreferences.edit().remove(KEY_MY_DAY_BREAKFAST).apply();

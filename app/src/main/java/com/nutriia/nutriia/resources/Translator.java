@@ -38,6 +38,10 @@ public class Translator {
         dictionnary.put("phosphorus", Map.of(LANGUAGES.FR_fr, "Phosphore"));
         dictionnary.put("potassium", Map.of(LANGUAGES.FR_fr, "Potassium"));
         dictionnary.put("zinc", Map.of(LANGUAGES.FR_fr, "Zinc"));
+        dictionnary.put("breakfast", Map.of(LANGUAGES.FR_fr, "Petit déjeuner"));
+        dictionnary.put("lunch", Map.of(LANGUAGES.FR_fr, "Déjeuner"));
+        dictionnary.put("dinner", Map.of(LANGUAGES.FR_fr, "Diner"));
+        dictionnary.put("snack", Map.of(LANGUAGES.FR_fr, "Collations"));
     }
     public static String translate(String text) {
         return translate(text, LANGUAGES.FR_fr);

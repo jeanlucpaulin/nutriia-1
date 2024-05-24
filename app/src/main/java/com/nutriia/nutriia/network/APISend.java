@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment;
 
 import com.nutriia.nutriia.Dish;
 import com.nutriia.nutriia.Nutrient;
+import com.nutriia.nutriia.TypicalDay;
 import com.nutriia.nutriia.fragments.NutrientAJR;
+import com.nutriia.nutriia.interfaces.APIResponseRDA;
 import com.nutriia.nutriia.resources.Translator;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
@@ -20,8 +22,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.List;
 import java.util.function.Consumer;
@@ -31,6 +35,9 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class APISend {
+
+    private static boolean rdaDefined = false;
+    private static final List<APIResponseRDA> listeners = new ArrayList<>();
 
     public static void sendConnect(String login, String password, Context context){
         String data = "{\"login\": \"" + login + "\", \"password\": \"" + password + "\"}";
@@ -165,7 +172,8 @@ public class APISend {
             activity.runOnUiThread(() -> callbackMacro.accept(macronutrientsFragments));
             activity.runOnUiThread(() -> callbackMicro.accept(micronutrientsFragments));
             activity.runOnUiThread(() -> callbackCalories.accept(String.valueOf(userSharedPreferences.getRDACalories())));
-
+            APISend.rdaDefined = true;
+            activity.runOnUiThread(() -> listeners.forEach(APIResponseRDA::onAPIRDAResponse));
             return;
         }
 
@@ -228,6 +236,8 @@ public class APISend {
                         activity.runOnUiThread(() -> callbackMacro.accept(macronutrients));
                         activity.runOnUiThread(() -> callbackMicro.accept(micronutrients));
                         activity.runOnUiThread(() -> callbackCalories.accept(calories));
+                        APISend.rdaDefined = true;
+                        activity.runOnUiThread(() -> listeners.forEach(APIResponseRDA::onAPIRDAResponse));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -292,21 +302,57 @@ public class APISend {
         });
     }
 
-    public static void obtainsTypicalDay(Activity activity, Consumer<List<Dish>> callbackDishes) {
+    public static void obtainsTypicalDay(Activity activity, Consumer<List<TypicalDay>> callbackDishes, APIResponseRDA listener) {
+
+        UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(activity);
+
+        if(!rdaDefined && !userSharedPreferences.isTypicalDayDefined()) {
+            if(!listeners.contains(listener)) listeners.add(listener);
+            return;
+        }
+
+        if(userSharedPreferences.isTypicalDayDefined()) {
+
+            List<TypicalDay> typicalDay = new ArrayList<>();
+            typicalDay.add(new TypicalDay("breakfast", Dish.listToDishes(new ArrayList<>(userSharedPreferences.getTypicalDayBreakfast()))));
+            typicalDay.add(new TypicalDay("lunch", Dish.listToDishes(new ArrayList<>(userSharedPreferences.getTypicalDayLunch()))));
+            typicalDay.add(new TypicalDay("snack", Dish.listToDishes(new ArrayList<>(userSharedPreferences.getTypicalDaySnack()))));
+            typicalDay.add(new TypicalDay("dinner", Dish.listToDishes(new ArrayList<>(userSharedPreferences.getTypicalDayDinner()))));
+
+            activity.runOnUiThread(() -> callbackDishes.accept(typicalDay));
+        }
+
         JSONObject data = new JSONObject();
         try {
-            data.put("action", "get_menu_suggestion");
+            data.put("action", "get_typical_day");
+
+            List<String> macronutrients = new ArrayList<>(UserSharedPreferences.getInstance(activity).getMacronutrients());
+            List<String> micronutrients = new ArrayList<>(UserSharedPreferences.getInstance(activity).getMicronutrients());
 
             JSONObject userGoal = new JSONObject();
-            userGoal.put("calories", new JSONArray());
-            userGoal.put("proteins", new JSONArray());
+            userGoal.put("calories", UserSharedPreferences.getInstance(activity).getRDACalories());
+            JSONObject userMacronutrients = new JSONObject();
+            JSONObject userMicronutrients = new JSONObject();
+
+            for(String macronutrient : macronutrients) {
+                userMacronutrients.put(macronutrient, UserSharedPreferences.getInstance(activity).getRDANutrient(macronutrient));
+            }
+
+            for(String micronutrient : micronutrients) {
+                userMicronutrients.put(micronutrient, UserSharedPreferences.getInstance(activity).getRDANutrient(micronutrient));
+            }
+
+            userGoal.put("macronutrients", userMacronutrients);
+            userGoal.put("micronutrients", userMicronutrients);
+
             data.put("user_goal", userGoal);
+
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        new APIRequest("get_menu_suggestion", data.toString(), activity).send(new Callback() {
+        new APIRequest("get_typical_day", data.toString(), activity).send(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
             }
@@ -318,19 +364,24 @@ public class APISend {
 
                     try {
                         JSONObject jsonObject = new JSONObject(responseBody);
-                        List<Dish> breakfastDishes = parseDishes(jsonObject.getJSONArray("breakfast"));
-                        List<Dish> lunchDishes = parseDishes(jsonObject.getJSONArray("lunch"));
-                        List<Dish> snackDishes = parseDishes(jsonObject.getJSONArray("snack"));
-                        List<Dish> dinnerDishes = parseDishes(jsonObject.getJSONArray("dinner"));
+                        TypicalDay breakfast = new TypicalDay("breakfast", parseDishes(jsonObject.getJSONArray("breakfast")));
+                        TypicalDay lunch = new TypicalDay("lunch", parseDishes(jsonObject.getJSONArray("lunch")));
+                        TypicalDay snack = new TypicalDay("snack", parseDishes(jsonObject.getJSONArray("snack")));
+                        TypicalDay dinner = new TypicalDay("dinner", parseDishes(jsonObject.getJSONArray("dinner")));
 
-                        List<Dish> allDishes = new ArrayList<>();
-                        allDishes.addAll(breakfastDishes);
-                        allDishes.addAll(lunchDishes);
-                        allDishes.addAll(snackDishes);
-                        allDishes.addAll(dinnerDishes);
+                        List<TypicalDay> typicalDay = new ArrayList<>();
+                        typicalDay.add(breakfast);
+                        typicalDay.add(lunch);
+                        typicalDay.add(snack);
+                        typicalDay.add(dinner);
+
+                        userSharedPreferences.setTypicalDayBreakfast(breakfast.getDishesStringSet());
+                        userSharedPreferences.setTypicalDayLunch(lunch.getDishesStringSet());
+                        userSharedPreferences.setTypicalDaySnack(snack.getDishesStringSet());
+                        userSharedPreferences.setTypicalDayDinner(dinner.getDishesStringSet());
 
 
-                        activity.runOnUiThread(() -> callbackDishes.accept(allDishes));
+                        activity.runOnUiThread(() -> callbackDishes.accept(typicalDay));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

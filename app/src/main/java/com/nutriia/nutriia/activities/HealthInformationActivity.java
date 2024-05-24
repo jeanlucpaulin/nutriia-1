@@ -171,6 +171,7 @@ public class HealthInformationActivity extends AppCompatActivity {
             if(hasChanged)
             {
                 userSharedPreferences.clearRDA();
+                userSharedPreferences.clearTypicalDay();
             }
 
             setResult(RESULT_OK, new Intent());
