@@ -14,15 +14,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nutriia.nutriia.Day;
 import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.DayProgressionAdapter;
+import com.nutriia.nutriia.interfaces.APIResponseRDA;
+import com.nutriia.nutriia.interfaces.APIResponseValidateDay;
+import com.nutriia.nutriia.network.APISend;
+import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MicronutrientsOfMyDay extends Fragment {
+public class MicronutrientsOfMyDay extends Fragment implements APIResponseValidateDay, APIResponseRDA {
 
+    private RecyclerView recyclerView;
+    private final List<Nutrient> nutrientsList = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,7 +37,7 @@ public class MicronutrientsOfMyDay extends Fragment {
 
         Resources resources = getResources();
 
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView = view.findViewById(R.id.recyclerView);
         TextView textView = view.findViewById(R.id.component_title);
         textView.setText(R.string.micronutrients_of_my_day);
 
@@ -38,13 +45,30 @@ public class MicronutrientsOfMyDay extends Fragment {
 
         List<Nutrient> nutrientsList = new ArrayList<>();
         for(String micronutrient : resources.getStringArray(R.array.list_micronutrients)) {
-            nutrientsList.add(new Nutrient(micronutrient, 100, resources.getString(R.string.grams_unit), 50));
+            nutrientsList.add(new Nutrient(micronutrient, 100, resources.getString(R.string.grams_unit), 0));
         }
 
         DayProgressionAdapter dayProgressionAdapter = new DayProgressionAdapter(getContext(), nutrientsList);
         recyclerView.setAdapter(dayProgressionAdapter);
 
+        APISend.addValidateDayListener(this);
+
         return view;
 
     }
+
+    @Override
+    public void onValidateDayResponse(Day day) {
+        nutrientsList.clear();
+        nutrientsList.addAll(day.getMicroNutrients().values());
+        DayProgressionAdapter dayProgressionAdapter = new DayProgressionAdapter(getContext(), nutrientsList);
+        recyclerView.setAdapter(dayProgressionAdapter);
+    }
+
+    @Override
+    public void onAPIRDAResponse() {
+
+    }
+
+
 }

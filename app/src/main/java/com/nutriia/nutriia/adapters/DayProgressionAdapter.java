@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.resources.Translator;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Nutrient nutrient = nutrientsList.get(position);
-        holder.name.setText(nutrient.getName());
+        holder.name.setText(Translator.translate(nutrient.getName()));
         holder.value.setText(String.valueOf(nutrient.getValue() + nutrient.getUnit()));
         holder.progressBar.setProgress(nutrient.getProgress());
     }

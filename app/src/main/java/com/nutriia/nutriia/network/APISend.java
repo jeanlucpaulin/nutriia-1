@@ -9,12 +9,16 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.nutriia.nutriia.Day;
 import com.nutriia.nutriia.Dish;
 import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.TypicalDay;
 import com.nutriia.nutriia.activities.DishCompositionActivity;
+import com.nutriia.nutriia.builders.DayBuilder;
+
 import com.nutriia.nutriia.fragments.NutrientAJR;
 import com.nutriia.nutriia.interfaces.APIResponseRDA;
+import com.nutriia.nutriia.interfaces.APIResponseValidateDay;
 import com.nutriia.nutriia.resources.Translator;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
@@ -39,7 +43,20 @@ import okhttp3.Response;
 public class APISend {
 
     private static boolean rdaDefined = false;
-    private static final List<APIResponseRDA> listeners = new ArrayList<>();
+    private static final List<APIResponseRDA> listenersRDA = new ArrayList<>();
+    private static final List<APIResponseValidateDay> listenersValidateDay = new ArrayList<>();
+
+    public static void clearRDAListeners() {
+        listenersRDA.clear();
+    }
+
+    public static void clearValidateDayListeners() {
+        listenersValidateDay.clear();
+    }
+
+    public static void addValidateDayListener(APIResponseValidateDay listener) {
+        listenersValidateDay.add(listener);
+    }
 
     public static void sendConnect(String login, String password, Context context){
         String data = "{\"login\": \"" + login + "\", \"password\": \"" + password + "\"}";
@@ -175,7 +192,7 @@ public class APISend {
             activity.runOnUiThread(() -> callbackMicro.accept(micronutrientsFragments));
             activity.runOnUiThread(() -> callbackCalories.accept(String.valueOf(userSharedPreferences.getRDACalories())));
             APISend.rdaDefined = true;
-            activity.runOnUiThread(() -> listeners.forEach(APIResponseRDA::onAPIRDAResponse));
+            activity.runOnUiThread(() -> listenersRDA.forEach(APIResponseRDA::onAPIRDAResponse));
             return;
         }
 
@@ -239,7 +256,7 @@ public class APISend {
                         activity.runOnUiThread(() -> callbackMicro.accept(micronutrients));
                         activity.runOnUiThread(() -> callbackCalories.accept(calories));
                         APISend.rdaDefined = true;
-                        activity.runOnUiThread(() -> listeners.forEach(APIResponseRDA::onAPIRDAResponse));
+                        activity.runOnUiThread(() -> listenersRDA.forEach(APIResponseRDA::onAPIRDAResponse));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -309,7 +326,7 @@ public class APISend {
         UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(activity);
 
         if(!rdaDefined && !userSharedPreferences.isTypicalDayDefined()) {
-            if(!listeners.contains(listener)) listeners.add(listener);
+            if(!listenersRDA.contains(listener)) listenersRDA.add(listener);
             return;
         }
 
@@ -402,8 +419,40 @@ public class APISend {
         return dishes;
     }
 
-    public static void sendValidateDay(Context context){
+    public static void sendValidateDay(Activity activity, Map<String, String> userInput) {
+        Context context = activity.getApplicationContext();
+        JSONObject data = new JSONObject();
+        try {
+            data.put("action", "validate_day");
+            data.put("user_registrations", new JSONObject(userInput));
 
+            Log.d("API", "Data: " + data.toString());
+
+            new APIRequest("validate_day", data.toString(), context).send(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        String responseBody = response.body() != null ? response.body().string() : null;
+                        Log.d("API", "Day validated");
+                        Log.d("API", "Response: " + responseBody);
+                        try {
+                            JSONObject jsonObject = new JSONObject(responseBody);
+                            Day day = new DayBuilder().build(jsonObject, UserSharedPreferences.getInstance(context));
+                            activity.runOnUiThread(() -> listenersValidateDay.forEach(listener -> listener.onValidateDayResponse(day)));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else
+                        Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void obtainsDishComposition(Activity activity, String dishName, Consumer<Dish> callbackDish) {
