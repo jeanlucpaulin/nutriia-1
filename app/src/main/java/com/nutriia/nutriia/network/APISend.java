@@ -272,15 +272,15 @@ public class APISend {
             data.put("action", "get_dish_suggestion");
 
             JSONObject userGoal = new JSONObject();
-            userGoal.put("calories", new JSONArray());
+            userGoal.put("calories", UserSharedPreferences.getInstance(activity).getRDACalories());
             userGoal.put("proteins", new JSONArray());
             data.put("user_goal", userGoal);
 
             JSONObject userRegistrations = new JSONObject();
-            userRegistrations.put("breakfast",  new JSONArray());
-            userRegistrations.put("lunch", new JSONArray());
-            userRegistrations.put("snack", new JSONArray());
-            userRegistrations.put("dinner", new JSONArray());
+            userRegistrations.put("breakfast",  UserSharedPreferences.getInstance(activity).getBreakfastMyDay());
+            userRegistrations.put("lunch", UserSharedPreferences.getInstance(activity).getLunchMyDay());
+            userRegistrations.put("snack", UserSharedPreferences.getInstance(activity).getSnackMyDay());
+            userRegistrations.put("dinner", UserSharedPreferences.getInstance(activity).getDinnerMyDay());
             data.put("user_registrations", userRegistrations);
 
             JSONObject userProfile = new JSONObject();
