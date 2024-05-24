@@ -41,7 +41,11 @@ public class DishSuggestions extends Fragment {
                 dishName.setText(dish.getName());
 
                 ImageButton imageButton = itemView.findViewById(R.id.item_button);
-                imageButton.setOnClickListener(click -> startActivity(new Intent(getContext(), DishCompositionActivity.class)));
+                imageButton.setOnClickListener(click -> {
+                    Intent intent = new Intent(getContext(), DishCompositionActivity.class);
+                    intent.putExtra("DISH_NAME", dish.getName());
+                    startActivity(intent);
+                });
 
                 listView.addView(itemView);
             }
@@ -59,7 +63,11 @@ public class DishSuggestions extends Fragment {
                     dishName.setText(dish.getName());
 
                     ImageButton imageButton = itemView.findViewById(R.id.item_button);
-                    imageButton.setOnClickListener(click -> startActivity(new Intent(getContext(), DishCompositionActivity.class)));
+                    imageButton.setOnClickListener(click -> {
+                        Intent intent = new Intent(getContext(), DishCompositionActivity.class);
+                        intent.putExtra("DISH_NAME", dish.getName());
+                        startActivity(intent);
+                    });
 
                     listView.addView(itemView);
                 }

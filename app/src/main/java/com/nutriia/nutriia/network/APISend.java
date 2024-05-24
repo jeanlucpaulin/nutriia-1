@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.nutriia.nutriia.Dish;
 import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.TypicalDay;
+import com.nutriia.nutriia.activities.DishCompositionActivity;
 import com.nutriia.nutriia.fragments.NutrientAJR;
 import com.nutriia.nutriia.interfaces.APIResponseRDA;
 import com.nutriia.nutriia.resources.Translator;
@@ -402,5 +404,45 @@ public class APISend {
 
     public static void sendValidateDay(Context context){
 
+    }
+
+    public static void obtainsDishComposition(Activity activity, String dishName, Consumer<Dish> callbackDish) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("action", "get_dish_composition");
+            data.put("dish_name", dishName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Show the loading spinner
+        activity.runOnUiThread(() -> ((DishCompositionActivity) activity).loadingSpinner.setVisibility(View.VISIBLE));
+
+        new APIRequest("get_dish_composition", data.toString(), activity).send(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                // Hide the loading spinner
+                activity.runOnUiThread(() -> ((DishCompositionActivity) activity).loadingSpinner.setVisibility(View.GONE));
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                // Hide the loading spinner
+                activity.runOnUiThread(() -> ((DishCompositionActivity) activity).loadingSpinner.setVisibility(View.GONE));
+
+                if (response.isSuccessful()) {
+                    String responseBody = response.body() != null ? response.body().string() : null;
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(responseBody);
+                        Dish dish = new Dish(jsonObject);
+                        activity.runOnUiThread(() -> callbackDish.accept(dish));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+            }
+        });
     }
 }

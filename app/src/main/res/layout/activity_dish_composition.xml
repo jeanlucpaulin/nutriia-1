@@ -74,7 +74,7 @@
                 android:id="@+id/titleDish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Composition du plat"
+                android:text="@string/composition_du_plat"
                 android:textColor="@color/black"
                 android:fontFamily="@font/montserrat"
                 android:textStyle="bold"
@@ -89,38 +89,6 @@
                 />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/foodList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_health_edit_text"
-            android:elevation="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/dishList"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:padding="10dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginTop="12dp">
-
-            <TextView
-                android:id="@+id/titleFood"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Composition de chaque aliment"
-                android:textColor="@color/black"
-                android:fontFamily="@font/montserrat"
-                android:textStyle="bold"
-                android:textSize="20sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/foodComposition"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/titleFood"
-                android:layout_marginStart="30dp"
-                />
-        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/recipe"
@@ -128,7 +96,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_health_edit_text"
             android:elevation="2dp"
-            app:layout_constraintTop_toBottomOf="@+id/foodList"
+            app:layout_constraintTop_toBottomOf="@+id/dishList"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:padding="10dp"
@@ -141,7 +109,7 @@
                 android:id="@+id/titleRecipe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Recette du plat"
+                android:text="@string/recette_du_plat"
                 android:textColor="@color/black"
                 android:fontFamily="@font/montserrat"
                 android:textStyle="bold"
@@ -155,6 +123,17 @@
                 android:layout_marginStart="30dp"
                 />
         </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/loading_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/recipe"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

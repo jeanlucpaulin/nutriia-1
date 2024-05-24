@@ -219,4 +219,6 @@
     <string name="email_ou_nom_d_utilisateur">Email ou nom d\'utilisateur</string>
     <string name="mot_de_passe">Mot de passe</string>
     <string name="mot_de_passe_oubli"><u>Mot de passe oublié ?</u></string>
+    <string name="composition_du_plat">Composition du plat</string>
+    <string name="recette_du_plat">Recette du plat</string>
 </resources>

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,6 +53,7 @@ public class ExampleTypicalDay extends Fragment implements APIResponseRDA {
 
         Button relaunchButton = view.findViewById(R.id.relaunchButton);
         relaunchButton.setOnClickListener(v -> {
+            showCustomToast("Génération d'une journée type en cours...", Toast.LENGTH_SHORT);
             UserSharedPreferences.getInstance(getContext()).clearTypicalDay();
             APISend.obtainsTypicalDay(getActivity(), this::setTypicalDy, this);
         });
@@ -97,5 +99,20 @@ public class ExampleTypicalDay extends Fragment implements APIResponseRDA {
             stringBuilder.append(dish.getName()).append(i == typicalDay.getDishes().size()-1 ? "" : "\n");
         }
         editText.setText(stringBuilder.toString());
+    }
+
+    private void showCustomToast(String message, int duration) {
+        getActivity().runOnUiThread(() -> {
+            LayoutInflater inflater = getLayoutInflater();
+            View layout = inflater.inflate(R.layout.toast_layout, getActivity().findViewById(R.id.toast_layout_root));
+
+            TextView textView = layout.findViewById(R.id.toast_text);
+            textView.setText(message);
+
+            Toast toast = new Toast(getContext());
+            toast.setDuration(duration);
+            toast.setView(layout);
+            toast.show();
+        });
     }
 }
