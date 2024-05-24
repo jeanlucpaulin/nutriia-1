@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import com.nutriia.nutriia.Dish;
 import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.fragments.NutrientAJR;
+import com.nutriia.nutriia.resources.Translator;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import org.json.JSONArray;
@@ -154,11 +155,11 @@ public class APISend {
             ArrayList<Fragment> micronutrientsFragments = new ArrayList<>();
 
             for (String macronutrient : macronutrients) {
-                macronutrientsFragments.add(new NutrientAJR(new Nutrient(macronutrient, (int) userSharedPreferences.getRDANutrient(macronutrient), "g")));
+                macronutrientsFragments.add(new NutrientAJR(new Nutrient(Translator.translate(macronutrient), (int) userSharedPreferences.getRDANutrient(macronutrient), "g")));
             }
 
             for (String micronutrient : micronutrients) {
-                micronutrientsFragments.add(new NutrientAJR(new Nutrient(micronutrient, (int) userSharedPreferences.getRDANutrient(micronutrient), "mg")));
+                micronutrientsFragments.add(new NutrientAJR(new Nutrient(Translator.translate(micronutrient), (int) userSharedPreferences.getRDANutrient(micronutrient), "mg")));
             }
 
             activity.runOnUiThread(() -> callbackMacro.accept(macronutrientsFragments));
@@ -204,7 +205,7 @@ public class APISend {
                             JSONObject nutrient = macronutrientsJSON.getJSONObject(key);
                             macronutrientsList.add(key);
                             userSharedPreferences.setRDANutrient(key, nutrient.getInt("value"));
-                            macronutrients.add(new NutrientAJR(new Nutrient(key, nutrient.getInt("value"), nutrient.getString("unit"))));
+                            macronutrients.add(new NutrientAJR(new Nutrient(Translator.translate(key), nutrient.getInt("value"), nutrient.getString("unit"))));
                         }
 
                         userSharedPreferences.setMacronutrients(macronutrientsList);
@@ -215,7 +216,7 @@ public class APISend {
                             JSONObject nutrient = micronutrientsJSON.getJSONObject(key);
                             micronutrientsList.add(key);
                             userSharedPreferences.setRDANutrient(key, nutrient.getInt("value"));
-                            micronutrients.add(new NutrientAJR(new Nutrient(key, nutrient.getInt("value"), nutrient.getString("unit"))));
+                            micronutrients.add(new NutrientAJR(new Nutrient(Translator.translate(key), nutrient.getInt("value"), nutrient.getString("unit"))));
                         }
 
                         userSharedPreferences.setMicronutrients(micronutrientsList);
