@@ -320,6 +320,7 @@ public class APISend {
             typicalDay.add(new TypicalDay("dinner", Dish.listToDishes(new ArrayList<>(userSharedPreferences.getTypicalDayDinner()))));
 
             activity.runOnUiThread(() -> callbackDishes.accept(typicalDay));
+            return;
         }
 
         JSONObject data = new JSONObject();

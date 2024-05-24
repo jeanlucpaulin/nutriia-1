@@ -21,6 +21,7 @@ import com.nutriia.nutriia.activities.DayAnalysisActivity;
 import com.nutriia.nutriia.interfaces.APIResponseRDA;
 import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.resources.Translator;
+import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,10 @@ public class ExampleTypicalDay extends Fragment implements APIResponseRDA {
         APISend.obtainsTypicalDay(getActivity(), this::setTypicalDy, this);
 
         Button relaunchButton = view.findViewById(R.id.relaunchButton);
-        relaunchButton.setOnClickListener(v -> APISend.obtainsTypicalDay(getActivity(), this::setTypicalDy, this));
+        relaunchButton.setOnClickListener(v -> {
+            UserSharedPreferences.getInstance(getContext()).clearTypicalDay();
+            APISend.obtainsTypicalDay(getActivity(), this::setTypicalDy, this);
+        });
 
         LinearLayout layout = view.findViewById(R.id.linearLayoutMeal);
         layout.setOnClickListener(click -> startActivity(new Intent(getContext(), DayAnalysisActivity.class)));
