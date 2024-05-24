@@ -49,8 +49,11 @@ public class UserSharedPreferences {
     private static final String KEY_RDA_POTASSIUM = "user_rda_potassium";
     private static final String KEY_RDA_ZINC = "user_rda_zinc";
 
-
-
+    private static final String KEY_MY_DAY_BREAKFAST = "user_my_day_breakfast";
+    private static final String KEY_MY_DAY_LUNCH = "user_my_day_lunch";
+    private static final String KEY_MY_DAY_DINNER = "user_my_day_dinner";
+    private static final String KEY_MY_DAY_SNACK = "user_my_day_snack";
+    private static final String KEY_MY_DAY_CALORIES = "user_my_day_calories";
 
 
     private final SharedPreferences sharedPreferences;
@@ -168,4 +171,69 @@ public class UserSharedPreferences {
     public void setAccessToken(String accessToken) {
         sharedPreferences.edit().putString("access_token", accessToken).apply();
     }
+
+    public void setBreakfastMyDay(HashSet<String> dish){
+        sharedPreferences.edit().putStringSet(KEY_MY_DAY_BREAKFAST, dish).apply();
+    }
+
+    public void setLunchMyDay(HashSet<String> dish){
+        sharedPreferences.edit().putStringSet(KEY_MY_DAY_LUNCH, dish).apply();
+    }
+
+    public void setDinnerMyDay(HashSet<String> dish){
+        sharedPreferences.edit().putStringSet(KEY_MY_DAY_DINNER, dish).apply();
+    }
+
+    public void setSnackMyDay(HashSet<String> dish){
+        sharedPreferences.edit().putStringSet(KEY_MY_DAY_SNACK, dish).apply();
+    }
+
+    public Set<String> getBreakfastMyDay(){
+        return sharedPreferences.getStringSet(KEY_MY_DAY_BREAKFAST, new HashSet<>());
+    }
+
+    public Set<String> getLunchMyDay(){
+        return sharedPreferences.getStringSet(KEY_MY_DAY_LUNCH, new HashSet<>());
+    }
+
+    public Set<String> getDinnerMyDay(){
+        return sharedPreferences.getStringSet(KEY_MY_DAY_DINNER, new HashSet<>());
+    }
+
+    public Set<String> getSnackMyDay(){
+        return sharedPreferences.getStringSet(KEY_MY_DAY_SNACK, new HashSet<>());
+    }
+
+    public void setMyDayCalories(String calories){
+        sharedPreferences.edit().putString(KEY_MY_DAY_CALORIES, calories).apply();
+    }
+
+    public String getMyDayCalories(){
+        return sharedPreferences.getString(KEY_MY_DAY_CALORIES, "0");
+    }
+
+    public void clearBreakfastMyDay(){
+        sharedPreferences.edit().remove(KEY_MY_DAY_BREAKFAST).apply();
+    }
+
+    public void clearLunchMyDay(){
+        sharedPreferences.edit().remove(KEY_MY_DAY_LUNCH).apply();
+    }
+
+    public void clearDinnerMyDay(){
+        sharedPreferences.edit().remove(KEY_MY_DAY_DINNER).apply();
+    }
+
+    public void clearSnackMyDay(){
+        sharedPreferences.edit().remove(KEY_MY_DAY_SNACK).apply();
+    }
+
+    public void clearMyDay(){
+        this.clearBreakfastMyDay();
+        this.clearLunchMyDay();
+        this.clearDinnerMyDay();
+        this.clearSnackMyDay();
+    }
+
+
 }

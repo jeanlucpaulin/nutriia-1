@@ -347,4 +347,8 @@ public class APISend {
         }
         return dishes;
     }
+
+    public static void sendValidateDay(Context context){
+
+    }
 }
