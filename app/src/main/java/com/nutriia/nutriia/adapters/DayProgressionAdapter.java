@@ -38,8 +38,8 @@ public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAd
         String name = Translator.translate(nutrient.getName()) + " (" + nutrient.getProgress() + " " + nutrient.getUnit() + ")";
         holder.name.setText(name);
         holder.value.setText(String.valueOf(nutrient.getValue() + " " + nutrient.getUnit()));
-        holder.progressBar.setProgress(nutrient.getProgress());
-        holder.progressBar.setMax(nutrient.getValue());
+        int progressRatio = (int) ((float) nutrient.getProgress() / nutrient.getValue() * 100);
+        holder.progressBar.setProgress(progressRatio);
     }
 
     @Override
