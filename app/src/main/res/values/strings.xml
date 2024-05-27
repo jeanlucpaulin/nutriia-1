@@ -153,10 +153,10 @@
     <string-array name="tips_activity">
         <item>Intégrez au moins 30 minutes d\'exercice modéré par jour, comme la marche rapide, pour améliorer votre santé cardiovasculaire et maintenir un poids sain.</item>
         <item>Faites des exercices courts et intenses, comme des sprints ou des sauts, 3 à 4 fois par semaine. Cela aide à brûler plus de calories.</item>
-        <item>Faites des exercices de musculation, comme des squats, des pompes et des soulevés de terre, 3 à 4 fois par semaine. Augmentez progressivement le poids que vous soulevez.</item>
+        <item>Faites des exercices de musculation, comme des squats, des pompes et des soulevés de terre, 3 à 4 fois par semaine. Augmentez progressivement la charge.</item>
         <item>Faites 30 minutes d\'exercice modéré, comme la marche rapide, le vélo ou la natation, 5 jours par semaine pour améliorer votre forme physique.</item>
         <item>Faites des exercices cardiovasculaires comme la course, le vélo ou la natation pendant 30 à 60 minutes, 3 à 5 fois par semaine. Augmentez progressivement la durée et l\'intensité.</item>
-        <item>Faites de l\'exercice régulièrement, mais évitez les séances intenses trop près de l\'heure du coucher. Une activité physique modérée favorise un sommeil plus profond.</item>
+        <item>Faites de l\'exercice régulièrement, mais évitez les séances intenses trop près de l\'heure du coucher. Une activité physique modérée favorise un meilleur sommeil.</item>
         <item>Faites de l\'exercice régulièrement en intégrant des activités physiques comme la marche, la natation ou le vélo dans votre routine quotidienne. Visez au moins 150 minutes d\'activité modérée par semaine.</item>
     </string-array>
     <string-array name="tips_recovery">
