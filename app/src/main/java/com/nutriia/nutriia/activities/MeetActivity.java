@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.utils.AccountMenu;
 import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
@@ -35,6 +36,8 @@ public class MeetActivity extends AppCompatActivity {
         NavBarListener.init(this, R.id.navbar_meet);
         DrawerMenu.init(this);
         AccountMenu.init(this);
+
+        APISend.clear();
 
         webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
