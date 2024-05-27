@@ -1,107 +1,72 @@
 package com.nutriia.nutriia.activities;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.nutriia.nutriia.Message;
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.adapters.MessageAdapter;
+import com.nutriia.nutriia.utils.AccountMenu;
 import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
 
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class CoachActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    EditText editText;
-    ImageButton sendButton;
-    List<Message> messageList;
-    MessageAdapter messageAdapter;
+    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_coach);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_meet);  // Assurez-vous que le layout XML est correctement nommé
 
-        //DrawerMenu.init(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         NavBarListener.init(this, R.id.navbar_coach);
+        DrawerMenu.init(this);
+        AccountMenu.init(this);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
-        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.white));
-
-        messageList = new ArrayList<>();
-
-        recyclerView = findViewById(R.id.recyclerView);
-        editText = findViewById(R.id.editText);
-        sendButton = findViewById(R.id.sendButton);
-
-        messageList.add(new Message("Salut ! 😊", Message.SENT_BY_BOT));
-        messageList.add(new Message("Je suis ton coach NutriIA, pose moi toutes tes questions. J’y répondrai avec plaisir.", Message.SENT_BY_BOT));
-
-        // Set up the RecyclerView
-        messageAdapter = new MessageAdapter(messageList);
-        recyclerView.setAdapter(messageAdapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        sendButton.setOnClickListener((v) -> {
-            String question = editText.getText().toString().trim();
-            addToChat(question, Message.SENT_BY_ME);
-            callAPI(question);
-        });
-    }
-
-    void addToChat(String message, String sentBy) {
-        runOnUiThread(new Runnable() {
+        webView = findViewById(R.id.webview);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.setWebViewClient(new WebViewClient() {
             @Override
-            public void run() {
-                messageList.add(new Message(message, sentBy));
-                messageAdapter.notifyDataSetChanged();
-                recyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                injectJavaScript();
             }
         });
+        webView.loadUrl("https://nutriia.fr/en_us/mobile-chatbot/");
     }
 
-    void addResponse(String response) {
-        messageList.remove(messageList.size() - 1);
-        addToChat(response, Message.SENT_BY_BOT);
-    }
-
-    void callAPI(String question) {
-
-        messageList.add(new Message("Écrit...", Message.SENT_BY_BOT));
-
-        JSONObject json = new JSONObject();
+    private void injectJavaScript() {
         try {
-            json.put("model", "text-davinci-003");
-            json.put("prompt", question);
-            json.put("max_tokens", 4000);
-            json.put("temperature", 0);
+            String js = "javascript:(function() {" +
+                    "var wpadminbar = document.getElementById('wpadminbar');" +
+                    "if (wpadminbar) wpadminbar.style.display = 'none';" +
+                    "var masthead = document.getElementById('masthead');" +
+                    "if (masthead) masthead.style.display = 'none';" +
+                    "var colophon = document.getElementById('colophon');" +
+                    "if (colophon) colophon.style.display = 'none';" +
+                    "var ktScrollUp = document.getElementById('kt-scroll-up');" +
+                    "if (ktScrollUp) ktScrollUp.style.display = 'none';" +
+                    "var chat = document.getElementById('mwai-chatbot-default');" +
+                    "if (chat) chat.style.display = 'none';" +
+                    "})()";
+            webView.evaluateJavascript(js, null);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

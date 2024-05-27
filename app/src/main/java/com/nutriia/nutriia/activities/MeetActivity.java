@@ -33,14 +33,42 @@ public class MeetActivity extends AppCompatActivity {
         });
 
         NavBarListener.init(this, R.id.navbar_meet);
-
         DrawerMenu.init(this);
-
         AccountMenu.init(this);
 
         webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://nutriia.fr/en_us/my-coach/");
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                injectJavaScript();
+            }
+        });
+        webView.loadUrl("https://nutriia.fr/en_us/advisor-chat/");
+    }
+
+    private void injectJavaScript() {
+        try {
+            String js = "javascript:(function() {" +
+                    "var wpadminbar = document.getElementById('wpadminbar');" +
+                    "if (wpadminbar) wpadminbar.style.display = 'none';" +
+                    "var masthead = document.getElementById('masthead');" +
+                    "if (masthead) masthead.style.display = 'none';" +
+                    "var colophon = document.getElementById('colophon');" +
+                    "if (colophon) colophon.style.display = 'none';" +
+                    "var ktScrollUp = document.getElementById('kt-scroll-up');" +
+                    "if (ktScrollUp) ktScrollUp.style.display = 'none';" +
+                    "var chat = document.getElementById('mwai-chatbot-default');" +
+                    "if (chat) chat.style.display = 'none';" +
+                    "})()";
+            webView.evaluateJavascript(js, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

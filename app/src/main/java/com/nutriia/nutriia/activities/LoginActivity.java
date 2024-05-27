@@ -15,6 +15,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         DrawerMenu.init(this);
-        NavBarListener.init(this, R.id.account);
+        //NavBarListener.init(this, R.id.account);
     }
 }

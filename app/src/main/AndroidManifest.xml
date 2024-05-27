@@ -55,9 +55,11 @@
         </activity>
 
         <!-- Déclaration de MeetActivity -->
-        <activity android:name=".activities.MeetActivity"
-            android:windowSoftInputMode="adjustPan"
-            />
+        <activity
+            android:name=".activities.MeetActivity"
+            android:exported="true">
+        </activity>
+
         <activity android:name=".activities.WebViewActivity" />
         <meta-data
             android:name="preloaded_fonts"

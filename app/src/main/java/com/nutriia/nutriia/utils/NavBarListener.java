@@ -1,7 +1,6 @@
 package com.nutriia.nutriia.utils;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,7 +48,7 @@ public class NavBarListener {
                 TextView text = activity.findViewById(R.id.navbar_meet_text);
                 text.setTextColor(activity.getResources().getColor(R.color.lime, activity.getTheme()));
                 text.setTypeface(ResourcesCompat.getFont(activity, R.font.montserrat_bold));
-                ((ImageView) activity.findViewById(R.id.navbar_meet_image)).setImageDrawable(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.menu_icon_calendar_full, activity.getTheme()));
+                ((ImageView) activity.findViewById(R.id.navbar_meet_image)).setImageDrawable(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.menu_icon_chat_advisor_full, activity.getTheme()));
             } else layout.setOnClickListener(NavBarListener::eventMeets);
         }
 
@@ -59,7 +58,7 @@ public class NavBarListener {
                 TextView text = activity.findViewById(R.id.navbar_coach_text);
                 text.setTextColor(activity.getResources().getColor(R.color.lime, activity.getTheme()));
                 text.setTypeface(ResourcesCompat.getFont(activity, R.font.montserrat_bold));
-                ((ImageView) activity.findViewById(R.id.navbar_coach_image)).setImageDrawable(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.menu_icon_chat_full, activity.getTheme()));
+                ((ImageView) activity.findViewById(R.id.navbar_coach_image)).setImageDrawable(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.menu_icon_chat_ai_full, activity.getTheme()));
             } else layout.setOnClickListener(NavBarListener::eventCoach);
         }
 
