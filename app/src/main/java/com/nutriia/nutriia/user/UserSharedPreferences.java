@@ -21,34 +21,8 @@ public class UserSharedPreferences {
     private static final String KEY_CALORIES = "user_calories";
     private static final String KEY_MACRONUTRIENTS = "user_macronutrients";
     private static final String KEY_MICRONUTRIENTS = "user_micronutrients";
-
-    private static final String KEY_RDA_CALORIES = "user_rda_calories";
-    private static final String KEY_RDA_PROTEINS = "user_rda_proteins";
-    private static final String KEY_RDA_LIPIDS = "user_rda_lipids";
-    private static final String KEY_RDA_CARBOHYDRATES = "user_rda_carbohydrates";
-    private static final String KEY_RDA_FIBERS = "user_rda_fibers";
-    private static final String KEY_RDA_SUGARS = "user_rda_sugars";
-    private static final String KEY_RDA_VITAMIN_A = "user_rda_vitamin_a";
-    private static final String KEY_RDA_VITAMIN_B1 = "user_rda_vitamin_b1";
-    private static final String KEY_RDA_VITAMIN_B2 = "user_rda_vitamin_b2";
-    private static final String KEY_RDA_VITAMIN_B3 = "user_rda_vitamin_b3";
-    private static final String KEY_RDA_VITAMIN_B4 = "user_rda_vitamin_b4";
-    private static final String KEY_RDA_VITAMIN_B6 = "user_rda_vitamin_b6";
-    private static final String KEY_RDA_VITAMIN_B7 = "user_rda_vitamin_b7";
-    private static final String KEY_RDA_VITAMIN_B9 = "user_rda_vitamin_b9";
-    private static final String KEY_RDA_VITAMIN_C = "user_rda_vitamin_c";
-    private static final String KEY_RDA_VITAMIN_D = "user_rda_vitamin_d";
-    private static final String KEY_RDA_VITAMIN_E = "user_rda_vitamin_e";
-    private static final String KEY_RDA_VITAMIN_K = "user_rda_vitamin_k";
-    private static final String KEY_RDA_CALCIUM = "user_rda_calcium";
-    private static final String KEY_RDA_COPPER = "user_rda_copper";
-    private static final String KEY_RDA_IRON = "user_rda_iron";
-    private static final String KEY_RDA_MAGNESIUM = "user_rda_magnesium";
-    private static final String KEY_RDA_MANGANESE = "user_rda_manganese";
-    private static final String KEY_RDA_PHOSPHORUS = "user_rda_phosphorus";
-    private static final String KEY_RDA_POTASSIUM = "user_rda_potassium";
-    private static final String KEY_RDA_ZINC = "user_rda_zinc";
-
+    private static final String KEY_MY_DAY = "user_my_day_";
+    private static final String KEY_MY_DAY_DATE = "user_my_day_date";
     private static final String KEY_MY_DAY_BREAKFAST = "user_my_day_breakfast";
     private static final String KEY_MY_DAY_LUNCH = "user_my_day_lunch";
     private static final String KEY_MY_DAY_DINNER = "user_my_day_dinner";
@@ -127,7 +101,15 @@ public class UserSharedPreferences {
 
     public void setRDANutrient(String nutrient, int value) { sharedPreferences.edit().putFloat(KEY_RDA + nutrient, value).apply(); }
 
-    public float getRDANutrient(String nutrient) { return sharedPreferences.getFloat(KEY_RDA + nutrient, -1); }
+    public float getRDANutrient(String nutrient) { return sharedPreferences.getFloat(KEY_RDA + nutrient, 0); }
+
+    public void setMRDCalories(int calories) { sharedPreferences.edit().putInt(KEY_MY_DAY_CALORIES, calories).apply(); }
+
+    public int getMRDCalories() { return sharedPreferences.getInt(KEY_MY_DAY_CALORIES, -1); }
+
+    public void setMRDNutrient(String nutrient, int value) { sharedPreferences.edit().putFloat(KEY_MY_DAY + nutrient, value).apply(); }
+
+    public float getMRDNutrient(String nutrient) { return sharedPreferences.getFloat(KEY_MY_DAY + nutrient, 0); }
 
     public Set<String> getMacronutrients() {
         return sharedPreferences.getStringSet(KEY_MACRONUTRIENTS, new HashSet<>());
@@ -149,8 +131,74 @@ public class UserSharedPreferences {
         return getRDACalories() != -1;
     }
 
-    public void clearRDA()
-    {
+    public boolean isMRDDefined() { return getMRDCalories() != -1; }
+
+    public void setMRDDate(String date) {
+        sharedPreferences.edit().putString(KEY_MY_DAY_DATE, date).apply();
+    }
+
+    public String getMRDDate() {
+        return sharedPreferences.getString(KEY_MY_DAY_DATE, "");
+    }
+
+    /** Set MyRealDay Breakfast */
+    public void setMRDABreakfast(Set<String> dish){
+        sharedPreferences.edit().putStringSet(KEY_MY_DAY_BREAKFAST, dish).apply();
+    }
+
+    /** Get MyRealDay Breakfast */
+    public Set<String> getMRDABreakfast(){
+        return sharedPreferences.getStringSet(KEY_MY_DAY_BREAKFAST, new HashSet<>());
+    }
+
+    /** Set MyRealDay Lunch */
+    public void setMRDALunch(Set<String> dish){
+        sharedPreferences.edit().putStringSet(KEY_MY_DAY_LUNCH, dish).apply();
+    }
+
+    /** Get MyRealDay Lunch */
+    public Set<String> getMRDALunch(){
+        return sharedPreferences.getStringSet(KEY_MY_DAY_LUNCH, new HashSet<>());
+    }
+
+    /** Set MyRealDay Dinner */
+    public void setMRDADinner(Set<String> dish){
+        sharedPreferences.edit().putStringSet(KEY_MY_DAY_DINNER, dish).apply();
+    }
+
+    /** Get MyRealDay Dinner */
+    public Set<String> getMRDADinner(){
+        return sharedPreferences.getStringSet(KEY_MY_DAY_DINNER, new HashSet<>());
+    }
+
+    /** Set MyRealDay Snack */
+    public void setMRDASnack(Set<String> dish){
+        sharedPreferences.edit().putStringSet(KEY_MY_DAY_SNACK, dish).apply();
+    }
+
+    /** Get MyRealDay Snack */
+    public Set<String> getMRDASnack(){
+        return sharedPreferences.getStringSet(KEY_MY_DAY_SNACK, new HashSet<>());
+    }
+
+    public void clearMRD() {
+        for(String nutrient : getMacronutrients())
+        {
+            sharedPreferences.edit().remove(KEY_MY_DAY + nutrient).apply();
+        }
+        for(String nutrient : getMicronutrients())
+        {
+            sharedPreferences.edit().remove(KEY_MY_DAY + nutrient).apply();
+        }
+        sharedPreferences.edit().remove(KEY_MY_DAY_CALORIES).apply();
+        sharedPreferences.edit().remove(KEY_MY_DAY_DATE).apply();
+        sharedPreferences.edit().remove(KEY_MY_DAY_BREAKFAST).apply();
+        sharedPreferences.edit().remove(KEY_MY_DAY_LUNCH).apply();
+        sharedPreferences.edit().remove(KEY_MY_DAY_DINNER).apply();
+        sharedPreferences.edit().remove(KEY_MY_DAY_SNACK).apply();
+    }
+
+    public void clearRDA() {
         Log.d("UserSharedPreferences", "Clearing RDA");
         for(String nutrient : getMacronutrients())
         {
@@ -219,63 +267,4 @@ public class UserSharedPreferences {
         sharedPreferences.edit().remove(KEY_TYPICAL_DAY_DINNER).apply();
         sharedPreferences.edit().remove(KEY_TYPICAL_DAY_SNACK).apply();
     }
-
-
-    public void setBreakfastMyDay(HashSet<String> dish){
-        sharedPreferences.edit().putStringSet(KEY_MY_DAY_BREAKFAST, dish).apply();
-    }
-
-    public void setLunchMyDay(HashSet<String> dish){
-        sharedPreferences.edit().putStringSet(KEY_MY_DAY_LUNCH, dish).apply();
-    }
-
-    public void setDinnerMyDay(HashSet<String> dish){
-        sharedPreferences.edit().putStringSet(KEY_MY_DAY_DINNER, dish).apply();
-    }
-
-    public void setSnackMyDay(HashSet<String> dish){
-        sharedPreferences.edit().putStringSet(KEY_MY_DAY_SNACK, dish).apply();
-    }
-
-    public Set<String> getBreakfastMyDay(){
-        return sharedPreferences.getStringSet(KEY_MY_DAY_BREAKFAST, new HashSet<>());
-    }
-
-    public Set<String> getLunchMyDay(){
-        return sharedPreferences.getStringSet(KEY_MY_DAY_LUNCH, new HashSet<>());
-    }
-
-    public Set<String> getDinnerMyDay(){
-        return sharedPreferences.getStringSet(KEY_MY_DAY_DINNER, new HashSet<>());
-    }
-
-    public Set<String> getSnackMyDay(){
-        return sharedPreferences.getStringSet(KEY_MY_DAY_SNACK, new HashSet<>());
-    }
-
-
-    public void clearBreakfastMyDay(){
-        sharedPreferences.edit().remove(KEY_MY_DAY_BREAKFAST).apply();
-    }
-
-    public void clearLunchMyDay(){
-        sharedPreferences.edit().remove(KEY_MY_DAY_LUNCH).apply();
-    }
-
-    public void clearDinnerMyDay(){
-        sharedPreferences.edit().remove(KEY_MY_DAY_DINNER).apply();
-    }
-
-    public void clearSnackMyDay(){
-        sharedPreferences.edit().remove(KEY_MY_DAY_SNACK).apply();
-    }
-
-    public void clearMyDay(){
-        this.clearBreakfastMyDay();
-        this.clearLunchMyDay();
-        this.clearDinnerMyDay();
-        this.clearSnackMyDay();
-    }
-
-
 }

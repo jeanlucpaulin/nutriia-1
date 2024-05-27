@@ -18,13 +18,16 @@ import com.nutriia.nutriia.Day;
 import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.DayProgressionAdapter;
+import com.nutriia.nutriia.builders.DayBuilder;
+import com.nutriia.nutriia.interfaces.APIResponseRDA;
 import com.nutriia.nutriia.interfaces.APIResponseValidateDay;
 import com.nutriia.nutriia.network.APISend;
+import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MacronutrientsOfMyDay extends Fragment implements APIResponseValidateDay {
+public class MacronutrientsOfMyDay extends Fragment implements APIResponseValidateDay, APIResponseRDA {
 
     private RecyclerView recyclerView;
     private final List<Nutrient> nutrientsList = new ArrayList<>();
@@ -41,14 +44,7 @@ public class MacronutrientsOfMyDay extends Fragment implements APIResponseValida
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        nutrientsList.clear();
-        for(String macronutrient : resources.getStringArray(R.array.list_macronutrients)) {
-            nutrientsList.add(new Nutrient(macronutrient, 100, resources.getString(R.string.grams_unit), 50));
-        }
-
-
-        DayProgressionAdapter dayProgressionAdapter = new DayProgressionAdapter(getContext(), nutrientsList);
-        recyclerView.setAdapter(dayProgressionAdapter);
+        APISend.addRDAListener(this);
 
         APISend.addValidateDayListener(this);
 
@@ -58,6 +54,19 @@ public class MacronutrientsOfMyDay extends Fragment implements APIResponseValida
 
     @Override
     public void onValidateDayResponse(Day day) {
+        update(day);
+    }
+
+    @Override
+    public void onAPIRDAResponse() {
+        UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(getContext());
+
+        Day day = new DayBuilder().buildOnlyWithGoal(userSharedPreferences);
+
+        update(day);
+    }
+
+    private void update(Day day) {
         nutrientsList.clear();
         nutrientsList.addAll(day.getMacroNutrients().values());
         DayProgressionAdapter dayProgressionAdapter = new DayProgressionAdapter(getContext(), nutrientsList);

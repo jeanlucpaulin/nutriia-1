@@ -18,6 +18,7 @@ import com.nutriia.nutriia.Day;
 import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.DayProgressionAdapter;
+import com.nutriia.nutriia.builders.DayBuilder;
 import com.nutriia.nutriia.interfaces.APIResponseRDA;
 import com.nutriia.nutriia.interfaces.APIResponseValidateDay;
 import com.nutriia.nutriia.network.APISend;
@@ -43,31 +44,32 @@ public class MicronutrientsOfMyDay extends Fragment implements APIResponseValida
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<Nutrient> nutrientsList = new ArrayList<>();
-        for(String micronutrient : resources.getStringArray(R.array.list_micronutrients)) {
-            nutrientsList.add(new Nutrient(micronutrient, 100, resources.getString(R.string.grams_unit), 0));
-        }
-
-        DayProgressionAdapter dayProgressionAdapter = new DayProgressionAdapter(getContext(), nutrientsList);
-        recyclerView.setAdapter(dayProgressionAdapter);
+        APISend.addRDAListener(this);
 
         APISend.addValidateDayListener(this);
 
         return view;
-
     }
 
     @Override
     public void onValidateDayResponse(Day day) {
-        nutrientsList.clear();
-        nutrientsList.addAll(day.getMicroNutrients().values());
-        DayProgressionAdapter dayProgressionAdapter = new DayProgressionAdapter(getContext(), nutrientsList);
-        recyclerView.setAdapter(dayProgressionAdapter);
+        update(day);
     }
 
     @Override
     public void onAPIRDAResponse() {
+        UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(getContext());
 
+        Day day = new DayBuilder().buildOnlyWithGoal(userSharedPreferences);
+
+        update(day);
+    }
+
+    private void update(Day day) {
+        nutrientsList.clear();
+        nutrientsList.addAll(day.getMicroNutrients().values());
+        DayProgressionAdapter dayProgressionAdapter = new DayProgressionAdapter(getContext(), nutrientsList);
+        recyclerView.setAdapter(dayProgressionAdapter);
     }
 
 

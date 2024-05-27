@@ -1,6 +1,8 @@
 package com.nutriia.nutriia.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +19,19 @@ import com.nutriia.nutriia.Meal;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.MealsAdapter;
 import com.nutriia.nutriia.network.APISend;
+import com.nutriia.nutriia.user.Saver;
+import com.nutriia.nutriia.user.UserSharedPreferences;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public class MyRealDay extends Fragment {
 
@@ -32,39 +42,87 @@ public class MyRealDay extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.componenent_my_real_day, container, false);
 
-        meals = new ArrayList<>();
-        // Exemple of a list of meals
-        //TODO : DELETE THIS EXAMPLE
-        meals.add(new Meal("Breakfast"));
-        meals.add(new Meal("Lunch"));
-        meals.add(new Meal("Dinner"));
-        meals.add(new Meal("Snack"));
+        meals = new ArrayList<>(Arrays.asList(new Meal("Breakfast"), new Meal("Lunch"), new Meal("Dinner"), new Meal("Snack")));
 
-        TextView breakfastTextView = view.findViewById(R.id.breakfast).findViewById(R.id.textView);
-        breakfastTextView.setText(meals.get(0).getName());
+        int[] viewIds = new int[] {R.id.breakfast, R.id.lunch, R.id.dinner, R.id.snack};
 
-        TextView lunchTextView = view.findViewById(R.id.lunch).findViewById(R.id.textView);
-        lunchTextView.setText(meals.get(1).getName());
+        UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(getContext());
 
-        TextView dinnerTextView = view.findViewById(R.id.dinner).findViewById(R.id.textView);
-        dinnerTextView.setText(meals.get(2).getName());
+        Calendar calendar = Calendar.getInstance();
 
-        TextView snackTextView = view.findViewById(R.id.snack).findViewById(R.id.textView);
-        snackTextView.setText(meals.get(3).getName());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String currentDate = dateFormat.format(calendar.getTime());
+
+        String date = userSharedPreferences.getMRDDate();
+
+        if(!currentDate.equals(date) && !date.isEmpty()) userSharedPreferences.clearMRD();
+
+        for(int i = 0; i < viewIds.length; i++) {
+            TextView textView = view.findViewById(viewIds[i]).findViewById(R.id.textView);
+            EditText editText = view.findViewById(viewIds[i]).findViewById(R.id.editText);
+
+            StringBuilder content = new StringBuilder();
+
+            List<String> dishes = getDishes(viewIds[i]);
+
+            for (int j = 0; j < dishes.size(); j++) {
+                content.append(dishes.get(j)).append(j == dishes.size()-1 ? "" : "\n");
+            }
+
+            editText.setText(content.toString());
+            textView.setText(meals.get(i).getName());
+
+        }
+
 
         Button validateButton = view.findViewById(R.id.validateButton);
 
         validateButton.setOnClickListener(v -> {
-            Map<String, String> userInput = new HashMap<>();
-            for(int viewId : new int[] {R.id.breakfast, R.id.lunch, R.id.dinner, R.id.snack}) {
+            Context context = getContext();
+            Map<String, Set<String>> userInput = new HashMap<>();
+
+            for(int viewId : viewIds) {
                 TextView textView = view.findViewById(viewId).findViewById(R.id.textView);
                 EditText editText = view.findViewById(viewId).findViewById(R.id.editText);
-                userInput.put(textView.getText().toString().toLowerCase(), editText.getText().toString());
+
+                Set<String> inputs = new HashSet<>();
+
+                if(viewId == R.id.breakfast) {
+                    inputs = Saver.saveMRDInputBreakfast(context, editText.getText().toString());
+                }
+                else if(viewId == R.id.lunch) {
+                    inputs = Saver.saveMRDInputLunch(context, editText.getText().toString());
+                }
+                else if(viewId == R.id.dinner) {
+                    inputs = Saver.saveMRDInputDinner(context, editText.getText().toString());
+                }
+                else if(viewId == R.id.snack){
+                    inputs = Saver.saveMRDInputSnack(context, editText.getText().toString());
+                }
+
+                userInput.put(textView.getText().toString().toLowerCase(), inputs);
             }
 
             APISend.sendValidateDay(getActivity(), userInput);
         });
 
         return view;
+    }
+
+    private List<String> getDishes(int id) {
+        List<String> dishes = new ArrayList<>();
+        if(id == R.id.breakfast) {
+            dishes = new ArrayList<>(UserSharedPreferences.getInstance(getContext()).getMRDABreakfast());
+        }
+        else if(id == R.id.lunch) {
+            dishes = new ArrayList<>(UserSharedPreferences.getInstance(getContext()).getMRDALunch());
+        }
+        else if(id == R.id.dinner) {
+            dishes = new ArrayList<>(UserSharedPreferences.getInstance(getContext()).getMRDADinner());
+        }
+        else if(id == R.id.snack) {
+            dishes = new ArrayList<>(UserSharedPreferences.getInstance(getContext()).getMRDASnack());
+        }
+        return dishes;
     }
 }

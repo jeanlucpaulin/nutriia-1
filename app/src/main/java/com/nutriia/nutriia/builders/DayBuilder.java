@@ -10,8 +10,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 public class DayBuilder {
@@ -46,6 +49,37 @@ public class DayBuilder {
 
             return null;
         }
+    }
+
+    public Day buildOnlyWithGoal(UserSharedPreferences sharedPreferences) {
+        Nutrient calorieNutrient = new Nutrient("calories", sharedPreferences.getRDACalories(), "kcal", 0);
+
+        Calendar calendar = Calendar.getInstance();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String currentDate = dateFormat.format(calendar.getTime());
+
+        String date = sharedPreferences.getMRDDate();
+
+        Log.d("DayBuilder", "Current date: " + currentDate);
+        Log.d("DayBuilder", "Date: " + date);
+
+        if(!currentDate.equals(date) && !date.isEmpty()) {
+            Log.d("DayBuilder", "Clearing MRD");
+            sharedPreferences.clearMRD();
+        }
+
+        Map<String, Nutrient> macroNutrients = new HashMap<>();
+        for(String key : sharedPreferences.getMacronutrients()) {
+            macroNutrients.put(key, new Nutrient(key, (int) sharedPreferences.getRDANutrient(key), "g", (int) sharedPreferences.getMRDNutrient(key)));
+        }
+
+        Map<String, Nutrient> microNutrients = new HashMap<>();
+        for(String key : sharedPreferences.getMicronutrients()) {
+            microNutrients.put(key, new Nutrient(key, (int) sharedPreferences.getRDANutrient(key), "mg", (int) sharedPreferences.getMRDNutrient(key)));
+        }
+
+        return new Day(calorieNutrient, macroNutrients, microNutrients);
     }
 
 }

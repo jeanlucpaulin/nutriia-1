@@ -20,6 +20,7 @@ import com.nutriia.nutriia.fragments.NutrientAJR;
 import com.nutriia.nutriia.interfaces.APIResponseRDA;
 import com.nutriia.nutriia.interfaces.APIResponseValidateDay;
 import com.nutriia.nutriia.resources.Translator;
+import com.nutriia.nutriia.user.Saver;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import org.json.JSONArray;
@@ -56,6 +57,11 @@ public class APISend {
 
     public static void addValidateDayListener(APIResponseValidateDay listener) {
         listenersValidateDay.add(listener);
+    }
+
+    public static void addRDAListener(APIResponseRDA listener) {
+        if(!rdaDefined) listenersRDA.add(listener);
+        else listener.onAPIRDAResponse();
     }
 
     public static void sendConnect(String login, String password, Context context){
@@ -196,6 +202,8 @@ public class APISend {
             return;
         }
 
+        rdaDefined = false;
+
         StringBuilder data = new StringBuilder("{\"user_profile\": {");
         data.append("\"height\": ").append(UserSharedPreferences.getInstance(activity).getHeight()).append(", ");
         data.append("\"weight\": ").append(UserSharedPreferences.getInstance(activity).getWeight()).append(", ");
@@ -277,10 +285,10 @@ public class APISend {
             data.put("user_goal", userGoal);
 
             JSONObject userRegistrations = new JSONObject();
-            userRegistrations.put("breakfast",  UserSharedPreferences.getInstance(activity).getBreakfastMyDay());
-            userRegistrations.put("lunch", UserSharedPreferences.getInstance(activity).getLunchMyDay());
-            userRegistrations.put("snack", UserSharedPreferences.getInstance(activity).getSnackMyDay());
-            userRegistrations.put("dinner", UserSharedPreferences.getInstance(activity).getDinnerMyDay());
+            userRegistrations.put("breakfast",  UserSharedPreferences.getInstance(activity).getMRDABreakfast());
+            userRegistrations.put("lunch", UserSharedPreferences.getInstance(activity).getMRDABreakfast());
+            userRegistrations.put("snack", UserSharedPreferences.getInstance(activity).getMRDASnack());
+            userRegistrations.put("dinner", UserSharedPreferences.getInstance(activity).getMRDADinner());
             data.put("user_registrations", userRegistrations);
 
             JSONObject userProfile = new JSONObject();
@@ -419,7 +427,7 @@ public class APISend {
         return dishes;
     }
 
-    public static void sendValidateDay(Activity activity, Map<String, String> userInput) {
+    public static void sendValidateDay(Activity activity, Map<String, Set<String>> userInput) {
         Context context = activity.getApplicationContext();
         JSONObject data = new JSONObject();
         try {
@@ -442,6 +450,7 @@ public class APISend {
                         try {
                             JSONObject jsonObject = new JSONObject(responseBody);
                             Day day = new DayBuilder().build(jsonObject, UserSharedPreferences.getInstance(context));
+                            Saver.saveMyReadDay(context, day);
                             activity.runOnUiThread(() -> listenersValidateDay.forEach(listener -> listener.onValidateDayResponse(day)));
                         } catch (JSONException e) {
                             throw new RuntimeException(e);

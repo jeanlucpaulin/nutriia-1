@@ -74,6 +74,9 @@ public class DayAnalysisActivity extends AppCompatActivity {
 
         AccountMenu.init(this);
 
+        APISend.clearValidateDayListeners();
+        APISend.clearRDAListeners();
+
         //Partie composants
 
         recyclerView = findViewById(R.id.recycler_view);

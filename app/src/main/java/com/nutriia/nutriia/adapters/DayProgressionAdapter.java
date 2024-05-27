@@ -35,9 +35,11 @@ public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Nutrient nutrient = nutrientsList.get(position);
-        holder.name.setText(Translator.translate(nutrient.getName()));
-        holder.value.setText(String.valueOf(nutrient.getValue() + nutrient.getUnit()));
+        String name = Translator.translate(nutrient.getName()) + " (" + nutrient.getProgress() + " " + nutrient.getUnit() + ")";
+        holder.name.setText(name);
+        holder.value.setText(String.valueOf(nutrient.getValue() + " " + nutrient.getUnit()));
         holder.progressBar.setProgress(nutrient.getProgress());
+        holder.progressBar.setMax(nutrient.getValue());
     }
 
     @Override

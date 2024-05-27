@@ -12,6 +12,7 @@ public class Nutrient {
         this.name = name;
         this.value = value;
         this.unit = unit;
+        this.progress = 0;
     }
 
     public Nutrient(String name, int value, String unit, int progress) {
