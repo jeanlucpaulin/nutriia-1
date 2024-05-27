@@ -12,7 +12,11 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.network.APISend;
@@ -31,7 +35,16 @@ public class HealthInformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_health_information);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.activity_health_information_page), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        getWindow().setStatusBarColor(getResources().getColor(R.color.white, getTheme()));
 
         TextView headerBackTitle = (TextView) findViewById(R.id.title);
         headerBackTitle.setText("Informations \nsanté");

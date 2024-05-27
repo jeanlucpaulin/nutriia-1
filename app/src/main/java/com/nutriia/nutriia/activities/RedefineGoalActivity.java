@@ -6,7 +6,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +42,16 @@ public class RedefineGoalActivity extends AppCompatActivity implements OnClickOn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_redefine_goal);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.activity_redefine_goal), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        getWindow().setStatusBarColor(getResources().getColor(R.color.white, getTheme()));
 
         ImageButton backButton = findViewById(R.id.lateral_open);
         backButton.setOnClickListener(v -> {
