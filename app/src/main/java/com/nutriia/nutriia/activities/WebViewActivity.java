@@ -31,6 +31,8 @@ public class WebViewActivity extends AppCompatActivity {
             return insets;
         });
 
+        getWindow().setStatusBarColor(getResources().getColor(R.color.white, getTheme()));
+
         String url = getIntent().getStringExtra("url");
         String title = getIntent().getStringExtra("title");
 
