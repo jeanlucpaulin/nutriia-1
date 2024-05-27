@@ -60,8 +60,6 @@ public class DayAnalysisActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        APISend.clearValidateDayListeners();
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -74,8 +72,7 @@ public class DayAnalysisActivity extends AppCompatActivity {
 
         AccountMenu.init(this);
 
-        APISend.clearValidateDayListeners();
-        APISend.clearRDAListeners();
+        APISend.clear();
 
         //Partie composants
 

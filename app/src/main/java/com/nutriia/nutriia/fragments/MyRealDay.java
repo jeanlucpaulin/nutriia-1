@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class MyRealDay extends Fragment {
 
@@ -78,14 +79,17 @@ public class MyRealDay extends Fragment {
         Button validateButton = view.findViewById(R.id.validateButton);
 
         validateButton.setOnClickListener(v -> {
+            validateButton.setEnabled(false);
             Context context = getContext();
             Map<String, Set<String>> userInput = new HashMap<>();
+            boolean send = false;
 
             for(int viewId : viewIds) {
                 TextView textView = view.findViewById(viewId).findViewById(R.id.textView);
                 EditText editText = view.findViewById(viewId).findViewById(R.id.editText);
 
                 Set<String> inputs = new HashSet<>();
+                List<String> dishes = getDishes(viewId);
 
                 if(viewId == R.id.breakfast) {
                     inputs = Saver.saveMRDInputBreakfast(context, editText.getText().toString());
@@ -101,9 +105,19 @@ public class MyRealDay extends Fragment {
                 }
 
                 userInput.put(textView.getText().toString().toLowerCase(), inputs);
+
+                if(!send && !inputEquals(dishes, new ArrayList<>(inputs))) send = true;
             }
 
-            APISend.sendValidateDay(getActivity(), userInput);
+            if(send) {
+                APISend.sendValidateDay(getActivity(), userInput, result -> {
+                    validateButton.setEnabled(true);
+                });
+            }
+            else {
+                Log.d("MyRealDay", "No changes to send");
+                validateButton.setEnabled(true);
+            }
         });
 
         return view;
@@ -124,5 +138,13 @@ public class MyRealDay extends Fragment {
             dishes = new ArrayList<>(UserSharedPreferences.getInstance(getContext()).getMRDASnack());
         }
         return dishes;
+    }
+
+    private boolean inputEquals(List<String> list1, List<String> list2) {
+        if(list1.size() != list2.size()) return false;
+        for(int i = 0; i < list1.size(); i++) {
+            if(!list1.get(i).equals(list2.get(i))) return false;
+        }
+        return true;
     }
 }

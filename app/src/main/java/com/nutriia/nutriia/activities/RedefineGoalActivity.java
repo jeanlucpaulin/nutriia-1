@@ -18,6 +18,7 @@ import com.nutriia.nutriia.builders.GoalsBuilder;
 import com.nutriia.nutriia.fragments.DefineMyGoal;
 import com.nutriia.nutriia.fragments.RedefineMyGoal;
 import com.nutriia.nutriia.interfaces.OnClickOnGoal;
+import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ public class RedefineGoalActivity extends AppCompatActivity implements OnClickOn
                     userSharedPreferences.setGoal(i);
                     userSharedPreferences.clearRDA();
                     userSharedPreferences.clearTypicalDay();
+                    APISend.obtainsNewGoalRDA(this, null);
 
                     finish();
                     return;

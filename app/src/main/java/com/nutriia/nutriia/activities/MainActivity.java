@@ -74,39 +74,22 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        APISend.clearRDAListeners();
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        //APISend.sendConnect("Louis", "Nutriiaemf", getApplicationContext());
 
         APISend.obtainAccountInfos(getApplicationContext());
-
-        //APISend.obtainsProfileInfos(getApplicationContext());
-
-/*
-        ArrayMap<String, Integer> data = new ArrayMap<>();
-        data.put("age", 28);
-        data.put("weight", 70);
-        data.put("height", 185);
-        data.put("gender", 0);
-        data.put("goal", 3);
-        data.put("activity", 1);
-        data.put("progression", 2);
-
-
-        APISend.sendProfileInfos(this, data);
-*/
 
 
         DrawerMenu.init(this, this);
         NavBarListener.init(this, R.id.navbar_target);
 
         AccountMenu.init(this);
+
+        APISend.clear();
 
         //Partie composants
 

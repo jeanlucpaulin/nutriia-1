@@ -44,11 +44,19 @@ import okhttp3.Response;
 public class APISend {
 
     private static boolean rdaDefined = false;
+    private static boolean rdaRequested = false;
+    private static boolean validateDayCallBack = true;
     private static final List<APIResponseRDA> listenersRDA = new ArrayList<>();
     private static final List<APIResponseValidateDay> listenersValidateDay = new ArrayList<>();
 
     public static void clearRDAListeners() {
         listenersRDA.clear();
+    }
+
+    public static void clear() {
+        clearRDAListeners();
+        clearValidateDayListeners();
+        validateDayCallBack = false;
     }
 
     public static void clearValidateDayListeners() {
@@ -60,8 +68,8 @@ public class APISend {
     }
 
     public static void addRDAListener(APIResponseRDA listener) {
-        if(!rdaDefined) listenersRDA.add(listener);
-        else listener.onAPIRDAResponse();
+        listenersRDA.add(listener);
+        if(rdaDefined) listener.onAPIRDAResponse();
     }
 
     public static void sendConnect(String login, String password, Context context){
@@ -174,35 +182,25 @@ public class APISend {
         });
     }
 
-    public static void obtainsNewGoalAJR(Activity activity, Consumer<ArrayList<Fragment>> callbackMacro, Consumer<ArrayList<Fragment>> callbackMicro, Consumer<String> callbackCalories) {
 
+    public static void obtainsNewGoalRDA(Activity activity, APIResponseRDA listener) {
+        Log.d("API", "Obtains new goal RDA nb listeners: " + listenersRDA.size());
         UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(activity);
-        if(userSharedPreferences.isRDADefined())
-        {
+
+        rdaDefined = userSharedPreferences.isRDADefined();
+
+        if(rdaDefined) {
             Log.d("API", "User profile already defined");
-            ArrayList<String> macronutrients = new ArrayList<>(userSharedPreferences.getMacronutrients());
-            ArrayList<String> micronutrients = new ArrayList<>(userSharedPreferences.getMicronutrients());
-
-            ArrayList<Fragment> macronutrientsFragments = new ArrayList<>();
-            ArrayList<Fragment> micronutrientsFragments = new ArrayList<>();
-
-            for (String macronutrient : macronutrients) {
-                macronutrientsFragments.add(new NutrientAJR(new Nutrient(Translator.translate(macronutrient), (int) userSharedPreferences.getRDANutrient(macronutrient), "g")));
-            }
-
-            for (String micronutrient : micronutrients) {
-                micronutrientsFragments.add(new NutrientAJR(new Nutrient(Translator.translate(micronutrient), (int) userSharedPreferences.getRDANutrient(micronutrient), "mg")));
-            }
-
-            activity.runOnUiThread(() -> callbackMacro.accept(macronutrientsFragments));
-            activity.runOnUiThread(() -> callbackMicro.accept(micronutrientsFragments));
-            activity.runOnUiThread(() -> callbackCalories.accept(String.valueOf(userSharedPreferences.getRDACalories())));
-            APISend.rdaDefined = true;
+            if(listener != null) addRDAListener(listener);
             activity.runOnUiThread(() -> listenersRDA.forEach(APIResponseRDA::onAPIRDAResponse));
             return;
         }
 
-        rdaDefined = false;
+        if(listener != null) addRDAListener(listener);
+
+        if(rdaRequested) return;
+
+        rdaRequested = true;
 
         StringBuilder data = new StringBuilder("{\"user_profile\": {");
         data.append("\"height\": ").append(UserSharedPreferences.getInstance(activity).getHeight()).append(", ");
@@ -218,10 +216,12 @@ public class APISend {
         new APIRequest("get_new_goal", data.toString(), activity).send(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                rdaRequested = false;
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                rdaRequested = false;
                 if (response.isSuccessful()) {
                     String responseBody = response.body() != null ? response.body().string() : null;
 
@@ -229,8 +229,7 @@ public class APISend {
 
                     try {
                         JSONObject jsonObject = new JSONObject(responseBody);
-                        ArrayList<Fragment> macronutrients = new ArrayList<>();
-                        ArrayList<Fragment> micronutrients = new ArrayList<>();
+
                         Set<String> macronutrientsList = new HashSet<>();
                         Set<String> micronutrientsList = new HashSet<>();
 
@@ -240,30 +239,26 @@ public class APISend {
                             JSONObject nutrient = macronutrientsJSON.getJSONObject(key);
                             macronutrientsList.add(key);
                             userSharedPreferences.setRDANutrient(key, nutrient.getInt("value"));
-                            macronutrients.add(new NutrientAJR(new Nutrient(Translator.translate(key), nutrient.getInt("value"), nutrient.getString("unit"))));
                         }
 
                         userSharedPreferences.setMacronutrients(macronutrientsList);
 
                         JSONObject micronutrientsJSON = jsonObject.getJSONObject("micronutrients");
+
                         for (Iterator<String> it = micronutrientsJSON.keys(); it.hasNext(); ) {
                             String key = it.next();
                             JSONObject nutrient = micronutrientsJSON.getJSONObject(key);
                             micronutrientsList.add(key);
                             userSharedPreferences.setRDANutrient(key, nutrient.getInt("value"));
-                            micronutrients.add(new NutrientAJR(new Nutrient(Translator.translate(key), nutrient.getInt("value"), nutrient.getString("unit"))));
                         }
 
                         userSharedPreferences.setMicronutrients(micronutrientsList);
 
-                        String calories = jsonObject.getJSONObject("calories").getString("value");
-
                         userSharedPreferences.setRDACalories(jsonObject.getJSONObject("calories").getInt("value"));
 
-                        activity.runOnUiThread(() -> callbackMacro.accept(macronutrients));
-                        activity.runOnUiThread(() -> callbackMicro.accept(micronutrients));
-                        activity.runOnUiThread(() -> callbackCalories.accept(calories));
+
                         APISend.rdaDefined = true;
+
                         activity.runOnUiThread(() -> listenersRDA.forEach(APIResponseRDA::onAPIRDAResponse));
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -427,7 +422,8 @@ public class APISend {
         return dishes;
     }
 
-    public static void sendValidateDay(Activity activity, Map<String, Set<String>> userInput) {
+    public static void sendValidateDay(Activity activity, Map<String, Set<String>> userInput, Consumer<Boolean> callback) {
+        validateDayCallBack = true;
         Context context = activity.getApplicationContext();
         JSONObject data = new JSONObject();
         try {
@@ -439,6 +435,7 @@ public class APISend {
             new APIRequest("validate_day", data.toString(), context).send(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    if(validateDayCallBack) activity.runOnUiThread(() -> callback.accept(false));
                 }
 
                 @Override
@@ -457,6 +454,7 @@ public class APISend {
                         }
                     } else
                         Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+                    if(validateDayCallBack) activity.runOnUiThread(() -> callback.accept(true));
                 }
             });
         } catch (JSONException e) {

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
@@ -173,6 +174,7 @@ public class HealthInformationActivity extends AppCompatActivity {
             {
                 userSharedPreferences.clearRDA();
                 userSharedPreferences.clearTypicalDay();
+                APISend.obtainsNewGoalRDA(this, null);
             }
 
             setResult(RESULT_OK, new Intent());

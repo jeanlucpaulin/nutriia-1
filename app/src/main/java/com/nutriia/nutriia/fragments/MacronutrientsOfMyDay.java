@@ -1,11 +1,9 @@
 package com.nutriia.nutriia.fragments;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,20 +34,17 @@ public class MacronutrientsOfMyDay extends Fragment implements APIResponseValida
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.component_my_day, container, false);
 
-        Resources resources = getResources();
-
         recyclerView = view.findViewById(R.id.recyclerView);
         TextView textView = view.findViewById(R.id.component_title);
         textView.setText(R.string.macronutrients_of_my_day);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        APISend.addRDAListener(this);
+        APISend.obtainsNewGoalRDA(this.getActivity(), this);
 
         APISend.addValidateDayListener(this);
 
         return view;
-
     }
 
     @Override

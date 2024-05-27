@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.resources.Translator;
 
 public class NutrientAJR extends Fragment {
 
@@ -27,7 +28,7 @@ public class NutrientAJR extends Fragment {
         View view = inflater.inflate(R.layout.list_item_recommanded_daily_amount, container, false);
 
         TextView textViewName = view.findViewById(R.id.name);
-        textViewName.setText(nutrient.getName());
+        textViewName.setText(Translator.translate(nutrient.getName()));
 
         TextView textViewAmount = view.findViewById(R.id.amount);
         textViewAmount.setText(String.valueOf(nutrient.getValue()));
