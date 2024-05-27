@@ -24,8 +24,11 @@
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/lateral_open"
-        app:layout_constraintEnd_toStartOf="@id/account"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <!-- change for account app:layout_constraintStart_toEndOf="@id/lateral_open" -->
+    <!-- change for account app:layout_constraintEnd_toStartOf="@id/account" -->
 
     <ImageView
         android:id="@+id/logo_bird"
@@ -50,6 +53,7 @@
         app:layout_constraintEnd_toEndOf="@id/center_guideline"
         />
 
+    <!--
     <ImageButton
         android:id="@+id/account"
         android:layout_width="50dp"
@@ -62,5 +66,6 @@
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         />
+    -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

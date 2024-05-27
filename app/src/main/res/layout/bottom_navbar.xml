@@ -80,7 +80,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginTop="5dp"
-            android:src="@drawable/menu_icon_calendar_outline"
+            android:src="@drawable/menu_icon_chat_advisor_outline"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
             />
@@ -109,7 +109,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginTop="5dp"
-            android:src="@drawable/menu_icon_chat_outline"
+            android:src="@drawable/menu_icon_chat_ai_outline"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
             />

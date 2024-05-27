@@ -2,12 +2,12 @@
     <string name="app_name">NutriiA</string>
     <string name="menu_target">Mes objectifs</string>
     <string name="menu_analysis">Analyse de ma journée</string>
-    <string name="menu_meet">Rendez-vous conseiller</string>
-    <string name="menu_coach">Coach NutriiA</string>
+    <string name="menu_meet">Chat Conseiller</string>
+    <string name="menu_coach">Chat IA</string>
     <string name="menu_learn">Formations</string>
     <string name="side_navigation_target">Redéfinir mon objectif</string>
     <string name="side_navigation_health">Modifier mes informations santé</string>
-    <string name="side_navigation_meet">Voir mes rendez-vous</string>
+    <string name="side_navigation_meet">Voir mes rendez-vous (en développement)</string>
     <string name="side_navigation_follow_daily">Suivi hebdomadaire (en développement)</string>
     <string name="side_navigation_follow_monthly">Suivi mensuel (en développement)</string>
     <string name="side_navigation_forum">Forum</string>

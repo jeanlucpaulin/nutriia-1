@@ -37,8 +37,35 @@ public class WebViewActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient());
         WebSettings webSettings = webView.getSettings();
         ((WebSettings) webSettings).setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                injectJavaScript(view);
+            }
+        });
         assert url != null;
         webView.loadUrl(url);
 
+    }
+
+    private void injectJavaScript(WebView webView) {
+        try {
+            String js = "javascript:(function() {" +
+                    "var wpadminbar = document.getElementById('wpadminbar');" +
+                    "if (wpadminbar) wpadminbar.style.display = 'none';" +
+                    "var masthead = document.getElementById('masthead');" +
+                    "if (masthead) masthead.style.display = 'none';" +
+                    "var colophon = document.getElementById('colophon');" +
+                    "if (colophon) colophon.style.display = 'none';" +
+                    "var ktScrollUp = document.getElementById('kt-scroll-up');" +
+                    "if (ktScrollUp) ktScrollUp.style.display = 'none';" +
+                    "var chat = document.getElementById('mwai-chatbot-default');" +
+                    "if (chat) chat.style.display = 'none';" +
+                    "})()";
+            webView.evaluateJavascript(js, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
