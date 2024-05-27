@@ -37,6 +37,8 @@ public class ObjectifActivity extends AppCompatActivity implements OnClickOnGoal
     @Override
     public void onClickOnGoal(boolean isSelected) {
         submitButton.setEnabled(isSelected);
+        submitButton.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+
         if(isSelected) {
             for (Goal buttonGoal : goals) {
                 if (buttonGoal.isSelected()) goalDescription.setText(buttonGoal.getDescription());
@@ -77,6 +79,7 @@ public class ObjectifActivity extends AppCompatActivity implements OnClickOnGoal
         submitButton = (Button) findViewById(R.id.plusdinfo);
 
         submitButton.setEnabled(false);
+        submitButton.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
 
         Button tryWithoutGoal = (Button) findViewById(R.id.decrouvrirSansObjectif);
         tryWithoutGoal.setOnClickListener(v -> {
