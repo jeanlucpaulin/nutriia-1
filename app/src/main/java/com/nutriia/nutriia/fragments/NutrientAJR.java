@@ -18,6 +18,10 @@ public class NutrientAJR extends Fragment {
 
     private Nutrient nutrient;
 
+    public NutrientAJR() {
+        nutrient = new Nutrient("?", 0, "?");
+    }
+
     public NutrientAJR(Nutrient nutrient) {
         this.nutrient = nutrient;
     }
