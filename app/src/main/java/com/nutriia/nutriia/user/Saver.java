@@ -46,7 +46,7 @@ public class Saver {
     public static void saveMyReadDay(Context context, Day day) {
         UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(context);
         Nutrient calorie = day.getCalorie();
-        userSharedPreferences.setMRDCalories(calorie.getValue());
+        userSharedPreferences.setMRDCalories(calorie.getProgress());
         for(Nutrient macronutrient : day.getMacroNutrients().values()) {
             userSharedPreferences.setMRDNutrient(macronutrient.getName(), macronutrient.getProgress());
         }
