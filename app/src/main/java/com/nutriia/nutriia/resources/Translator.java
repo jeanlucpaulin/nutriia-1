@@ -48,8 +48,8 @@ public class Translator {
     }
 
     public static String translate(String text, LANGUAGES language) {
-         if(!dictionnary.containsKey(text)) return text;
-         if(!dictionnary.get(text).containsKey(language)) return text;
-        return dictionnary.get(text).get(language);
+         if(!dictionnary.containsKey(text.toLowerCase())) return text;
+         if(!dictionnary.get(text.toLowerCase()).containsKey(language)) return text;
+        return dictionnary.get(text.toLowerCase()).get(language);
     }
 }

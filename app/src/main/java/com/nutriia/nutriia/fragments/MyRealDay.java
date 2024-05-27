@@ -19,6 +19,7 @@ import com.nutriia.nutriia.Meal;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.MealsAdapter;
 import com.nutriia.nutriia.network.APISend;
+import com.nutriia.nutriia.resources.Translator;
 import com.nutriia.nutriia.user.Saver;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
@@ -71,7 +72,7 @@ public class MyRealDay extends Fragment {
             }
 
             editText.setText(content.toString());
-            textView.setText(meals.get(i).getName());
+            textView.setText(Translator.translate(meals.get(i).getName()));
 
         }
 
