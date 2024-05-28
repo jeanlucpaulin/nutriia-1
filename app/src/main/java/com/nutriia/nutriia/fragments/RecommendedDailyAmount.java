@@ -70,8 +70,13 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA {
 
         arrow = view.findViewById(R.id.arrowDetails);
         detailsText = view.findViewById(R.id.textDetails);
-        LinearLayout reverseDisplayAllItems = view.findViewById(R.id.detailsButton);
-        reverseDisplayAllItems.setOnClickListener(v -> reverseDisplayAllItems());
+        LinearLayout reverseDISPLAY_ALL_ITEMS = view.findViewById(R.id.detailsButton);
+        reverseDISPLAY_ALL_ITEMS.setOnClickListener(v -> reverseDisplayedItems());
+
+        String text = getResources().getString(DISPLAY_ALL_ITEMS ? R.string.less_details : R.string.more_details);
+        detailsText.setText(text);
+
+        arrow.setRotation(DISPLAY_ALL_ITEMS ? 270 : 90);
 
         return view;
     }
@@ -110,7 +115,7 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA {
         caloriesText.setText(String.valueOf(day.getCalorie().getValue()));
     }
 
-    private void reverseDisplayAllItems() {
+    private void reverseDisplayedItems() {
         DISPLAY_ALL_ITEMS = !DISPLAY_ALL_ITEMS;
         onAPIRDAResponse();
         arrow.setRotation(arrow.getRotation() + 180);
