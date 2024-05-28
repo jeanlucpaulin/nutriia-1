@@ -4,12 +4,16 @@ import android.content.Context;
 import android.util.Log;
 
 import com.nutriia.nutriia.Day;
+import com.nutriia.nutriia.Dish;
 import com.nutriia.nutriia.Nutrient;
+import com.nutriia.nutriia.utils.Date;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -54,10 +58,17 @@ public class Saver {
             userSharedPreferences.setMRDNutrient(micronutrient.getName(), micronutrient.getProgress());
         }
 
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String date = dateFormat.format(calendar.getTime());
+        String date = Date.getTodayDate();
         userSharedPreferences.setMRDDate(date);
+    }
 
+    public static void saveDishSuggestions(Context context, List<Dish> suggestions) {
+        Set<String> suggestionsString = new HashSet<>();
+        for(Dish dish : suggestions) {
+            suggestionsString.add(dish.getName());
+        }
+        UserSharedPreferences.getInstance(context).setDishSuggestions(suggestionsString);
+
+        UserSharedPreferences.getInstance(context).setDishSuggestionsDate(Date.getTodayDate());
     }
 }

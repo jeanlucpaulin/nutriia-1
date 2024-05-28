@@ -391,10 +391,12 @@ public class APISend {
         new APIRequest("get_typical_day", data.toString(), activity).send(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                activity.runOnUiThread(() -> callbackDishes.accept(new ArrayList<>()));
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                List<TypicalDay> typicalDay = new ArrayList<>();
                 if (response.isSuccessful()) {
                     String responseBody = response.body() != null ? response.body().string() : null;
 
@@ -405,7 +407,7 @@ public class APISend {
                         TypicalDay snack = new TypicalDay("snack", parseDishes(jsonObject.getJSONArray("snack")));
                         TypicalDay dinner = new TypicalDay("dinner", parseDishes(jsonObject.getJSONArray("dinner")));
 
-                        List<TypicalDay> typicalDay = new ArrayList<>();
+
                         typicalDay.add(breakfast);
                         typicalDay.add(lunch);
                         typicalDay.add(snack);
@@ -415,14 +417,12 @@ public class APISend {
                         userSharedPreferences.setTypicalDayLunch(lunch.getDishesStringSet());
                         userSharedPreferences.setTypicalDaySnack(snack.getDishesStringSet());
                         userSharedPreferences.setTypicalDayDinner(dinner.getDishesStringSet());
-
-
-                        activity.runOnUiThread(() -> callbackDishes.accept(typicalDay));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                 } else Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+                activity.runOnUiThread(() -> callbackDishes.accept(typicalDay));
             }
         });
     }

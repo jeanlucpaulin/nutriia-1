@@ -2,6 +2,7 @@ package com.nutriia.nutriia.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,12 @@ import com.nutriia.nutriia.Dish;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.activities.DishCompositionActivity;
 import com.nutriia.nutriia.adapters.DishSuggestionAdapter;
+import com.nutriia.nutriia.builders.DishBuilder;
 import com.nutriia.nutriia.network.APISend;
+import com.nutriia.nutriia.resources.Settings;
+import com.nutriia.nutriia.user.Saver;
+import com.nutriia.nutriia.user.UserSharedPreferences;
+import com.nutriia.nutriia.utils.Date;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +33,24 @@ import java.util.Objects;
 
 public class DishSuggestions extends Fragment {
 
-    private static final List<Dish> dishes = new ArrayList<>();
+    private final List<Dish> dishes;
+
+    public DishSuggestions() {
+        dishes = new ArrayList<>();
+
+        if(getContext() == null) return;
+
+        UserSharedPreferences sharedPreferences = UserSharedPreferences.getInstance(getContext());
+        String date = Date.getTodayDate();
+        String sharedDate = sharedPreferences.getDishSuggestionsDate();
+        if(!sharedDate.isEmpty() && date.equals(sharedDate)) {
+            dishes.addAll(DishBuilder.buildDish(sharedPreferences));
+            Log.d("DishSuggestions", "DishSuggestions: " + dishes.size());
+        }
+        else {
+            Log.d("DishSuggestions", "DishSuggestions: " + sharedDate + " " + date);
+        }
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,20 +58,26 @@ public class DishSuggestions extends Fragment {
 
         LinearLayout listView = view.findViewById(R.id.dish_suggestions_list);
 
-        if(dishes.isEmpty()) APISend.obtainsNewDish(getActivity(), dishes -> {
-            DishSuggestions.dishes.addAll(dishes);
+        if(this.dishes.isEmpty()) APISend.obtainsNewDish(getActivity(), dishes -> {
+            this.dishes.addAll(dishes);
             addDishes(dishes, listView);
-        }, DishSuggestions.dishes);
+        }, this.dishes);
         else addDishes(dishes, listView);
 
         ImageButton moreDishButton = view.findViewById(R.id.more_dish_suggestions_button);
         moreDishButton.setOnClickListener(v -> {
+            if(dishes.size() >= Settings.getMaxDishSuggestions())
+            {
+                showCustomToast("Nombre maximum de générations atteint", Toast.LENGTH_SHORT);
+                return;
+            }
+
             showCustomToast("Génération du plat idéal en cours...", Toast.LENGTH_SHORT);
 
             APISend.obtainsNewDish(getActivity(), dishes -> {
-                DishSuggestions.dishes.addAll(dishes);
+                this.dishes.addAll(dishes);
                 addDishes(dishes, listView);
-            }, DishSuggestions.dishes);
+            }, this.dishes);
         });
 
         return view;
@@ -70,6 +99,8 @@ public class DishSuggestions extends Fragment {
 
             listView.addView(itemView);
         }
+
+        Saver.saveDishSuggestions(getContext(), this.dishes);
 
     }
 

@@ -33,6 +33,7 @@ public class ExampleTypicalDay extends Fragment implements APIResponseRDA {
     private View lunchView;
     private View dinnerView;
     private View snackView;
+    private Button relaunchButton = null;
 
     @Nullable
     @Override
@@ -51,8 +52,9 @@ public class ExampleTypicalDay extends Fragment implements APIResponseRDA {
 
         APISend.obtainsTypicalDay(getActivity(), this::setTypicalDy, this);
 
-        Button relaunchButton = view.findViewById(R.id.relaunchButton);
+        relaunchButton = view.findViewById(R.id.relaunchButton);
         relaunchButton.setOnClickListener(v -> {
+            relaunchButton.setEnabled(false);
             showCustomToast("Génération d'une journée type en cours...", Toast.LENGTH_SHORT);
             UserSharedPreferences.getInstance(getContext()).clearTypicalDay();
             APISend.obtainsTypicalDay(getActivity(), this::setTypicalDy, this);
@@ -70,6 +72,7 @@ public class ExampleTypicalDay extends Fragment implements APIResponseRDA {
     }
 
     private void setTypicalDy(List<TypicalDay> dishes) {
+        if(relaunchButton != null) relaunchButton.setEnabled(true);
         for (TypicalDay typicalDay : dishes) {
             switch (typicalDay.getName()) {
                 case "breakfast":

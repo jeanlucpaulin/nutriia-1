@@ -34,6 +34,8 @@ public class UserSharedPreferences {
     private static final String KEY_TYPICAL_DAY_DINNER = "user_typical_day_dinner";
     private static final String KEY_TYPICAL_DAY_SNACK = "user_typical_day_snack";
 
+    private static final String KEY_DISH_SUGGESTIONS = "user_dish_suggestions";
+    private static final String KEY_DISH_SUGGESTIONS_DATE = "user_dish_suggestions_date";
 
     private final SharedPreferences sharedPreferences;
     private static UserSharedPreferences instance;
@@ -266,5 +268,21 @@ public class UserSharedPreferences {
         sharedPreferences.edit().remove(KEY_TYPICAL_DAY_LUNCH).apply();
         sharedPreferences.edit().remove(KEY_TYPICAL_DAY_DINNER).apply();
         sharedPreferences.edit().remove(KEY_TYPICAL_DAY_SNACK).apply();
+    }
+
+    public void setDishSuggestions(Set<String> dishSuggestions){
+        sharedPreferences.edit().putStringSet(KEY_DISH_SUGGESTIONS, dishSuggestions).apply();
+    }
+
+    public Set<String> getDishSuggestions(){
+        return sharedPreferences.getStringSet(KEY_DISH_SUGGESTIONS, new HashSet<>());
+    }
+
+    public void setDishSuggestionsDate(String date){
+        sharedPreferences.edit().putString(KEY_DISH_SUGGESTIONS_DATE, date).apply();
+    }
+
+    public String getDishSuggestionsDate(){
+        return sharedPreferences.getString(KEY_DISH_SUGGESTIONS_DATE, "");
     }
 }
