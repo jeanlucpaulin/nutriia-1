@@ -37,8 +37,13 @@ public class DishSuggestions extends Fragment {
 
     public DishSuggestions() {
         dishes = new ArrayList<>();
+    }
 
-        if(getContext() == null) return;
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.component_dish_suggestions, container, false);
+
+        LinearLayout listView = view.findViewById(R.id.dish_suggestions_list);
 
         UserSharedPreferences sharedPreferences = UserSharedPreferences.getInstance(getContext());
         String date = Date.getTodayDate();
@@ -50,13 +55,6 @@ public class DishSuggestions extends Fragment {
         else {
             Log.d("DishSuggestions", "DishSuggestions: " + sharedDate + " " + date);
         }
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.component_dish_suggestions, container, false);
-
-        LinearLayout listView = view.findViewById(R.id.dish_suggestions_list);
 
         if(this.dishes.isEmpty()) APISend.obtainsNewDish(getActivity(), dishes -> {
             this.dishes.addAll(dishes);
@@ -66,6 +64,7 @@ public class DishSuggestions extends Fragment {
 
         ImageButton moreDishButton = view.findViewById(R.id.more_dish_suggestions_button);
         moreDishButton.setOnClickListener(v -> {
+            moreDishButton.setEnabled(false);
             if(dishes.size() >= Settings.getMaxDishSuggestions())
             {
                 showCustomToast("Nombre maximum de générations atteint", Toast.LENGTH_SHORT);
@@ -75,6 +74,7 @@ public class DishSuggestions extends Fragment {
             showCustomToast("Génération du plat idéal en cours...", Toast.LENGTH_SHORT);
 
             APISend.obtainsNewDish(getActivity(), dishes -> {
+                moreDishButton.setEnabled(true);
                 this.dishes.addAll(dishes);
                 addDishes(dishes, listView);
             }, this.dishes);
