@@ -6,7 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,12 +35,17 @@ import java.util.List;
 
 public class RecommendedDailyAmount extends Fragment implements APIResponseRDA {
 
+    private static final int MAX_DISPLAYED_ITEMS = 10;
+    private static boolean DISPLAY_ALL_ITEMS = false;
 
     private final List<Fragment> macronutrients = new ArrayList<>();
     private final List<Fragment> micronutrients = new ArrayList<>();
     private TextView caloriesText;
     private RecyclerView macronutrientsListView;
     private RecyclerView micronutrientsListView;
+    private ImageView arrow;
+    private TextView detailsText;
+    private View view;
 
     private AppCompatActivity activity;
 
@@ -49,7 +57,7 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.component_recommanded_daily_amount, container, false);
+        view = inflater.inflate(R.layout.component_recommanded_daily_amount, container, false);
 
         macronutrientsListView = view.findViewById(R.id.macronutrients_list);
         micronutrientsListView = view.findViewById(R.id.micronutrients_list);
@@ -60,12 +68,16 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA {
 
         APISend.obtainsNewGoalRDA(this.getActivity(), this);
 
+        arrow = view.findViewById(R.id.arrowDetails);
+        detailsText = view.findViewById(R.id.textDetails);
+        LinearLayout reverseDisplayAllItems = view.findViewById(R.id.detailsButton);
+        reverseDisplayAllItems.setOnClickListener(v -> reverseDisplayAllItems());
+
         return view;
     }
 
     @Override
     public void onAPIRDAResponse() {
-        Log.d("API", "onAPIRDAResponse");
         Day day = new DayBuilder().buildOnlyWithGoal(UserSharedPreferences.getInstance(getContext()));
         List<Fragment> macroFragments = new ArrayList<>();
         List<Fragment> microFragments = new ArrayList<>();
@@ -77,17 +89,34 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA {
             microFragments.add(new NutrientAJR(nutrient));
         }
 
-        ItemRDAAdapter macroAdapter = new ItemRDAAdapter(activity.getSupportFragmentManager(), macroFragments);
-        ItemRDAAdapter microAdapter = new ItemRDAAdapter(activity.getSupportFragmentManager(), microFragments);
-
         macronutrients.clear();
         macronutrients.addAll(macroFragments);
         micronutrients.clear();
         micronutrients.addAll(microFragments);
 
+        while (!DISPLAY_ALL_ITEMS && microFragments.size() + macroFragments.size() > MAX_DISPLAYED_ITEMS) {
+            if(!microFragments.isEmpty()) microFragments.remove(microFragments.size() - 1);
+            else if (!macroFragments.isEmpty()) macroFragments.remove(macroFragments.size() - 1);
+            else break;
+        }
+
+        ItemRDAAdapter macroAdapter = new ItemRDAAdapter(activity.getSupportFragmentManager(), macroFragments);
+        ItemRDAAdapter microAdapter = new ItemRDAAdapter(activity.getSupportFragmentManager(), microFragments);
+
+
         macronutrientsListView.setAdapter(macroAdapter);
         micronutrientsListView.setAdapter(microAdapter);
 
         caloriesText.setText(String.valueOf(day.getCalorie().getValue()));
+    }
+
+    private void reverseDisplayAllItems() {
+        DISPLAY_ALL_ITEMS = !DISPLAY_ALL_ITEMS;
+        onAPIRDAResponse();
+        arrow.setRotation(arrow.getRotation() + 180);
+        String text = getResources().getString(DISPLAY_ALL_ITEMS ? R.string.less_details : R.string.more_details);
+        detailsText.setText(text);
+        ScrollView scrollView = view.findViewById(R.id.scroll_view);
+        scrollView.fullScroll(View.FOCUS_UP);
     }
 }
