@@ -91,7 +91,7 @@ public class DishCompositionActivity extends AppCompatActivity {
             String key = keys.next();
             try {
                 JSONObject nutrient = micronutrients.getJSONObject(key);
-                compositionList.add(Translator.translate(key) + ": " + nutrient.getInt("value") + nutrient.getString("unit"));
+                compositionList.add(Translator.translate(key) + ": " + nutrient.getInt("value") + " " + nutrient.getString("unit"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
