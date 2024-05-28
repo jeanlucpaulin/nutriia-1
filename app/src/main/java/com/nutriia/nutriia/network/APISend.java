@@ -269,14 +269,19 @@ public class APISend {
         });
     }
 
-    public static void obtainsNewDish(Activity activity, Consumer<List<Dish>> callbackDishes) {
+    public static void obtainsNewDish(Activity activity, Consumer<List<Dish>> callbackDishes, List<Dish> dishes) {
         JSONObject data = new JSONObject();
         try {
             data.put("action", "get_dish_suggestion");
 
             JSONObject userGoal = new JSONObject();
             userGoal.put("calories", UserSharedPreferences.getInstance(activity).getRDACalories());
-            userGoal.put("proteins", new JSONArray());
+            for(String macronutrient : UserSharedPreferences.getInstance(activity).getMacronutrients()) {
+                userGoal.put(macronutrient, UserSharedPreferences.getInstance(activity).getRDANutrient(macronutrient));
+            }
+            for(String micronutrient : UserSharedPreferences.getInstance(activity).getMicronutrients()) {
+                userGoal.put(micronutrient, UserSharedPreferences.getInstance(activity).getRDANutrient(micronutrient));
+            }
             data.put("user_goal", userGoal);
 
             JSONObject userRegistrations = new JSONObject();
@@ -293,6 +298,14 @@ public class APISend {
             userProfile.put("progression", UserSharedPreferences.getInstance(activity).getProgression());
             userProfile.put("activity_level", UserSharedPreferences.getInstance(activity).getActivityLevel());
             data.put("user_profile", userProfile);
+
+            JSONArray bannedDishes = new JSONArray();
+            for(Dish dish : dishes) {
+                bannedDishes.put(dish.getName());
+            }
+
+            data.put("banned_dishes", bannedDishes);
+
 
         } catch (JSONException e) {
             e.printStackTrace();
