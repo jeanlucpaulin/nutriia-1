@@ -77,7 +77,8 @@ public class MyRealDay extends Fragment {
         }
 
         TextView textViewCalories = view.findViewById(R.id.calories);
-        textViewCalories.setText(String.valueOf(userSharedPreferences.getMRDCalories() + " kcal"));
+        int calories = userSharedPreferences.getMRDCalories();
+        textViewCalories.setText(String.valueOf(Math.max(calories, 0) + " kcal"));
 
 
         Button validateButton = view.findViewById(R.id.validateButton);
@@ -116,8 +117,9 @@ public class MyRealDay extends Fragment {
             if(send) {
                 APISend.sendValidateDay(getActivity(), userInput, result -> {
                     validateButton.setEnabled(true);
-                    TextView calories = view.findViewById(R.id.calories);
-                    calories.setText(String.valueOf(userSharedPreferences.getMRDCalories() + " kcal"));
+                    TextView caloriesTextView = view.findViewById(R.id.calories);
+                    int caloriesMRD = userSharedPreferences.getMRDCalories();
+                    caloriesTextView.setText(String.valueOf((Math.max(caloriesMRD, 0)) + " kcal"));
                 });
             }
             else {
