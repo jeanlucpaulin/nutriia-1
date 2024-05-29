@@ -10,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.nutriia.nutriia.R;
@@ -35,6 +37,7 @@ import java.util.List;
 public class FoodComposition extends Fragment {
 
     private EditText editTextPlat;
+    private ImageButton deleteButton;
     private RecyclerView recyclerViewSuggestions;
     private SuggestionsAdapter suggestionsAdapter;
     private List<String> suggestions;
@@ -49,6 +52,8 @@ public class FoodComposition extends Fragment {
         View view = inflater.inflate(R.layout.component_food_composition, container, false);
 
         editTextPlat = view.findViewById(R.id.editplat);
+        deleteButton = view.findViewById(R.id.deleteButton);
+
         recyclerViewSuggestions = view.findViewById(R.id.recyclerViewSuggestions);
         recyclerViewSuggestions.setLayoutManager(new LinearLayoutManager(getContext()));
         suggestions = new ArrayList<>();
@@ -62,7 +67,7 @@ public class FoodComposition extends Fragment {
         });
 
         recyclerViewSuggestions.setAdapter(suggestionsAdapter);
-
+        recyclerViewSuggestions.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
 
         editTextPlat.addTextChangedListener(new TextWatcher() {
             @Override
@@ -73,29 +78,33 @@ public class FoodComposition extends Fragment {
                 if (isSuggestionSelected) {
                     isSuggestionSelected = false;
                 } else {
-                    if (charSequence.toString().trim().isEmpty()) {
+                    if (charSequence.length() >= 2) {
+                        if (charSequence.toString().trim().isEmpty()) {
+                            suggestions.clear();
+                            recyclerViewSuggestions.setVisibility(View.GONE);
+                        } else {
+                            handler.removeCallbacks(runnable);
+                            runnable = () -> fetchSuggestions(charSequence.toString());
+                            handler.postDelayed(runnable, 300);
+                        }
+                    } else {
                         suggestions.clear();
                         recyclerViewSuggestions.setVisibility(View.GONE);
-                    } else {
-                        // Remove any pending callbacks
-                        handler.removeCallbacks(runnable);
-
-                        // Add a delay before executing the fetchSuggestions
-                        runnable = () -> fetchSuggestions(charSequence.toString());
-                        handler.postDelayed(runnable, 500); // 500ms delay
                     }
                 }
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
-                if (editable.length() == 0) {
-                    suggestions.clear();
-                    recyclerViewSuggestions.setVisibility(View.GONE);
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    deleteButton.setEnabled(true);
+                    deleteButton.setImageResource(R.drawable.menu_icon_delete_red);
+                } else {
+                    deleteButton.setEnabled(false);
+                    deleteButton.setImageResource(R.drawable.menu_icon_delete_grey);
                 }
             }
         });
-
 
         LinearLayout layout = view.findViewById(R.id.linearLayoutComposition);
         layout.setOnClickListener(click -> {
@@ -107,6 +116,8 @@ public class FoodComposition extends Fragment {
                 showCustomToast("Veuillez saisir un nom d'aliment", Toast.LENGTH_SHORT);
             }
         });
+
+        deleteButton.setOnClickListener(v -> editTextPlat.setText(""));
 
         return view;
     }
@@ -149,7 +160,6 @@ public class FoodComposition extends Fragment {
                         suggestions.clear();
                         String currentText = editTextPlat.getText().toString().trim().toLowerCase();
 
-                        // Filtrer les suggestions
                         for (int i = 0; i < suggestionsArray.length(); i++) {
                             String suggestion = suggestionsArray.getString(i);
                             if (!suggestion.toLowerCase().equals(currentText)) {
@@ -157,10 +167,7 @@ public class FoodComposition extends Fragment {
                             }
                         }
 
-                        // Supprimer l'aliment s'il est déjà présent dans la liste
-                        if (suggestions.contains(currentText)) {
-                            suggestions.remove(currentText);
-                        }
+                        suggestions.remove(currentText);
 
                         getActivity().runOnUiThread(() -> {
                             if (suggestions.isEmpty()) {
@@ -184,8 +191,6 @@ public class FoodComposition extends Fragment {
             }
         }).start();
     }
-
-
 
     private void fetchFoodComposition(String foodName) {
         if (isRequestInProgress) {
@@ -223,9 +228,7 @@ public class FoodComposition extends Fragment {
                             String errorMessage = jsonResponse.getString("error");
                             getActivity().runOnUiThread(() -> showCustomToast(errorMessage, Toast.LENGTH_SHORT));
                         } else {
-                            getActivity().runOnUiThread(() -> {
-                                launchFoodCompositionActivity(foodName, jsonResponse);
-                            });
+                            getActivity().runOnUiThread(() -> launchFoodCompositionActivity(foodName, jsonResponse));
                         }
                     } catch (JSONException e) {
                         Log.e("fetchFoodComposition", "Invalid JSON response", e);
@@ -244,7 +247,6 @@ public class FoodComposition extends Fragment {
         }).start();
     }
 
-
     private void launchFoodCompositionActivity(String foodName, JSONObject foodData) {
         Log.d("launchFoodCompositionActivity", "Launching activity for: " + foodName);
         Intent intent = new Intent(getContext(), FoodCompositionActivity.class);
@@ -254,7 +256,7 @@ public class FoodComposition extends Fragment {
     }
 
     private void showCustomToast(String message, int duration) {
-        getActivity().runOnUiThread(() -> {
+        requireActivity().runOnUiThread(() -> {
             LayoutInflater inflater = getLayoutInflater();
             View layout = inflater.inflate(R.layout.toast_layout, getActivity().findViewById(R.id.toast_layout_root));
 
