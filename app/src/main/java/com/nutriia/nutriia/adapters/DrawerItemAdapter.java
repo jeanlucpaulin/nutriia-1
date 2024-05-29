@@ -69,6 +69,13 @@ public class DrawerItemAdapter extends RecyclerView.Adapter<DrawerItemAdapter.Vi
                     intent.putExtra("url", "https://nutriia.fr/fr/Forum/");
                     intent.putExtra("title", "Forum");
                     activityLauncher.launch(intent);
+                }else if (item.getItemId() == R.id.side_navigation_invite_friends) {
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, activity.getResources().getString(R.string.share_app_message));
+                    sendIntent.setType("text/plain");
+                    Intent shareIntent = Intent.createChooser(sendIntent, null);
+                    activity.startActivity(shareIntent);
                 }
             }
         });
