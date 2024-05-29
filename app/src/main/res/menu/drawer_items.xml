@@ -23,8 +23,4 @@
     <item
         android:id="@+id/side_navigation_forum"
         android:title="@string/side_navigation_forum" />
-
-    <item
-        android:id="@+id/side_navigation_invite_friends"
-        android:title="@string/side_navigation_invite_friends" />
 </menu>

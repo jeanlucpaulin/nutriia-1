@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.activities.AppLaunchActivity;
+import com.nutriia.nutriia.activities.WebViewActivity;
 import com.nutriia.nutriia.adapters.DrawerItemAdapter;
 import com.nutriia.nutriia.interfaces.onActivityFinishListener;
 import com.nutriia.nutriia.user.UserSharedPreferences;
@@ -36,6 +38,8 @@ public class DrawerMenu {
         ImageButton lateralOpenButton = activity.findViewById(R.id.lateral_open);
         ImageButton lateralCloseButton = activity.findViewById(R.id.lateral_close);
         Button disconnectButton = activity.findViewById(R.id.disconnect_button);
+        LinearLayout legalStatementsLayout = activity.findViewById(R.id.legal_statements_layout);
+        LinearLayout privacyPolicyLayout = activity.findViewById(R.id.privacy_policy_layout);
 
         lateralOpenButton.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
         lateralCloseButton.setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.START));
@@ -47,10 +51,25 @@ public class DrawerMenu {
         DrawerItemAdapter navAdapter = new DrawerItemAdapter(menu, activity, activityFinishListener);
         navRecyclerView.setAdapter(navAdapter);
 
+        legalStatementsLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(activity, WebViewActivity.class);
+            intent.putExtra("url", "https://nutriia.fr/fr/legal-statements/");
+            intent.putExtra("title", activity.getString(R.string.legal_statements));
+            activity.startActivity(intent);
+        });
+
+        privacyPolicyLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(activity, WebViewActivity.class);
+            intent.putExtra("url", "https://nutriia.fr/fr/privacy-policy-2");
+            intent.putExtra("title", activity.getString(R.string.privacy_policy));
+            activity.startActivity(intent);
+        });
+
         disconnectButton.setOnClickListener(v -> {
             UserSharedPreferences.getInstance(activity.getApplicationContext()).clear();
             activity.startActivity(new Intent(activity, AppLaunchActivity.class));
         });
+
 
         TextView appVersionDrawer = activity.findViewById(R.id.app_version_drawer);
 

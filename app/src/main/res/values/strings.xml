@@ -12,6 +12,8 @@
     <string name="side_navigation_follow_monthly">Suivi mensuel (en développement)</string>
     <string name="side_navigation_forum">Forum</string>
     <string name="side_navigation_invite_friends">Inviter des amis</string>
+    <string name="legal_statements">Mentions légales</string>
+    <string name="privacy_policy">Politique de confidentialité</string>
     <string name="menu_formations">Formations</string>
     <string name="title_tips_tricks">Conseils et astuces</string>
     <string name="button_previous_tips_description">Conseil et astuce précédente</string>

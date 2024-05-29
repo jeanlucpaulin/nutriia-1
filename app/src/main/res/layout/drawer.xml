@@ -50,9 +50,67 @@
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/disconnect_button"
-        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@id/legal_statements_layout"
+        android:layout_marginBottom="15dp"
         />
+
+    <LinearLayout
+        android:id="@+id/legal_statements_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/privacy_policy_layout"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/legal_statements_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/legal_statements"
+            android:textSize="15sp"
+            android:textColor="@android:color/holo_blue_light" />
+
+        <ImageView
+            android:id="@+id/legal_statements_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@string/legal_statements"
+            android:src="@drawable/baseline_arrow_outward_24"
+            android:layout_marginStart="5dp"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/privacy_policy_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/disconnect_button"
+        android:layout_marginBottom="15dp">
+
+        <TextView
+            android:id="@+id/privacy_policy_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/privacy_policy"
+            android:textSize="15sp"
+            android:textColor="@android:color/holo_blue_light" />
+
+        <ImageView
+            android:id="@+id/privacy_policy_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@string/privacy_policy"
+            android:src="@drawable/baseline_arrow_outward_24"
+            android:layout_marginStart="5dp"
+            />
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/disconnect_button"
