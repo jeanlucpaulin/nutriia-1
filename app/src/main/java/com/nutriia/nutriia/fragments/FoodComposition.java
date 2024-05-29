@@ -2,6 +2,7 @@ package com.nutriia.nutriia.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.activities.FoodCompositionActivity;
 import com.nutriia.nutriia.adapters.SuggestionsAdapter;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -37,6 +39,9 @@ public class FoodComposition extends Fragment {
     private SuggestionsAdapter suggestionsAdapter;
     private List<String> suggestions;
     private boolean isSuggestionSelected = false;
+    private boolean isRequestInProgress = false;
+    private Handler handler = new Handler();
+    private Runnable runnable;
 
     @Nullable
     @Override
@@ -48,13 +53,16 @@ public class FoodComposition extends Fragment {
         recyclerViewSuggestions.setLayoutManager(new LinearLayoutManager(getContext()));
         suggestions = new ArrayList<>();
         suggestionsAdapter = new SuggestionsAdapter(suggestions, suggestion -> {
-            editTextPlat.setText(suggestion);
-            recyclerViewSuggestions.setVisibility(View.GONE);
-            isSuggestionSelected = true;
-            fetchFoodComposition(suggestion);
+            if (!isRequestInProgress) {
+                editTextPlat.setText(suggestion);
+                recyclerViewSuggestions.setVisibility(View.GONE);
+                isSuggestionSelected = true;
+                fetchFoodComposition(suggestion);
+            }
         });
 
         recyclerViewSuggestions.setAdapter(suggestionsAdapter);
+
 
         editTextPlat.addTextChangedListener(new TextWatcher() {
             @Override
@@ -69,7 +77,12 @@ public class FoodComposition extends Fragment {
                         suggestions.clear();
                         recyclerViewSuggestions.setVisibility(View.GONE);
                     } else {
-                        fetchSuggestions(charSequence.toString());
+                        // Remove any pending callbacks
+                        handler.removeCallbacks(runnable);
+
+                        // Add a delay before executing the fetchSuggestions
+                        runnable = () -> fetchSuggestions(charSequence.toString());
+                        handler.postDelayed(runnable, 500); // 500ms delay
                     }
                 }
             }
@@ -82,6 +95,7 @@ public class FoodComposition extends Fragment {
                 }
             }
         });
+
 
         LinearLayout layout = view.findViewById(R.id.linearLayoutComposition);
         layout.setOnClickListener(click -> {
@@ -171,7 +185,17 @@ public class FoodComposition extends Fragment {
         }).start();
     }
 
+
+
     private void fetchFoodComposition(String foodName) {
+        if (isRequestInProgress) {
+            Log.d("fetchFoodComposition", "Request already in progress, ignoring new request.");
+            return;
+        }
+
+        isRequestInProgress = true;
+        Log.d("fetchFoodComposition", "Starting request for: " + foodName);
+
         new Thread(() -> {
             try {
                 String encodedFoodName = URLEncoder.encode(foodName, "UTF-8");
@@ -190,16 +214,22 @@ public class FoodComposition extends Fragment {
                     }
                     bufferedReader.close();
 
-                    JSONObject jsonResponse = new JSONObject(response.toString());
-                    Log.d("FoodComposition", "Response JSON: " + jsonResponse.toString());
+                    String responseBody = response.toString();
+                    try {
+                        JSONObject jsonResponse = new JSONObject(responseBody);
+                        Log.d("fetchFoodComposition", "Response JSON: " + jsonResponse.toString());
 
-                    if (jsonResponse.has("error")) {
-                        String errorMessage = jsonResponse.getString("error");
-                        getActivity().runOnUiThread(() -> showCustomToast(errorMessage, Toast.LENGTH_SHORT));
-                    } else {
-                        getActivity().runOnUiThread(() -> {
-                            launchFoodCompositionActivity(foodName, jsonResponse);
-                        });
+                        if (jsonResponse.has("error")) {
+                            String errorMessage = jsonResponse.getString("error");
+                            getActivity().runOnUiThread(() -> showCustomToast(errorMessage, Toast.LENGTH_SHORT));
+                        } else {
+                            getActivity().runOnUiThread(() -> {
+                                launchFoodCompositionActivity(foodName, jsonResponse);
+                            });
+                        }
+                    } catch (JSONException e) {
+                        Log.e("fetchFoodComposition", "Invalid JSON response", e);
+                        getActivity().runOnUiThread(() -> showCustomToast("Invalid response from server", Toast.LENGTH_SHORT));
                     }
                 } else {
                     getActivity().runOnUiThread(() -> showCustomToast("Erreur de connexion", Toast.LENGTH_SHORT));
@@ -207,11 +237,16 @@ public class FoodComposition extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
                 getActivity().runOnUiThread(() -> showCustomToast("Une erreur est survenue", Toast.LENGTH_SHORT));
+            } finally {
+                isRequestInProgress = false;
+                Log.d("fetchFoodComposition", "Request completed for: " + foodName);
             }
         }).start();
     }
 
+
     private void launchFoodCompositionActivity(String foodName, JSONObject foodData) {
+        Log.d("launchFoodCompositionActivity", "Launching activity for: " + foodName);
         Intent intent = new Intent(getContext(), FoodCompositionActivity.class);
         intent.putExtra("food_name", foodName);
         intent.putExtra("food_data", foodData.toString());
