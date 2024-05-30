@@ -27,9 +27,7 @@
         android:textColor="@color/black"
         android:textSize="23sp"
         android:fontFamily="@font/montserrat_light"
-        android:stateListAnimator="@null"
         android:textAlignment="viewStart"
-        android:justificationMode="inter_word"
         android:layout_toRightOf="@id/icon"
         android:layout_centerVertical="true"
         />

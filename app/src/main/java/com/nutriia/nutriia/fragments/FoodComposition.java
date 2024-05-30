@@ -1,6 +1,5 @@
 package com.nutriia.nutriia.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -12,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -21,8 +21,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.activities.FoodCompositionActivity;
+import com.nutriia.nutriia.adapters.FoodCompositionAdapter;
 import com.nutriia.nutriia.adapters.SuggestionsAdapter;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,12 +33,23 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class FoodComposition extends Fragment {
 
     private EditText editTextPlat;
     private ImageButton deleteButton;
+    private TextView foodCalorie;
+    private TextView foodName;
+    private RelativeLayout titleAndCalorie;
+    private LinearLayout macroMicroList;
+    private RecyclerView macroNutrientsRecyclerView;
+    private RecyclerView microNutrientsRecyclerView;
+    private FoodCompositionAdapter macroNutrientAdapter;
+    private FoodCompositionAdapter microNutrientAdapter;
+    private List<String> macroNutrients;
+    private List<String> microNutrients;
     private RecyclerView recyclerViewSuggestions;
     private SuggestionsAdapter suggestionsAdapter;
     private List<String> suggestions;
@@ -53,6 +65,21 @@ public class FoodComposition extends Fragment {
 
         editTextPlat = view.findViewById(R.id.editplat);
         deleteButton = view.findViewById(R.id.deleteButton);
+
+        foodCalorie = view.findViewById(R.id.food_calorie);
+        foodName = view.findViewById(R.id.food_name);
+
+        macroNutrientsRecyclerView = view.findViewById(R.id.macronutrients);
+        macroNutrientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        macroNutrients = new ArrayList<>();
+        macroNutrientAdapter = new FoodCompositionAdapter(macroNutrients);
+        macroNutrientsRecyclerView.setAdapter(macroNutrientAdapter);
+
+        microNutrientsRecyclerView = view.findViewById(R.id.micronutrients);
+        microNutrientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        microNutrients = new ArrayList<>();
+        microNutrientAdapter = new FoodCompositionAdapter(microNutrients);
+        microNutrientsRecyclerView.setAdapter(microNutrientAdapter);
 
         recyclerViewSuggestions = view.findViewById(R.id.recyclerViewSuggestions);
         recyclerViewSuggestions.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -116,6 +143,12 @@ public class FoodComposition extends Fragment {
                 showCustomToast("Veuillez saisir un nom d'aliment", Toast.LENGTH_SHORT);
             }
         });
+
+        titleAndCalorie = view.findViewById(R.id.TitleandCalorie);
+        macroMicroList = view.findViewById(R.id.macroMicroList);
+
+        titleAndCalorie.setVisibility(View.GONE);
+        macroMicroList.setVisibility(View.GONE);
 
         deleteButton.setOnClickListener(v -> editTextPlat.setText(""));
 
@@ -228,7 +261,13 @@ public class FoodComposition extends Fragment {
                             String errorMessage = jsonResponse.getString("error");
                             getActivity().runOnUiThread(() -> showCustomToast(errorMessage, Toast.LENGTH_SHORT));
                         } else {
-                            getActivity().runOnUiThread(() -> launchFoodCompositionActivity(foodName, jsonResponse));
+                            getActivity().runOnUiThread(() -> {
+                                try {
+                                    updateUI(jsonResponse.getJSONObject("foodData"));
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
                         }
                     } catch (JSONException e) {
                         Log.e("fetchFoodComposition", "Invalid JSON response", e);
@@ -247,12 +286,61 @@ public class FoodComposition extends Fragment {
         }).start();
     }
 
-    private void launchFoodCompositionActivity(String foodName, JSONObject foodData) {
-        Log.d("launchFoodCompositionActivity", "Launching activity for: " + foodName);
-        Intent intent = new Intent(getContext(), FoodCompositionActivity.class);
-        intent.putExtra("food_name", foodName);
-        intent.putExtra("food_data", foodData.toString());
-        startActivity(intent);
+    private void updateUI(JSONObject foodData) {
+        RelativeLayout titleAndCalorie = getView().findViewById(R.id.TitleandCalorie);
+        LinearLayout macroMicroList = getView().findViewById(R.id.macroMicroList);
+
+        try {
+            if (foodData.has("calories") && foodData.has("food_name") &&
+                    (foodData.has("macro_nutrients") || foodData.has("micro_nutrients"))) {
+
+                titleAndCalorie.setVisibility(View.VISIBLE);
+                macroMicroList.setVisibility(View.VISIBLE);
+
+                String calories = foodData.getString("calories") + " Kcal / 100g";
+                if (foodCalorie != null) {
+                    foodCalorie.setText(calories);
+                }
+
+                String foodNameStr = foodData.getString("food_name");
+                if (foodName != null) {
+                    foodName.setText(foodNameStr);
+                }
+
+                if (foodData.has("macro_nutrients")) {
+                    JSONObject macroNutrientsObj = foodData.getJSONObject("macro_nutrients");
+                    macroNutrients.clear();
+                    for (Iterator<String> it = macroNutrientsObj.keys(); it.hasNext(); ) {
+                        String key = it.next();
+                        String nutrient = key + " (" + macroNutrientsObj.getString(key) + ")";
+                        macroNutrients.add(nutrient);
+                    }
+                    if (macroNutrientAdapter != null) {
+                        macroNutrientAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                if (foodData.has("micro_nutrients")) {
+                    JSONObject microNutrientsObj = foodData.getJSONObject("micro_nutrients");
+                    microNutrients.clear();
+                    for (Iterator<String> it = microNutrientsObj.keys(); it.hasNext(); ) {
+                        String key = it.next();
+                        String nutrient = key + " (" + microNutrientsObj.getString(key) + ")";
+                        microNutrients.add(nutrient);
+                    }
+                    if (microNutrientAdapter != null) {
+                        microNutrientAdapter.notifyDataSetChanged();
+                    }
+                }
+
+            } else {
+                titleAndCalorie.setVisibility(View.GONE);
+                macroMicroList.setVisibility(View.GONE);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showCustomToast(String message, int duration) {

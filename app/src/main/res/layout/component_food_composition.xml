@@ -72,9 +72,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recyclerViewSuggestions"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp">
+        android:layout_marginTop="6dp">
 
         <TextView
             android:id="@+id/textViewComposition"
@@ -83,7 +81,7 @@
             android:text="@string/show_composition"
             android:textColor="@color/black"
             android:fontFamily="@font/montserrat_light"
-            android:textSize="13sp"
+            android:textSize="15sp"
             android:layout_marginEnd="3dp"
             />
 
@@ -95,4 +93,110 @@
             android:src="@drawable/baseline_arrow_forward_ios_24"
             />
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/TitleandCalorie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutComposition"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/rounded_health_edit_text">
+
+        <TextView
+            android:id="@+id/food_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:singleLine="false"
+            android:layout_toStartOf="@id/food_calorie"
+            android:layout_alignParentStart="true"
+            />
+
+        <TextView
+            android:id="@+id/food_calorie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:fontFamily="@font/montserrat"
+            android:textSize="18sp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@+id/food_name" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/macroMicroList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/TitleandCalorie"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="12dp">
+
+        <RelativeLayout
+            android:id="@+id/macroList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_health_edit_text">
+
+            <TextView
+                android:id="@+id/titleMacro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/macronutriments"
+                android:textColor="@color/black"
+                android:fontFamily="@font/montserrat"
+                android:textStyle="bold"
+                android:textSize="17sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/macronutrients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/titleMacro"
+                android:layout_marginStart="10dp"
+                android:textSize="15sp"
+                android:layout_marginBottom="12dp"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/microList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_health_edit_text">
+
+            <TextView
+                android:id="@+id/titleMicro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/micronutriments"
+                android:textColor="@color/black"
+                android:fontFamily="@font/montserrat"
+                android:textStyle="bold"
+                android:textSize="17sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/micronutrients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/titleMicro"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="12dp"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
