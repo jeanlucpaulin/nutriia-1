@@ -14,7 +14,7 @@ public class Translator {
         dictionnary.put("proteins", Map.of(LANGUAGES.FR_fr, "Protéines"));
         dictionnary.put("carbohydrates", Map.of(LANGUAGES.FR_fr, "Glucides"));
         dictionnary.put("lipids", Map.of(LANGUAGES.FR_fr, "Lipides"));
-        dictionnary.put("fibers", Map.of(LANGUAGES.FR_fr, "fibres"));
+        dictionnary.put("fibers", Map.of(LANGUAGES.FR_fr, "Fibres"));
         dictionnary.put("sugars", Map.of(LANGUAGES.FR_fr, "sucres"));
         dictionnary.put("vitamin_a", Map.of(LANGUAGES.FR_fr, "Vitamine A"));
         dictionnary.put("vitamin_b1", Map.of(LANGUAGES.FR_fr, "Vitamine B1"));
