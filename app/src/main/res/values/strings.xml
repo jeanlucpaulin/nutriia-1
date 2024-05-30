@@ -85,8 +85,8 @@
     <string name="set_my_goal">Définir mon objectif ?</string>
     <string name="disconnect">Déconnexion</string>
     <string name="app_version">Version %s</string>
-    <string name="macronutrients_of_my_day">Macronuments de ma journée</string>
-    <string name="micronutrients_of_my_day">Micronuments de ma journée</string>
+    <string name="macronutrients_of_my_day">Macronutriments de ma journée</string>
+    <string name="micronutrients_of_my_day">Micronutriments de ma journée</string>
     <string name="goal">Objectif</string>
     <string name="dish_suggestion">Suggestions de plats</string>
     <string name="more_dish_suggestions">Plus de suggestions</string>
