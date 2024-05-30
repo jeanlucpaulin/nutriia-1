@@ -14,6 +14,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.fragments.DefineGoalButtons;
+import com.nutriia.nutriia.fragments.DefineMyGoal;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RedefineMyGoal;
 import com.nutriia.nutriia.interfaces.OnClickOnGoal;
@@ -103,6 +105,10 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
             fragmentManager.beginTransaction().show(fragment).commit();
         }
         if (fragment instanceof PageTitle) {
+            holder.getContainer().setBackground(null);
+        }
+
+        if (fragment instanceof DefineGoalButtons || fragment instanceof RedefineMyGoal) {
             holder.getContainer().setBackground(null);
         }
 

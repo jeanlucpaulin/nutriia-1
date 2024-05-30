@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -41,7 +42,7 @@ public class RedefineMyGoal extends Fragment {
     }
 
     public void setGoalSelected(boolean isSelected) {
-        RelativeLayout layout = view.findViewById(R.id.goalLayout);
+        LinearLayout layout = view.findViewById(R.id.goalLayout);
         goal.setSelected(isSelected);
         layout.setAlpha(isSelected ? 0.4f : 1.0f);
     }

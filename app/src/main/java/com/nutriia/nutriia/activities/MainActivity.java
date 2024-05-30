@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.DrawerItemAdapter;
 import com.nutriia.nutriia.adapters.FragmentsAdapter;
+import com.nutriia.nutriia.fragments.DefineGoalButtons;
 import com.nutriia.nutriia.fragments.DefineMyGoal;
 import com.nutriia.nutriia.fragments.DishSuggestions;
 import com.nutriia.nutriia.fragments.ExampleTypicalDay;
@@ -34,6 +35,7 @@ import com.nutriia.nutriia.fragments.FoodComposition;
 import com.nutriia.nutriia.fragments.MorePrecision;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
+import com.nutriia.nutriia.fragments.RedefineMyGoal;
 import com.nutriia.nutriia.fragments.TipsAdvices;
 import com.nutriia.nutriia.fragments.UserProfile;
 import com.nutriia.nutriia.interfaces.onActivityFinishListener;
@@ -104,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
     private void setFragments(RecyclerView recyclerView) {
         fragments.clear();
         fragments.add(new PageTitle(PageTitle.ActivityType.MAIN));
+        fragments.add(new DefineGoalButtons());
         fragments.add(new TipsAdvices());
         if(UserSharedPreferences.getInstance(getApplicationContext()).isUserProfileDefined()) fragments.add(new UserProfile(this, this));
         else fragments.add(new MorePrecision(this, this));

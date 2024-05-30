@@ -8,6 +8,7 @@
         android:id="@+id/side_navigation_sante"
         android:title="@string/side_navigation_health" />
 
+    <!--
     <item
         android:id="@+id/side_navigation_meet"
         android:title="@string/side_navigation_meet" />
@@ -20,6 +21,7 @@
         android:id="@+id/side_navigation_follow_monthly"
         android:title="@string/side_navigation_follow_monthly" />
 
+    -->
     <item
         android:id="@+id/side_navigation_forum"
         android:title="@string/side_navigation_forum" />

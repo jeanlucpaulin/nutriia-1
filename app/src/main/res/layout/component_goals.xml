@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/goalLayout"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/linear_rounded">
 
     <ImageView
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:id="@+id/icon"
         android:src="@drawable/icon_goal_muscle_gain"
-        android:contentDescription="Prise de muscles"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/goal"
         android:text="Prise de muscles"
-        android:textSize="25sp"
+        android:textSize="15sp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="@font/montserrat"
         android:textColor="@color/black"
         android:textAlignment="center"
-        android:layout_toEndOf="@id/icon"
-        android:layout_centerVertical="true"
         />
 
-</RelativeLayout>
+</LinearLayout>

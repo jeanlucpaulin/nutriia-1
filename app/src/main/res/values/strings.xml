@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">NutriiA</string>
-    <string name="menu_target">Mes objectifs</string>
+    <string name="menu_target">Accueil\nMes objectifs</string>
     <string name="menu_analysis">Analyse de ma journée</string>
     <string name="menu_meet">Chat Conseiller</string>
     <string name="menu_coach">Chat IA</string>
@@ -112,7 +112,7 @@
         <item>Bonjour, vous souhaitez avoir un meilleur sommeil !</item>
     </string-array>
     <string-array name="icons_goals">
-        <item>menu_icon_target_outline</item>
+        <item>menu_icon_target_outline_old</item>
         <item>icon_goal_weight_lost</item>
         <item>icon_goal_muscle_gain</item>
         <item>icon_goal_shape</item>
