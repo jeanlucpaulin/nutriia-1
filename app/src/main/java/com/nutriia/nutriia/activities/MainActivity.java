@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
 
         AccountMenu.init(this);
 
-        APISend.clear();
+        //APISend.clear();
 
         //Partie composants
 

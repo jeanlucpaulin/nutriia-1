@@ -56,7 +56,7 @@ public class FormationActivity extends AppCompatActivity {
         NavBarListener.init(this, R.id.navbar_learn);
         AccountMenu.init(this);
 
-        APISend.clear();
+        //APISend.clear();
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

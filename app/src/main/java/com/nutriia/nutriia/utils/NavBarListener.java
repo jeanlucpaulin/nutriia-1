@@ -74,31 +74,28 @@ public class NavBarListener {
     }
 
     private static void eventTarget(View v){
-        Intent intent = new Intent(activity, MainActivity.class);
-        activity.startActivity(intent);
-        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        navigate(v, MainActivity.class);
     }
 
     private static void eventAnalysis(View v){
-        Intent intent = new Intent(activity, DayAnalysisActivity.class);
-        activity.startActivity(intent);
-        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        navigate(v, DayAnalysisActivity.class);
     }
 
     private static void eventMeets(View v){
-        Intent intent = new Intent(activity, MeetActivity.class);
-        activity.startActivity(intent);
-        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        navigate(v, MeetActivity.class);
     }
 
     private static void eventCoach(View v){
-        Intent intent = new Intent(activity, CoachActivity.class);
-        activity.startActivity(intent);
-        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        navigate(v, CoachActivity.class);
     }
 
     private static void eventLearn(View v){
-        Intent intent = new Intent(activity, FormationActivity.class);
+        navigate(v, FormationActivity.class);
+    }
+
+    private static void navigate(View v, Class<?> activityClass){
+        Intent intent = new Intent(activity, activityClass);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }

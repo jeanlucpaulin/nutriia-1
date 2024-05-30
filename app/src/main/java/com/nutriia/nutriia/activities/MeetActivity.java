@@ -37,7 +37,7 @@ public class MeetActivity extends AppCompatActivity {
         DrawerMenu.init(this);
         AccountMenu.init(this);
 
-        APISend.clear();
+        //APISend.clear();
 
         webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);

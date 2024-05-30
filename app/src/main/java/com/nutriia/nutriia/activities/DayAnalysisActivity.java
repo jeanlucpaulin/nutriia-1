@@ -72,7 +72,7 @@ public class DayAnalysisActivity extends AppCompatActivity {
 
         AccountMenu.init(this);
 
-        APISend.clear();
+        //APISend.clear();
 
         //Partie composants
 

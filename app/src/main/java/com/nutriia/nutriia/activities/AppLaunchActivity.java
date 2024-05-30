@@ -12,13 +12,17 @@ public class AppLaunchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (UserSharedPreferences.getInstance(getApplicationContext()).getGoal() == -1) {
-            startActivity(new Intent(this, ObjectifActivity.class));
+            Intent intent = new Intent(this, ObjectifActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
         } else {
             startActivity(new Intent(this, MainActivity.class));
         }
 
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+
+        this.finishAffinity();
 
     }
 }
