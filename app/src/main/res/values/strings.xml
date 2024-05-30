@@ -98,40 +98,32 @@
     <string name="show_composition">Voir la composition</string>
     <string name="objective">Objectif</string>
     <string-array name="goals">
-        <item>Sans objectif</item>
+        <item>Nutrition santé</item>
         <item>Perte de poids</item>
         <item>Prise de muscles</item>
         <item>Remise en forme</item>
-        <item>Meilleur endurance</item>
         <item>Qualité du sommeil</item>
-        <item>Prévention santé</item>
     </string-array>
     <string-array name="welcome_messages">
-        <item>Bonjour, vous souhaitez découvrir l\'application !</item>
+        <item>Bonjour, vous souhaitez avoir des conseils en nutrition santé !</item>
         <item>Bonjour, vous souhaitez perdre du poids !</item>
         <item>Bonjour, vous souhaitez prendre du muscle !</item>
         <item>Bonjour, vous souhaitez vous remettre en forme !</item>
-        <item>Bonjour, vous souhaitez avoir une meilleure endurance !</item>
         <item>Bonjour, vous souhaitez avoir un meilleur sommeil !</item>
-        <item>Bonjour, vous souhaitez avoir des conseils de prévention santé !</item>
     </string-array>
     <string-array name="icons_goals">
         <item>menu_icon_target_outline</item>
         <item>icon_goal_weight_lost</item>
         <item>icon_goal_muscle_gain</item>
         <item>icon_goal_shape</item>
-        <item>icon_goal_improve_stamina</item>
         <item>icon_goal_sleep_quality</item>
-        <item>icon_goal_health_tips</item>
     </string-array>
     <string-array name="goals_descriptions">
         <item>Découvrir sans objectif</item>
         <item>L\'objectif de la perte de poids est de perdre du poids de manière saine et durable afin d\'améliorer la santé globale, la mobilité et la confiance en soi. En adoptant des habitudes alimentaires équilibrées et en intégrant des exercices physiques réguliers, vous pouvez atteindre et maintenir un poids optimal pour votre bien-être.</item>
         <item>L\'objectif de la prise de muscle est de gagner en masse musculaire tout en réduisant la proportion de graisse corporelle. En combinant un régime alimentaire riche en protéines avec un programme d\'entraînement de musculation ciblé, vous pouvez développer une musculature plus définie, améliorer la force et la résistance, et favoriser un métabolisme plus actif.</item>
         <item>L\'objectif de la remise en forme est d\'améliorer la santé cardiovasculaire, la force, la flexibilité et l\'endurance physique. En adoptant un mode de vie actif et équilibré, comprenant une alimentation saine et variée ainsi qu\'une pratique régulière d\'exercices cardiovasculaires, de musculation et de flexibilité, vous pouvez renforcer votre système immunitaire, réduire le risque de maladies chroniques et augmenter votre niveau d\'énergie quotidien.</item>
-        <item>L\'objectif de l\'endurance est d\'améliorer la capacité du corps à fournir de l\'énergie de manière soutenue sur une période prolongée. En incluant des exercices cardiovasculaires réguliers dans votre routine d\'entraînement, tels que la course à pied, le vélo ou la natation, vous pouvez renforcer votre système cardiorespiratoire, augmenter votre endurance et améliorer votre capacité à résister à la fatigue pendant les activités physiques et quotidiennes.</item>
         <item>L\'objectif de la qualité de sommeil est d\'améliorer la durée, la profondeur et la régularité du sommeil pour favoriser une récupération optimale du corps et de l\'esprit. En adoptant des habitudes de sommeil saines, telles que maintenir un horaire régulier de coucher et de lever, créer un environnement propice au sommeil dans la chambre à coucher, et pratiquer des techniques de relaxation avant le coucher, vous pouvez améliorer la qualité de votre sommeil et bénéficier d\'une meilleure santé physique et mentale.</item>
-        <item>L\'objectif de la prévention santé est de prévenir les maladies chroniques et de promouvoir le bien-être général en adoptant un mode de vie sain et équilibré. Cela inclut une alimentation nutritive, une activité physique régulière, la gestion du stress, le maintien d\'un poids santé, le sommeil adéquat et l\'abstention de comportements nocifs comme le tabagisme et la consommation excessive d\'alcool. En prenant soin de votre santé, vous pouvez réduire le risque de développer des maladies et profiter d\'une vie plus saine.</item>
     </string-array>
     <string-array name="tips_titles">
         <item>Alimentation</item>
@@ -148,27 +140,21 @@
         <item>Mangez plus de légumes, des viandes maigres, et des aliments complets comme le riz brun. Évitez les sodas et les boissons sucrées.</item>
         <item>Mangez des protéines à chaque repas, comme du poulet, du poisson ou des œufs, et ajoutez des légumes et des glucides comme le riz ou les pâtes complètes.</item>
         <item>Mangez des repas équilibrés avec des légumes, des protéines maigres (comme du poulet ou du poisson), et des glucides complets (comme le riz brun ou les patates douces).</item>
-        <item>Mangez des glucides complexes comme l\'avoine, le riz brun et les patates douces pour avoir de l\'énergie pendant vos entraînements. N\'oubliez pas d\'inclure des protéines et des légumes.</item>
         <item>Évitez les repas lourds et riches en graisses avant de vous coucher. Optez pour des aliments légers comme des fruits, des légumes ou des yaourts.</item>
-        <item>Adoptez une alimentation équilibrée riche en fruits, légumes, grains entiers, protéines maigres et graisses saines comme celles trouvées dans les avocats et les noix. Limitez les aliments transformés et riches en sucres.</item>
     </string-array>
     <string-array name="tips_activity">
         <item>Intégrez au moins 30 minutes d\'exercice modéré par jour, comme la marche rapide, pour améliorer votre santé cardiovasculaire et maintenir un poids sain.</item>
         <item>Faites des exercices courts et intenses, comme des sprints ou des sauts, 3 à 4 fois par semaine. Cela aide à brûler plus de calories.</item>
         <item>Faites des exercices de musculation, comme des squats, des pompes et des soulevés de terre, 3 à 4 fois par semaine. Augmentez progressivement la charge.</item>
         <item>Faites 30 minutes d\'exercice modéré, comme la marche rapide, le vélo ou la natation, 5 jours par semaine pour améliorer votre forme physique.</item>
-        <item>Faites des exercices cardiovasculaires comme la course, le vélo ou la natation pendant 30 à 60 minutes, 3 à 5 fois par semaine. Augmentez progressivement la durée et l\'intensité.</item>
         <item>Faites de l\'exercice régulièrement, mais évitez les séances intenses trop près de l\'heure du coucher. Une activité physique modérée favorise un meilleur sommeil.</item>
-        <item>Faites de l\'exercice régulièrement en intégrant des activités physiques comme la marche, la natation ou le vélo dans votre routine quotidienne. Visez au moins 150 minutes d\'activité modérée par semaine.</item>
     </string-array>
     <string-array name="tips_recovery">
         <item>Assurez-vous de dormir 7 à 9 heures par nuit pour permettre à votre corps de récupérer et renforcer votre système immunitaire.</item>
         <item>Dormez entre 7 et 9 heures par nuit. Un bon sommeil aide à contrôler votre faim et à récupérer après l\'exercice.</item>
         <item>Accordez-vous entre 7 et 9 heures de sommeil chaque nuit pour favoriser la récupération musculaire et la croissance optimales.</item>
         <item>Dormez suffisamment chaque nuit, idéalement entre 7 et 9 heures, pour permettre à votre corps de se reposer et de récupérer, favorisant ainsi une meilleure remise en forme.</item>
-        <item>Prenez des bains chauds ou des douches relaxantes après l\'entraînement pour détendre vos muscles et favoriser la récupération.</item>
         <item>Créez une routine relaxante avant d\'aller dormir, comme lire un livre, prendre un bain chaud ou méditer. Évitez les écrans au moins une heure avant de vous coucher.</item>
-        <item>Priorisez le sommeil en vous assurant de dormir suffisamment chaque nuit, car un sommeil adéquat renforce le système immunitaire et favorise la santé globale.</item>
     </string-array>
     <string-array name="genders">
         <item>Homme</item>
