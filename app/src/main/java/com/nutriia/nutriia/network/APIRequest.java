@@ -31,6 +31,10 @@ public class APIRequest {
 
             String data = "action=" + this.action + "&request=" + encodedData;
 
+            if(context == null) {
+                Log.e("APIRequest", "Context is null");
+                return;
+            }
 
             String url = this.context.getString(R.string.api_client_url) + "?" + data;
 

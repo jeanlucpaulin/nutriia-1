@@ -42,7 +42,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class APISend {
-
+    private static final String TAG = "APISend";
     private static boolean rdaDefined = false;
     private static boolean rdaRequested = false;
     private static boolean validateDayCallBack = true;
@@ -88,10 +88,10 @@ public class APISend {
                         JSONObject jsonObject = new JSONObject(responseBody);
                         String token = jsonObject.getString("token");
                         UserSharedPreferences.getInstance(context).setAccessToken(token);
-                        Log.d("API", "Token: " + token);
+                        Log.d(TAG, "Token: " + token);
                     } catch (JSONException e) { e.printStackTrace(); }
 
-                } else Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+                } else Log.d(TAG, "Request failed with status code: " + response.code() + ", message: " + response.body().string());
             }
         });
     }
@@ -112,10 +112,10 @@ public class APISend {
                         String lastname = jsonObject.getString("last_name");
                         String mail = jsonObject.getString("email");
                         String login = jsonObject.getString("login");
-                        Log.d("API", "Firstname: " + firstname + ", Lastname: " + lastname + ", Mail: " + mail + ", Login: " + login);
+                        Log.d(TAG, "Firstname: " + firstname + ", Lastname: " + lastname + ", Mail: " + mail + ", Login: " + login);
                     } catch (JSONException e) { e.printStackTrace(); }
 
-                } else Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+                } else Log.d(TAG, "Request failed with status code: " + response.code() + ", message: " + response.body().string());
             }
         });
     }
@@ -131,7 +131,7 @@ public class APISend {
                 if (response.isSuccessful()) {
                     String responseBody = response.body() != null ? response.body().string() : null;
 
-                    Log.d("API", "Response: " + responseBody);
+                    Log.d(TAG, "Response: " + responseBody);
 
                     try {
                         JSONObject jsonObject = new JSONObject(responseBody);
@@ -150,12 +150,12 @@ public class APISend {
                         UserSharedPreferences.getInstance(context).setGender(gender);
                         UserSharedPreferences.getInstance(context).setProgression(progression);
                         UserSharedPreferences.getInstance(context).setActivityLevel(activityLevel);
-                        Log.d("API", "Age: " + age + ", Weight: " + weight + ", Height: " + height + ", Goal: " + goal + ", Gender: " + gender + ", Progression: " + progression + ", Activity Level: " + activityLevel);
+                        Log.d(TAG, "Age: " + age + ", Weight: " + weight + ", Height: " + height + ", Goal: " + goal + ", Gender: " + gender + ", Progression: " + progression + ", Activity Level: " + activityLevel);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                } else Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+                } else Log.d(TAG, "Request failed with status code: " + response.code() + ", message: " + response.body().string());
             }
         });
     }
@@ -176,21 +176,21 @@ public class APISend {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    Log.d("API", "Profile infos updated");
-                } else Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+                    Log.d(TAG, "Profile infos updated");
+                } else Log.d(TAG, "Request failed with status code: " + response.code() + ", message: " + response.body().string());
             }
         });
     }
 
 
     public static void obtainsNewGoalRDA(Activity activity, APIResponseRDA listener) {
-        Log.d("API", "Obtains new goal RDA nb listeners: " + listenersRDA.size());
+        Log.d(TAG, "Obtains new goal RDA nb listeners: " + listenersRDA.size());
         UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(activity);
 
         rdaDefined = userSharedPreferences.isRDADefined();
 
         if(rdaDefined) {
-            Log.d("API", "User profile already defined");
+            Log.d(TAG, "User profile already defined");
             if(listener != null) addRDAListener(listener);
             activity.runOnUiThread(() -> listenersRDA.forEach(APIResponseRDA::onAPIRDAResponse));
             return;
@@ -211,7 +211,7 @@ public class APISend {
         data.delete(data.length() - 2, data.length());
         data.append("}}");
 
-        Log.d("API", "Data: " + data);
+        Log.d(TAG, "Data: " + data);
 
         new APIRequest("get_new_goal", data.toString(), activity).send(new Callback() {
             @Override
@@ -225,7 +225,7 @@ public class APISend {
                 if (response.isSuccessful()) {
                     String responseBody = response.body() != null ? response.body().string() : null;
 
-                    Log.d("API", "Response: " + responseBody);
+                    Log.d(TAG, "Response: " + responseBody);
 
                     try {
                         JSONObject jsonObject = new JSONObject(responseBody);
@@ -264,7 +264,7 @@ public class APISend {
                         e.printStackTrace();
                     }
 
-                } else Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+                } else Log.d(TAG, "Request failed with status code: " + response.code() + ", message: " + response.body().string());
             }
         });
     }
@@ -299,6 +299,17 @@ public class APISend {
             userProfile.put("activity_level", UserSharedPreferences.getInstance(activity).getActivityLevel());
             data.put("user_profile", userProfile);
 
+            JSONObject userDay = new JSONObject();
+            userDay.put("calories", UserSharedPreferences.getInstance(activity).getMRDCalories());
+            for(String nutrient : UserSharedPreferences.getInstance(activity).getMacronutrients()) {
+                userDay.put(nutrient, UserSharedPreferences.getInstance(activity).getMRDNutrient(nutrient));
+            }
+            for(String nutrient : UserSharedPreferences.getInstance(activity).getMicronutrients()) {
+                userDay.put(nutrient, UserSharedPreferences.getInstance(activity).getMRDNutrient(nutrient));
+            }
+            data.put("user_day", userDay);
+
+
             JSONArray bannedDishes = new JSONArray();
             for(Dish dish : dishes) {
                 bannedDishes.put(dish.getName());
@@ -332,7 +343,7 @@ public class APISend {
                         e.printStackTrace();
                     }
 
-                } else Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+                } else Log.d(TAG, "Request failed with status code: " + response.code() + ", message: " + response.body().string());
             }
         });
     }
@@ -421,7 +432,7 @@ public class APISend {
                         e.printStackTrace();
                     }
 
-                } else Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+                } else Log.d(TAG, "Request failed with status code: " + response.code() + ", message: " + response.body().string());
                 activity.runOnUiThread(() -> callbackDishes.accept(typicalDay));
             }
         });
@@ -443,7 +454,7 @@ public class APISend {
             data.put("action", "validate_day");
             data.put("user_registrations", new JSONObject(userInput));
 
-            Log.d("API", "Data: " + data.toString());
+            Log.d(TAG, "Data: " + data.toString());
 
             new APIRequest("validate_day", data.toString(), context).send(new Callback() {
                 @Override
@@ -455,8 +466,8 @@ public class APISend {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.isSuccessful()) {
                         String responseBody = response.body() != null ? response.body().string() : null;
-                        Log.d("API", "Day validated");
-                        Log.d("API", "Response: " + responseBody);
+                        Log.d(TAG, "Day validated");
+                        Log.d(TAG, "Response: " + responseBody);
                         try {
                             JSONObject jsonObject = new JSONObject(responseBody);
                             Day day = new DayBuilder().build(jsonObject, UserSharedPreferences.getInstance(context));
@@ -466,7 +477,7 @@ public class APISend {
                             throw new RuntimeException(e);
                         }
                     } else
-                        Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+                        Log.d(TAG, "Request failed with status code: " + response.code() + ", message: " + response.body().string());
                     if(validateDayCallBack) activity.runOnUiThread(() -> callback.accept(true));
                 }
             });
@@ -510,7 +521,7 @@ public class APISend {
                         e.printStackTrace();
                     }
 
-                } else Log.d("API", "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+                } else Log.d(TAG, "Request failed with status code: " + response.code() + ", message: " + response.body().string());
             }
         });
     }
