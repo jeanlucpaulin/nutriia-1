@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.Slide;
 import com.nutriia.nutriia.adapters.SlideAdapter;
+import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
@@ -23,11 +24,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TipsAdvices extends Fragment {
+public class TipsAdvices extends Fragment implements OnNewGoalSelected {
     private ViewPager2 viewPager;
     private SlideAdapter slideAdapter;
     private ImageButton previousButton;
     private ImageButton nextButton;
+    private final List<Slide> slides = new ArrayList<>();
 
     @Nullable
     @Override
@@ -39,22 +41,8 @@ public class TipsAdvices extends Fragment {
 
         int goalIndex = UserSharedPreferences.getInstance(getContext()).getGoal();
 
-        //nom des tips dans le fichier strings.xml
-        List<String> tipsNames = Arrays.asList(getResources().getStringArray(R.array.tips_names));
+        updateTips(goalIndex);
 
-
-        List<String> tipsTitles = Arrays.asList(getResources().getStringArray(R.array.tips_titles));
-        List<Slide> slides = new ArrayList<>();
-
-        for(int i = 0; i < tipsNames.size(); i++) {
-            List<String> tips = Arrays.asList(getResources().getStringArray(getResources().getIdentifier(tipsNames.get(i), "array", getContext().getPackageName())));
-            slides.add(new Slide(tipsTitles.get(i), tips.get(goalIndex)));
-        }
-
-
-        slideAdapter = new SlideAdapter(getContext(), slides);
-
-        viewPager.setAdapter(slideAdapter);
 
         previousButton = view.findViewById(R.id.previousButton);
         nextButton = view.findViewById(R.id.nextButton);
@@ -78,5 +66,29 @@ public class TipsAdvices extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onNewGoalSelected(int position) {
+        updateTips(position);
+    }
+
+    private void updateTips(int goalIndex) {
+        List<String> tipsNames = Arrays.asList(getResources().getStringArray(R.array.tips_names));
+
+
+        List<String> tipsTitles = Arrays.asList(getResources().getStringArray(R.array.tips_titles));
+
+        slides.clear();
+
+        for(int i = 0; i < tipsNames.size(); i++) {
+            List<String> tips = Arrays.asList(getResources().getStringArray(getResources().getIdentifier(tipsNames.get(i), "array", getContext().getPackageName())));
+            slides.add(new Slide(tipsTitles.get(i), tips.get(goalIndex)));
+        }
+
+
+        slideAdapter = new SlideAdapter(getContext(), slides);
+
+        viewPager.setAdapter(slideAdapter);
     }
 }

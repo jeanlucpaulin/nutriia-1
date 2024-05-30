@@ -20,13 +20,16 @@ import androidx.fragment.app.Fragment;
 import com.nutriia.nutriia.Goal;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.builders.GoalsBuilder;
+import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
 import com.nutriia.nutriia.interfaces.onActivityFinishListener;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
-public class UserProfile extends Fragment {
+public class UserProfile extends Fragment implements OnNewGoalSelected {
 
     private AppCompatActivity activity;
     private onActivityFinishListener activityFinishListener;
+    ImageView userGoalIcon;
+    TextView userGoal;
 
     public UserProfile(AppCompatActivity activity, onActivityFinishListener activityFinishListener) {
         this.activity = activity;
@@ -41,8 +44,8 @@ public class UserProfile extends Fragment {
         TextView userHeight = view.findViewById(R.id.height_data);
         TextView userBodyMassIndex = view.findViewById(R.id.body_mass_index_data);
         TextView userBodyMassIndexUnit = view.findViewById(R.id.body_mass_index_unit);
-        ImageView userGoalIcon = view.findViewById(R.id.image_objective);
-        TextView userGoal = view.findViewById(R.id.title_objective);
+        userGoalIcon = view.findViewById(R.id.image_objective);
+        userGoal = view.findViewById(R.id.title_objective);
         LinearLayout imcContainer = view.findViewById(R.id.imc_container);
         UserSharedPreferences sharedPreferences = UserSharedPreferences.getInstance(activity.getApplicationContext());
 
@@ -100,9 +103,19 @@ public class UserProfile extends Fragment {
             userBodyMassIndex.setText(userBodyMassIndexText);
         }
 
+        updateGoal(userSharedPreferences.getGoal());
+    }
+
+    @Override
+    public void onNewGoalSelected(int position) {
+        updateGoal(position);
+    }
+
+    private void updateGoal(int goalIndex) {
+        UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(requireContext());
         GoalsBuilder goalsBuilder = new GoalsBuilder(getResources(), requireContext().getPackageName(), userSharedPreferences);
-        Goal goal = goalsBuilder.getGoal(userSharedPreferences.getGoal());
-        goalIcon.setImageDrawable(ResourcesCompat.getDrawable(getResources(), goal.getImageResId(), null));
-        goalName.setText(goal.getText());
+        Goal goal = goalsBuilder.getGoal(goalIndex);
+        userGoalIcon.setImageDrawable(ResourcesCompat.getDrawable(getResources(), goal.getImageResId(), null));
+        userGoal.setText(goal.getText());
     }
 }

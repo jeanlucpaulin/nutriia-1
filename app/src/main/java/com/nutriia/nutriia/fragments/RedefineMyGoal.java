@@ -21,6 +21,7 @@ import com.nutriia.nutriia.Goal;
 public class RedefineMyGoal extends Fragment {
     private Goal goal;
     private View view;
+    private LinearLayout goalLayout;
 
     public RedefineMyGoal(Goal goal) {
         this.goal = goal;
@@ -33,18 +34,31 @@ public class RedefineMyGoal extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(goal.isActual() ? R.layout.component_goals_actual : R.layout.component_goals, container, false);
+        view = inflater.inflate(R.layout.component_goals, container, false);
+        goalLayout = view.findViewById(R.id.goalLayout);
+        if(goal.isActual()) {
+            goalLayout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_text_meal, null));
+        }
+        else {
+            goalLayout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_rounded, null));
+        }
+
         TextView textView = view.findViewById(R.id.goal);
         ImageView imageView = view.findViewById(R.id.icon);
         imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), goal.getImageResId(), null));
         textView.setText(goal.getText());
+
         return view;
     }
 
-    public void setGoalSelected(boolean isSelected) {
-        LinearLayout layout = view.findViewById(R.id.goalLayout);
-        goal.setSelected(isSelected);
-        layout.setAlpha(isSelected ? 0.4f : 1.0f);
+    public void setGoalSelected(boolean selected) {
+        if(selected == goal.isActual()) return;
+        goal.setActual(selected);
+        if(selected) {
+            goalLayout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_text_meal, null));
+        }
+        else {
+            goalLayout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_rounded, null));
+        }
     }
-
 }

@@ -1,6 +1,7 @@
 package com.nutriia.nutriia.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +23,26 @@ import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.FragmentsAdapter;
 import com.nutriia.nutriia.builders.GoalsBuilder;
 import com.nutriia.nutriia.interfaces.OnClickOnGoal;
+import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
 import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefineGoalButtons extends Fragment implements OnClickOnGoal {
+public class DefineGoalButtons extends Fragment {
     private RecyclerView recyclerView;
     private Button validateButton;
+    private OnNewGoalSelected callBack;
+
+    public DefineGoalButtons() {
+        super();
+    }
+
+    public DefineGoalButtons(OnNewGoalSelected callBack) {
+        super();
+        this.callBack = callBack;
+    }
 
     @Nullable
     @Override
@@ -46,6 +58,12 @@ public class DefineGoalButtons extends Fragment implements OnClickOnGoal {
         recyclerView = view.findViewById(R.id.recyclerViewRedefineGoal);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
+        setGoals();
+
+        return view;
+    }
+
+    private void setGoals() {
         List<Fragment> fragments = new ArrayList<>();
 
         GoalsBuilder goalsBuilder = new GoalsBuilder(getResources(), getActivity().getPackageName(), UserSharedPreferences.getInstance(getContext()));
@@ -56,14 +74,8 @@ public class DefineGoalButtons extends Fragment implements OnClickOnGoal {
             fragments.add(new RedefineMyGoal(goal));
         });
 
-        FragmentsAdapter adapter = new FragmentsAdapter(getChildFragmentManager(), fragments, true, this);
+        FragmentsAdapter adapter = new FragmentsAdapter(getChildFragmentManager(), fragments, true, callBack);
         recyclerView.setAdapter(adapter);
-
-        return view;
     }
 
-    @Override
-    public void onClickOnGoal(boolean isSelected) {
-        // Ici mettre le changement de goal
-    }
 }

@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.R;
@@ -19,6 +20,7 @@ import com.nutriia.nutriia.fragments.DefineMyGoal;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RedefineMyGoal;
 import com.nutriia.nutriia.interfaces.OnClickOnGoal;
+import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
 import com.nutriia.nutriia.interfaces.onItemClickListener;
 
 import java.util.List;
@@ -27,13 +29,13 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
     private final FragmentManager fragmentManager;
     private final List<Fragment> fragments;
     private final boolean allowClick;
-    private final OnClickOnGoal callBack;
+    private final OnNewGoalSelected callBack;
 
     public FragmentsAdapter(FragmentManager fragmentManager, List<Fragment> fragments) {
         this(fragmentManager, fragments, false, null);
     }
 
-    public FragmentsAdapter(FragmentManager fragmentManager, List<Fragment> fragments, boolean allowClick, OnClickOnGoal callBack) {
+    public FragmentsAdapter(FragmentManager fragmentManager, List<Fragment> fragments, boolean allowClick, OnNewGoalSelected callBack) {
         this.fragmentManager = fragmentManager;
         this.fragments = fragments;
         this.allowClick = allowClick;
@@ -43,29 +45,23 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
     @Override
     public void onItemClick(int position) {
         if(!allowClick) return;
-        if(((RedefineMyGoal) fragments.get(position)).getGoal().isSelected())
-        {
-            ((RedefineMyGoal) fragments.get(position)).setGoalSelected(false);
-            if(callBack != null) callBack.onClickOnGoal(false);
-            return;
-        }
-        for (Fragment fragment : fragments) {
-            if (fragment instanceof RedefineMyGoal) {
+        if(((RedefineMyGoal) fragments.get(position)).getGoal().isActual()) return;
+        for(Fragment fragment : fragments) {
+            if(fragment instanceof RedefineMyGoal) {
                 ((RedefineMyGoal) fragment).setGoalSelected(false);
             }
         }
         ((RedefineMyGoal) fragments.get(position)).setGoalSelected(true);
-        if(callBack != null) callBack.onClickOnGoal(true);
+
+        callBack.onNewGoalSelected(position);
     }
 
     public static class FragmentViewHolder extends RecyclerView.ViewHolder {
         private final FrameLayout container;
-        private final onItemClickListener listener;
 
         public FragmentViewHolder(@NonNull FrameLayout container, @Nullable onItemClickListener listener) {
             super(container);
             this.container = container;
-            this.listener = listener;
             container.setOnClickListener(v -> {
                 if (listener != null) {
                     listener.onItemClick(getAdapterPosition());

@@ -11,18 +11,25 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class PageTitle extends Fragment {
+public class PageTitle extends Fragment implements OnNewGoalSelected {
+    @Override
+    public void onNewGoalSelected(int position) {
+        updateTitle();
+    }
+
     public enum ActivityType {
         MAIN,
         FORMATION
     }
 
     private final ActivityType activityType;
+    private View view;
 
     public PageTitle(ActivityType activityType) {
         this.activityType = activityType;
@@ -30,15 +37,9 @@ public class PageTitle extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.component_page_title, container, false);
+        view = inflater.inflate(R.layout.component_page_title, container, false);
 
-        TextView title = view.findViewById(R.id.page_title);
-
-        if(activityType == ActivityType.MAIN) {
-            title.setText(getMainPageTitle());
-        } else {
-            title.setText(getFormationPageTitle());
-        }
+        updateTitle();
 
         return view;
     }
@@ -51,5 +52,14 @@ public class PageTitle extends Fragment {
 
     private String getFormationPageTitle() {
         return getResources().getString(R.string.formation_page_title);
+    }
+
+    private void updateTitle() {
+        TextView title = view.findViewById(R.id.page_title);
+        if(activityType == ActivityType.MAIN) {
+            title.setText(getMainPageTitle());
+        } else {
+            title.setText(getFormationPageTitle());
+        }
     }
 }

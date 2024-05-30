@@ -77,8 +77,8 @@ public class RedefineGoalActivity extends AppCompatActivity implements OnClickOn
             fragments.add(new RedefineMyGoal(goal));
         });
 
-        FragmentsAdapter adapter = new FragmentsAdapter(getSupportFragmentManager(), fragments, true, this);
-        recyclerView.setAdapter(adapter);
+        //FragmentsAdapter adapter = new FragmentsAdapter(getSupportFragmentManager(), fragments, true, this);
+        //recyclerView.setAdapter(adapter);
 
 
         validateButton.setEnabled(false);

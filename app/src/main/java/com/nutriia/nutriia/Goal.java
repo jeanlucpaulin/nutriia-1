@@ -2,10 +2,12 @@ package com.nutriia.nutriia;
 
 public class Goal {
     private int imageResId;
+
     private String text;
 
     private String description;
-    private boolean selected;
+
+    private boolean isSelected;
 
     private boolean isActual;
 
@@ -17,7 +19,6 @@ public class Goal {
         this.imageResId = imageResId;
         this.text = text;
         this.description = description;
-        this.selected = false;
         this.isActual = isActual;
     }
 
@@ -31,13 +32,15 @@ public class Goal {
 
     public String getDescription() { return description; }
 
+    public boolean isActual() { return isActual; }
+
+    public void setActual(boolean actual) { isActual = actual; }
+
     public boolean isSelected() {
-        return selected;
+        return isSelected;
     }
 
     public void setSelected(boolean selected) {
-        this.selected = selected;
+        isSelected = selected;
     }
-
-    public boolean isActual() { return isActual; }
 }
