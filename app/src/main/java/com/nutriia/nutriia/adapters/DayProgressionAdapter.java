@@ -1,6 +1,9 @@
 package com.nutriia.nutriia.adapters;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.Nutrient;
@@ -39,6 +43,10 @@ public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAd
         holder.name.setText(name);
         holder.value.setText(String.valueOf(nutrient.getValue() + " " + nutrient.getUnit()));
         int progressRatio = (int) ((float) nutrient.getProgress() / nutrient.getValue() * 100);
+
+        if(progressRatio <= 30) holder.progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.red)));
+        else if (progressRatio <= 70) holder.progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange)));
+        else holder.progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lime)));
         holder.progressBar.setProgress(progressRatio);
     }
 
