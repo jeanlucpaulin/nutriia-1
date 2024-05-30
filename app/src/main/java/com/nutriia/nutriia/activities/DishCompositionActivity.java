@@ -66,6 +66,7 @@ public class DishCompositionActivity extends AppCompatActivity {
         dishName.setText(dish.getName());
         dishCalories.setText(String.valueOf(dish.getCalories()) + " Kcal / 100g");
 
+        /*
         // Dish Composition
         RecyclerView dishCompositionRecyclerView = findViewById(R.id.dishCompostion);
         dishCompositionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -98,8 +99,10 @@ public class DishCompositionActivity extends AppCompatActivity {
         }
 
 
+
         FoodCompositionAdapter compositionAdapter = new FoodCompositionAdapter(compositionList);
         dishCompositionRecyclerView.setAdapter(compositionAdapter);
+ */
 
         // Recipe
         RecyclerView RecipeRecyclerView = findViewById(R.id.recipeComposition);

@@ -38,6 +38,12 @@ public class FoodCompositionAdapter extends RecyclerView.Adapter<FoodComposition
         return macroNutrientList.size();
     }
 
+    public void updateData(List<String> newData) {
+        this.macroNutrientList.clear();
+        this.macroNutrientList.addAll(newData);
+        notifyDataSetChanged();
+    }
+
     public static class MacroNutrientViewHolder extends RecyclerView.ViewHolder {
         TextView macroNutrientTextView;
 

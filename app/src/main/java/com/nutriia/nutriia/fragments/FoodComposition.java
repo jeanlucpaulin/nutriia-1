@@ -150,7 +150,11 @@ public class FoodComposition extends Fragment {
         titleAndCalorie.setVisibility(View.GONE);
         macroMicroList.setVisibility(View.GONE);
 
-        deleteButton.setOnClickListener(v -> editTextPlat.setText(""));
+        deleteButton.setOnClickListener(v -> {
+            titleAndCalorie.setVisibility(View.GONE);
+            macroMicroList.setVisibility(View.GONE);
+            editTextPlat.setText("");
+        });
 
         return view;
     }

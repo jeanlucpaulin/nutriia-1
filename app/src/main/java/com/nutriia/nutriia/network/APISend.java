@@ -2,6 +2,7 @@ package com.nutriia.nutriia.network;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
@@ -496,19 +497,25 @@ public class APISend {
         }
 
         // Show the loading spinner
-        activity.runOnUiThread(() -> ((DishCompositionActivity) activity).loadingSpinner.setVisibility(View.VISIBLE));
+        if (activity instanceof DishCompositionActivity) {
+            activity.runOnUiThread(() -> ((DishCompositionActivity) activity).loadingSpinner.setVisibility(View.VISIBLE));
+        }
 
         new APIRequest("get_dish_composition", data.toString(), activity).send(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 // Hide the loading spinner
-                activity.runOnUiThread(() -> ((DishCompositionActivity) activity).loadingSpinner.setVisibility(View.GONE));
+                if (activity instanceof DishCompositionActivity) {
+                    activity.runOnUiThread(() -> ((DishCompositionActivity) activity).loadingSpinner.setVisibility(View.GONE));
+                }
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 // Hide the loading spinner
-                activity.runOnUiThread(() -> ((DishCompositionActivity) activity).loadingSpinner.setVisibility(View.GONE));
+                if (activity instanceof DishCompositionActivity) {
+                    activity.runOnUiThread(() -> ((DishCompositionActivity) activity).loadingSpinner.setVisibility(View.GONE));
+                }
 
                 if (response.isSuccessful()) {
                     String responseBody = response.body() != null ? response.body().string() : null;
@@ -516,6 +523,13 @@ public class APISend {
                     try {
                         JSONObject jsonObject = new JSONObject(responseBody);
                         Dish dish = new Dish(jsonObject);
+
+                        // Save the dish composition data
+                        SharedPreferences sharedPreferences = activity.getSharedPreferences("DishComposition", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(dishName, jsonObject.toString());
+                        editor.apply();
+
                         activity.runOnUiThread(() -> callbackDish.accept(dish));
                     } catch (JSONException e) {
                         e.printStackTrace();

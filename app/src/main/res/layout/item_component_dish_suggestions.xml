@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rounded_background"
-    android:gravity="center_vertical"
     android:padding="10dp"
-    android:layout_marginBottom="10dp"
-    >
+    android:layout_marginBottom="10dp">
 
     <TextView
         android:layout_width="0dp"
@@ -18,7 +16,8 @@
         android:layout_marginStart="5dp"
         android:textColor="@color/black"
         android:text="Exemple of dish"
-        android:layout_weight="8" />
+        android:layout_toLeftOf="@+id/item_button"
+        android:layout_alignParentStart="true" />
 
     <ImageButton
         android:layout_width="30dp"
@@ -30,6 +29,142 @@
         android:clickable="true"
         android:scaleType="fitCenter"
         android:layout_marginStart="15dp"
-        />
+        android:layout_alignParentEnd="true" />
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayoutCompositionDish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="6dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/item_content">
+
+        <TextView
+            android:id="@+id/textViewComposition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_composition"
+            android:textColor="@color/black"
+            android:fontFamily="@font/montserrat_light"
+            android:textSize="15sp"
+            android:layout_marginEnd="3dp" />
+
+        <ImageView
+            android:id="@+id/imageViewComposition"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/baseline_arrow_forward_ios_24" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/food_calorie_Dish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat"
+        android:textSize="18sp"
+        android:layout_marginTop="6dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/item_content" />
+
+    <LinearLayout
+        android:id="@+id/macroMicroListDish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/food_calorie_Dish"
+        android:layout_marginStart="4sp"
+        android:layout_marginEnd="4sp"
+        android:layout_marginTop="10dp">
+
+        <RelativeLayout
+            android:id="@+id/macroList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/rounded_health_edit_text">
+
+            <TextView
+                android:id="@+id/titleMacro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/macronutriments"
+                android:textColor="@color/black"
+                android:fontFamily="@font/montserrat"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginStart="4sp"
+                android:layout_marginEnd="4sp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/macronutrients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/titleMacro"
+                android:layout_marginStart="10dp"
+                android:textSize="15sp"
+                android:layout_marginBottom="12dp"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/microList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_health_edit_text">
+
+            <TextView
+                android:id="@+id/titleMicro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/micronutriments"
+                android:textColor="@color/black"
+                android:fontFamily="@font/montserrat"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginStart="4sp"
+                android:layout_marginEnd="4sp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/micronutrients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/titleMicro"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="12dp"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/closeList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="6dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/macroMicroListDish">
+
+        <TextView
+            android:id="@+id/textViewClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fermé la composition"
+            android:textColor="@color/black"
+            android:fontFamily="@font/montserrat_light"
+            android:textSize="15sp"
+            android:layout_marginEnd="3dp" />
+
+        <ImageView
+            android:id="@+id/imageViewClose"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/baseline_keyboard_arrow_up_24" />
+    </LinearLayout>
+
+</RelativeLayout>
