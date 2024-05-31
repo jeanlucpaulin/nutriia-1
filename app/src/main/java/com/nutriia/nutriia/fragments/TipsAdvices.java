@@ -79,16 +79,23 @@ public class TipsAdvices extends Fragment implements OnNewGoalSelected {
 
         List<String> tipsTitles = Arrays.asList(getResources().getStringArray(R.array.tips_titles));
 
-        slides.clear();
+        if(slides.isEmpty()) {
+            for(int i = 0; i < tipsNames.size(); i++) {
+                List<String> tips = Arrays.asList(getResources().getStringArray(getResources().getIdentifier(tipsNames.get(i), "array", getContext().getPackageName())));
+                slides.add(new Slide(tipsTitles.get(i), tips.get(goalIndex)));
+            }
 
-        for(int i = 0; i < tipsNames.size(); i++) {
-            List<String> tips = Arrays.asList(getResources().getStringArray(getResources().getIdentifier(tipsNames.get(i), "array", getContext().getPackageName())));
-            slides.add(new Slide(tipsTitles.get(i), tips.get(goalIndex)));
+            slideAdapter = new SlideAdapter(getContext(), slides);
+
+            viewPager.setAdapter(slideAdapter);
         }
+        else {
+            for(int i = 0; i < tipsNames.size(); i++) {
+                List<String> tips = Arrays.asList(getResources().getStringArray(getResources().getIdentifier(tipsNames.get(i), "array", getContext().getPackageName())));
+                slides.get(i).setDescription(tips.get(goalIndex));
+            }
 
-
-        slideAdapter = new SlideAdapter(getContext(), slides);
-
-        viewPager.setAdapter(slideAdapter);
+            slideAdapter.notifyDataSetChanged();
+        }
     }
 }
