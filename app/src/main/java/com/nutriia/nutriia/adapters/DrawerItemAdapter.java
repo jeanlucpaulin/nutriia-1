@@ -54,17 +54,17 @@ public class DrawerItemAdapter extends RecyclerView.Adapter<DrawerItemAdapter.Vi
         this.setOnItemClickListener(new DrawerItemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.side_navigation_target) {
+                /*if (item.getItemId() == R.id.side_navigation_target) {
                     activityLauncher.launch(new Intent(context, RedefineGoalActivity.class));
                 } else if (item.getItemId() == R.id.side_navigation_sante) {
                     activityLauncher.launch(new Intent(context, HealthInformationActivity.class));
-                /*} else if (item.getItemId() == R.id.side_navigation_meet) {
+                } else if (item.getItemId() == R.id.side_navigation_meet) {
                     Log.d("Drawer", "Meet clicked");
                 } else if (item.getItemId() == R.id.side_navigation_follow_daily) {
                     Log.d("Drawer", "Follow Daily clicked");
                 } else if (item.getItemId() == R.id.side_navigation_follow_monthly) {
-                    Log.d("Drawer", "Follow Monthly clicked");*/
-                } else if (item.getItemId() == R.id.side_navigation_forum) {
+                    Log.d("Drawer", "Follow Monthly clicked");
+                } else */if (item.getItemId() == R.id.side_navigation_forum) {
                     Intent intent = new Intent(context, WebViewActivity.class);
                     intent.putExtra("url", "https://nutriia.fr/fr/Forum/");
                     intent.putExtra("title", "Forum");

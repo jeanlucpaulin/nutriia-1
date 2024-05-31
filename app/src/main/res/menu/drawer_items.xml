@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
     <item
         android:id="@+id/side_navigation_target"
         android:title="@string/side_navigation_target" />
@@ -8,7 +10,7 @@
         android:id="@+id/side_navigation_sante"
         android:title="@string/side_navigation_health" />
 
-    <!--
+
     <item
         android:id="@+id/side_navigation_meet"
         android:title="@string/side_navigation_meet" />

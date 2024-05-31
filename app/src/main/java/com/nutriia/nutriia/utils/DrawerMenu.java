@@ -37,7 +37,7 @@ public class DrawerMenu {
         DrawerLayout drawerLayout = activity.findViewById(R.id.drawer_layout);
         ImageButton lateralOpenButton = activity.findViewById(R.id.lateral_open);
         ImageButton lateralCloseButton = activity.findViewById(R.id.lateral_close);
-        Button disconnectButton = activity.findViewById(R.id.disconnect_button);
+        //Button disconnectButton = activity.findViewById(R.id.disconnect_button);
         LinearLayout legalStatementsLayout = activity.findViewById(R.id.legal_statements_layout);
         LinearLayout privacyPolicyLayout = activity.findViewById(R.id.privacy_policy_layout);
 
@@ -65,10 +65,10 @@ public class DrawerMenu {
             activity.startActivity(intent);
         });
 
-        disconnectButton.setOnClickListener(v -> {
+        /*disconnectButton.setOnClickListener(v -> {
             UserSharedPreferences.getInstance(activity.getApplicationContext()).clear();
             activity.startActivity(new Intent(activity, AppLaunchActivity.class));
-        });
+        });*/
 
 
         TextView appVersionDrawer = activity.findViewById(R.id.app_version_drawer);
