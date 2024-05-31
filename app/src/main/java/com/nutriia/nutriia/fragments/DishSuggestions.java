@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,16 +21,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.Dish;
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.activities.DishCompositionActivity;
-import com.nutriia.nutriia.adapters.DishSuggestionAdapter;
+import com.nutriia.nutriia.activities.DishRecipeActivity;
 import com.nutriia.nutriia.adapters.FoodCompositionAdapter;
 import com.nutriia.nutriia.builders.DishBuilder;
 import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.resources.Settings;
 import com.nutriia.nutriia.resources.Translator;
-import com.nutriia.nutriia.user.Saver;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 import com.nutriia.nutriia.utils.Date;
+import com.nutriia.nutriia.user.Saver;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +37,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 public class DishSuggestions extends Fragment {
 
@@ -58,35 +55,39 @@ public class DishSuggestions extends Fragment {
         UserSharedPreferences sharedPreferences = UserSharedPreferences.getInstance(getContext());
         String date = Date.getTodayDate();
         String sharedDate = sharedPreferences.getDishSuggestionsDate();
-        if(!sharedDate.isEmpty() && date.equals(sharedDate)) {
+        if (!sharedDate.isEmpty() && date.equals(sharedDate)) {
             dishes.addAll(DishBuilder.buildDish(sharedPreferences));
             Log.d("DishSuggestions", "DishSuggestions: " + dishes.size());
-        }
-        else {
+        } else {
             Log.d("DishSuggestions", "DishSuggestions: " + sharedDate + " " + date);
         }
 
-        if(this.dishes.isEmpty()) APISend.obtainsNewDish(getActivity(), dishes -> {
-            this.dishes.addAll(dishes);
-            addDishes(dishes, listView);
-        }, this.dishes);
-        else addDishes(dishes, listView);
+        if (this.dishes.isEmpty()) {
+            APISend.obtainsNewDish(getActivity(), newDishes -> {
+                this.dishes.addAll(newDishes);
+                addDishes(this.dishes, listView);
+            }, this.dishes);
+        } else {
+            addDishes(this.dishes, listView);
+        }
 
         ImageButton moreDishButton = view.findViewById(R.id.more_dish_suggestions_button);
         moreDishButton.setOnClickListener(v -> {
             moreDishButton.setEnabled(false);
-            if(dishes.size() >= Settings.getMaxDishSuggestions())
-            {
+            if (dishes.size() >= Settings.getMaxDishSuggestions()) {
                 showCustomToast("Nombre maximum de générations atteint", Toast.LENGTH_SHORT);
                 return;
             }
 
             showCustomToast("Génération du plat idéal en cours...", Toast.LENGTH_SHORT);
 
-            APISend.obtainsNewDish(getActivity(), dishes -> {
+            APISend.obtainsNewDish(getActivity(), newDishes -> {
                 moreDishButton.setEnabled(true);
-                this.dishes.addAll(dishes);
-                addDishes(dishes, listView);
+                if (!newDishes.isEmpty()) {
+                    Dish newDish = newDishes.get(0); // Prendre le premier plat de la liste des nouveaux plats
+                    this.dishes.add(newDish); // Ajouter uniquement le nouveau plat à la liste des plats existants
+                    addDishes(List.of(newDish), listView); // Ajouter uniquement le nouveau plat à la vue
+                }
             }, this.dishes);
         });
 
@@ -125,7 +126,7 @@ public class DishSuggestions extends Fragment {
 
             ImageButton imageButton = itemView.findViewById(R.id.item_button);
             imageButton.setOnClickListener(click -> {
-                Intent intent = new Intent(getContext(), DishCompositionActivity.class);
+                Intent intent = new Intent(getContext(), DishRecipeActivity.class);
                 intent.putExtra("DISH_NAME", dish.getName());
                 startActivity(intent);
             });
@@ -137,6 +138,12 @@ public class DishSuggestions extends Fragment {
             // Set their LayoutManagers
             macronutrientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             micronutrientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            // Set initial empty adapters
+            FoodCompositionAdapter macronutrientsAdapter = new FoodCompositionAdapter(new ArrayList<>());
+            FoodCompositionAdapter micronutrientsAdapter = new FoodCompositionAdapter(new ArrayList<>());
+            macronutrientsRecyclerView.setAdapter(macronutrientsAdapter);
+            micronutrientsRecyclerView.setAdapter(micronutrientsAdapter);
 
             APISend.obtainsDishComposition(getActivity(), dish.getName(), obtainedDish -> {
 
@@ -196,15 +203,9 @@ public class DishSuggestions extends Fragment {
                     }
                 }
 
-                // Set the adapters
-                FoodCompositionAdapter macronutrientsAdapter = new FoodCompositionAdapter(macronutrientsList);
-                FoodCompositionAdapter micronutrientsAdapter = new FoodCompositionAdapter(micronutrientsList);
-                macronutrientsRecyclerView.setAdapter(macronutrientsAdapter);
-                micronutrientsRecyclerView.setAdapter(micronutrientsAdapter);
-
                 // Update the adapters
-                ((FoodCompositionAdapter) macronutrientsRecyclerView.getAdapter()).updateData(macronutrientsList);
-                ((FoodCompositionAdapter) micronutrientsRecyclerView.getAdapter()).updateData(micronutrientsList);
+                macronutrientsAdapter.updateData(macronutrientsList);
+                micronutrientsAdapter.updateData(micronutrientsList);
 
             });
             listView.addView(itemView);

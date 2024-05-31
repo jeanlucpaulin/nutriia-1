@@ -45,6 +45,7 @@
         android:id="@+id/more_dish_suggestions_text"
         android:fontFamily="@font/montserrat_light"
         android:text="@string/more_dish_suggestions"
+        android:textSize="15sp"
         app:layout_constraintTop_toBottomOf="@+id/dish_suggestions_scroll_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

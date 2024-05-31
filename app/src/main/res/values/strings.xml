@@ -217,4 +217,6 @@
     <string name="less_details">Moins de détails</string>
     <string name="macronutriments">Macronutriments</string>
     <string name="micronutriments">Micronutriments</string>
+    <string name="fermer_la_composition">Fermer la composition</string>
+    <string name="ingr_dients_du_plat">Ingrédients du plat</string>
 </resources>

@@ -8,19 +8,15 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 import com.nutriia.nutriia.Day;
 import com.nutriia.nutriia.Dish;
-import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.TypicalDay;
-import com.nutriia.nutriia.activities.DishCompositionActivity;
+import com.nutriia.nutriia.activities.DishRecipeActivity;
 import com.nutriia.nutriia.builders.DayBuilder;
 
-import com.nutriia.nutriia.fragments.NutrientAJR;
 import com.nutriia.nutriia.interfaces.APIResponseRDA;
 import com.nutriia.nutriia.interfaces.APIResponseValidateDay;
-import com.nutriia.nutriia.resources.Translator;
 import com.nutriia.nutriia.user.Saver;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
@@ -30,7 +26,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -333,15 +328,21 @@ public class APISend {
                 if (response.isSuccessful()) {
                     String responseBody = response.body() != null ? response.body().string() : null;
 
-                    try {
-                        JSONObject jsonObject = new JSONObject(responseBody);
-                        String dishName = jsonObject.getString("dish");
-                        List<Dish> dishes = new ArrayList<>();
-                        dishes.add(new Dish(dishName));
+                    if (responseBody != null && responseBody.startsWith("{")) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(responseBody);
+                            String dishName = jsonObject.getString("dish");
+                            List<Dish> dishes = new ArrayList<>();
+                            dishes.add(new Dish(dishName));
 
-                        activity.runOnUiThread(() -> callbackDishes.accept(dishes));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                            activity.runOnUiThread(() -> callbackDishes.accept(dishes));
+                        } catch (JSONException e) {
+                            Log.e(TAG, "Failed to parse JSON response", e);
+                            // Handle the error appropriately
+                        }
+                    } else {
+                        Log.e(TAG, "Response is not a valid JSON: " + responseBody);
+                        // Handle the error appropriately
                     }
 
                 } else Log.d(TAG, "Request failed with status code: " + response.code() + ", message: " + response.body().string());
@@ -497,24 +498,24 @@ public class APISend {
         }
 
         // Show the loading spinner
-        if (activity instanceof DishCompositionActivity) {
-            activity.runOnUiThread(() -> ((DishCompositionActivity) activity).loadingSpinner.setVisibility(View.VISIBLE));
+        if (activity instanceof DishRecipeActivity) {
+            activity.runOnUiThread(() -> ((DishRecipeActivity) activity).loadingSpinner.setVisibility(View.VISIBLE));
         }
 
         new APIRequest("get_dish_composition", data.toString(), activity).send(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 // Hide the loading spinner
-                if (activity instanceof DishCompositionActivity) {
-                    activity.runOnUiThread(() -> ((DishCompositionActivity) activity).loadingSpinner.setVisibility(View.GONE));
+                if (activity instanceof DishRecipeActivity) {
+                    activity.runOnUiThread(() -> ((DishRecipeActivity) activity).loadingSpinner.setVisibility(View.GONE));
                 }
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 // Hide the loading spinner
-                if (activity instanceof DishCompositionActivity) {
-                    activity.runOnUiThread(() -> ((DishCompositionActivity) activity).loadingSpinner.setVisibility(View.GONE));
+                if (activity instanceof DishRecipeActivity) {
+                    activity.runOnUiThread(() -> ((DishRecipeActivity) activity).loadingSpinner.setVisibility(View.GONE));
                 }
 
                 if (response.isSuccessful()) {
@@ -536,6 +537,53 @@ public class APISend {
                     }
 
                 } else Log.d(TAG, "Request failed with status code: " + response.code() + ", message: " + response.body().string());
+            }
+        });
+    }
+
+    public static void obtainDishRecipe(Activity activity, String dishName, Consumer<List<String>> callbackRecipe, Consumer<List<String>> callbackIngredients) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("action", "get_recipe");
+            data.put("dish_name", dishName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new APIRequest("get_recipe", data.toString(), activity).send(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseBody = response.body() != null ? response.body().string() : null;
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(responseBody);
+                        JSONObject recipeObject = jsonObject.getJSONObject("recipe");
+                        List<String> recipeList = new ArrayList<>();
+                        Iterator<String> keys = recipeObject.keys();
+                        while (keys.hasNext()) {
+                            String key = keys.next();
+                            recipeList.add(recipeObject.getString(key));
+                        }
+
+                        JSONArray ingredientsArray = jsonObject.getJSONArray("ingredients");
+                        List<String> ingredientsList = new ArrayList<>();
+                        for (int i = 0; i < ingredientsArray.length(); i++) {
+                            ingredientsList.add(ingredientsArray.getString(i));
+                        }
+
+                        activity.runOnUiThread(() -> {
+                            callbackRecipe.accept(recipeList);
+                            callbackIngredients.accept(ingredientsList);
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
     }

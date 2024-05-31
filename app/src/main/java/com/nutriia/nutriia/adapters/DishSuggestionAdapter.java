@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.nutriia.nutriia.Dish;
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.activities.DishCompositionActivity;
+import com.nutriia.nutriia.activities.DishRecipeActivity;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class DishSuggestionAdapter extends BaseAdapter {
         dishName.setText(dish.getName());
 
         ImageButton imageButton = convertView.findViewById(R.id.item_button);
-        imageButton.setOnClickListener(click -> context.startActivity(new Intent(context, DishCompositionActivity.class)));
+        imageButton.setOnClickListener(click -> context.startActivity(new Intent(context, DishRecipeActivity.class)));
 
         return convertView;
     }

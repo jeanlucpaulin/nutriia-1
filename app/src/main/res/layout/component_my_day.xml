@@ -58,22 +58,19 @@
             android:text="@string/more_details"
             android:textColor="@color/black"
             android:fontFamily="@font/montserrat_light"
-            android:textSize="13sp"
+            android:textSize="15sp"
             android:layout_marginEnd="3dp"
+            android:layout_marginBottom="3dp"
             />
 
         <ImageView
             android:id="@+id/arrowDetails"
             android:layout_width="14dp"
             android:layout_height="14dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="3dp"
             android:src="@drawable/baseline_arrow_forward_ios_24"
             android:rotation="90"
             />
     </LinearLayout>
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
