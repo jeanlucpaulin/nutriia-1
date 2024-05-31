@@ -58,7 +58,7 @@ public class UserSharedPreferences {
     }
 
     public int getGoal() {
-        return sharedPreferences.getInt(KEY_GOAL, -1);
+        return sharedPreferences.getInt(KEY_GOAL, 0);
     }
 
     public boolean isUserGoalDefined() {
