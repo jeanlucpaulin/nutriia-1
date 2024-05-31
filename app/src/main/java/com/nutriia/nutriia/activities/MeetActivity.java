@@ -68,6 +68,12 @@ public class MeetActivity extends AppCompatActivity {
                     "if (ktScrollUp) ktScrollUp.style.display = 'none';" +
                     "var chat = document.getElementById('mwai-chatbot-default');" +
                     "if (chat) chat.style.display = 'none';" +
+                    "var elementById = document.getElementById('cmplz-manage-consent');" +
+                    "if (elementById) elementById.remove();" +
+                    "setTimeout(function() {" +
+                    "var elements = document.querySelectorAll('.cc-157aw.cc-1kgzy');" +
+                    "elements.forEach(function(element) { element.remove(); });" +
+                    "}, 2000);" +
                     "})()";
             webView.evaluateJavascript(js, null);
         } catch (Exception e) {

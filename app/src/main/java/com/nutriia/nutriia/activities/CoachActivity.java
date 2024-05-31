@@ -66,6 +66,12 @@ public class CoachActivity extends AppCompatActivity {
                     "if (ktScrollUp) ktScrollUp.style.display = 'none';" +
                     "var chat = document.getElementById('mwai-chatbot-default');" +
                     "if (chat) chat.style.display = 'none';" +
+                    "setTimeout(function() {" +
+                    "var elements = document.querySelectorAll('.cc-157aw.cc-1kgzy');" +
+                    "elements.forEach(function(element) { element.remove(); });" +
+                    "var elementById = document.getElementById('crisp-chatbox');" +
+                    "if (elementById) elementById.remove();" +
+                    "}, 1000);" +
                     "})()";
             webView.evaluateJavascript(js, null);
         } catch (Exception e) {
