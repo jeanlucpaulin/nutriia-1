@@ -221,4 +221,6 @@
     <string name="micronutriments">Micronutriments</string>
     <string name="fermer_la_composition">Fermer la composition</string>
     <string name="ingr_dients_du_plat">Ingrédients du plat</string>
+    <string name="slogan">Mangez bien, vivez bien.</string>
+    <string name="AIPowered">AI-Powered</string>
 </resources>
