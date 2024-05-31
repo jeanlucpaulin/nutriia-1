@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
         fragments.add(new TipsAdvices());
         if(UserSharedPreferences.getInstance(getApplicationContext()).isUserProfileDefined()) fragments.add(new UserProfile(this, this));
         else fragments.add(new MorePrecision(this, this));
-        if(UserSharedPreferences.getInstance(getApplicationContext()).getGoal() == 0) fragments.add(new DefineMyGoal(this, this));
         fragments.add(new RecommendedDailyAmount(this));
         fragments.add(new ExampleTypicalDay());
 
