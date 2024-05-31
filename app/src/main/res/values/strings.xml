@@ -22,7 +22,9 @@
     <string name="optional">(optionnel)</string>
     <string name="weight">Poids</string>
     <string name="height">Taille</string>
+    <string name="age">Âge</string>
     <string name="body_mass_index">IMC</string>
+    <string name="ideal_weight">Poids idéal</string>
     <string name="give_more_precision">Si vous souhaitez des renseignements plus précis, veuillez nous renseigner votre profil.</string>
     <string name="give_more_precision_goal">Si vous souhaitez des renseignement plus précis, veuillez nous renseigner votre objectif.</string>
     <string name="fill_profile">Renseigner mon profil</string>

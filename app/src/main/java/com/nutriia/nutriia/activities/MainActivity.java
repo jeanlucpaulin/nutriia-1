@@ -39,6 +39,7 @@ import com.nutriia.nutriia.fragments.RedefineMyGoal;
 import com.nutriia.nutriia.fragments.TipsAdvices;
 import com.nutriia.nutriia.fragments.UserProfile;
 import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
+import com.nutriia.nutriia.interfaces.OnUserProfileChanged;
 import com.nutriia.nutriia.interfaces.onActivityFinishListener;
 import com.nutriia.nutriia.network.APIRequest;
 import com.nutriia.nutriia.network.APISend;
@@ -59,7 +60,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements onActivityFinishListener, OnNewGoalSelected {
+public class MainActivity extends AppCompatActivity implements onActivityFinishListener, OnNewGoalSelected, OnUserProfileChanged {
     private RecyclerView recyclerView;
 
     private final List<Fragment> fragments = new ArrayList<>();
@@ -109,8 +110,7 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
         fragments.add(new PageTitle(PageTitle.ActivityType.MAIN));
         fragments.add(new DefineGoalButtons(this));
         fragments.add(new TipsAdvices());
-        if(UserSharedPreferences.getInstance(getApplicationContext()).isUserProfileDefined()) fragments.add(new UserProfile(this, this));
-        else fragments.add(new MorePrecision(this, this));
+        fragments.add(new UserProfile(this));
         fragments.add(new RecommendedDailyAmount(this));
         fragments.add(new ExampleTypicalDay());
 
@@ -128,6 +128,20 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
         for(Fragment fragment : fragments) {
             if(fragment instanceof OnNewGoalSelected) {
                 ((OnNewGoalSelected) fragment).onNewGoalSelected(position);
+            }
+        }
+    }
+
+    @Override
+    public void onUserProfileChanged() {
+        UserSharedPreferences sharedPreferences = UserSharedPreferences.getInstance(getApplicationContext());
+        sharedPreferences.clearRDA();
+        sharedPreferences.clearTypicalDay();
+        APISend.obtainsNewGoalRDA(this, null);
+
+        for(Fragment fragment : fragments) {
+            if(fragment instanceof OnUserProfileChanged) {
+                ((OnUserProfileChanged) fragment).onUserProfileChanged();
             }
         }
     }
