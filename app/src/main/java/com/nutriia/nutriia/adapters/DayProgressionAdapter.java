@@ -45,7 +45,7 @@ public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAd
         int progressRatio = (int) ((float) nutrient.getProgress() / nutrient.getValue() * 100);
 
         if(progressRatio <= 30) holder.progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.red)));
-        else if (progressRatio <= 70) holder.progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange)));
+        else if (progressRatio <= 70) holder.progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.yellow)));
         else holder.progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lime)));
         holder.progressBar.setProgress(progressRatio);
     }

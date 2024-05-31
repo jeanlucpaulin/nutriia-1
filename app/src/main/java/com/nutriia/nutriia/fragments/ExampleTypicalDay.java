@@ -61,7 +61,11 @@ public class ExampleTypicalDay extends Fragment implements APIResponseRDA {
         });
 
         LinearLayout layout = view.findViewById(R.id.linearLayoutMeal);
-        layout.setOnClickListener(click -> startActivity(new Intent(getContext(), DayAnalysisActivity.class)));
+        layout.setOnClickListener(click -> {
+            Intent intent = new Intent(getContext(), DayAnalysisActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        });
 
         return view;
     }

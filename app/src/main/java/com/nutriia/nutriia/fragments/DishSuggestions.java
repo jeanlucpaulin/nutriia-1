@@ -148,6 +148,7 @@ public class DishSuggestions extends Fragment {
             APISend.obtainsDishComposition(getActivity(), dish.getName(), obtainedDish -> {
 
                 // Check if the dish composition data is already saved locally
+                if(getActivity() == null) return;
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("DishComposition", Context.MODE_PRIVATE);
                 String savedData = sharedPreferences.getString(dish.getName(), null);
 

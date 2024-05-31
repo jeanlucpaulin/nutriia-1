@@ -85,7 +85,7 @@ public class UserSharedPreferences {
 
     public void setGender(int gender) { sharedPreferences.edit().putInt(KEY_GENDER, gender).apply(); }
 
-    public int getGender() { return sharedPreferences.getInt(KEY_GENDER, -1); }
+    public int getGender() { return sharedPreferences.getInt(KEY_GENDER, 0); }
 
     public boolean isUserGenderDefined() { return sharedPreferences.getInt(KEY_GENDER, -1) != -1; }
 
