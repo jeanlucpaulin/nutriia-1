@@ -101,6 +101,7 @@ public class MyRealDay extends Fragment {
                 public void afterTextChanged(Editable s) {
                     if (s.length() > 0) {
                         deleteButton.setImageResource(R.drawable.baseline_close_30_red);
+                        deleteButton.setEnabled(true);
                     } else {
                         deleteButton.setEnabled(false);
                         deleteButton.setImageResource(R.drawable.baseline_close_30);

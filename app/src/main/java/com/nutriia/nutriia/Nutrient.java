@@ -1,5 +1,7 @@
 package com.nutriia.nutriia;
 
+import android.content.Context;
+
 public class Nutrient {
     private String name;
     private int value;
@@ -36,5 +38,14 @@ public class Nutrient {
 
     public int getProgress() {
         return progress;
+    }
+
+    public static String getNutrientInfo(Context context, String nutrientName) {
+        int resId = context.getResources().getIdentifier("info_" + nutrientName.toLowerCase().replace(" ", "_"), "string", context.getPackageName());
+        if (resId != 0) {
+            return context.getString(resId);
+        } else {
+            return "Information non disponible pour ce nutriment.";
+        }
     }
 }

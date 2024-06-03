@@ -16,6 +16,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageButton
+        android:id="@+id/info_button"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/menu_icon_idea"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:layout_marginStart="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/item_name">
+    </ImageButton>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

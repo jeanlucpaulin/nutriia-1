@@ -1,14 +1,21 @@
 package com.nutriia.nutriia.adapters;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -48,6 +55,11 @@ public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAd
         else if (progressRatio <= 70) holder.progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.yellow)));
         else holder.progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lime)));
         holder.progressBar.setProgress(progressRatio);
+
+        holder.infoButton.setOnClickListener(v -> {
+            String nutrientInfo = Nutrient.getNutrientInfo(context, nutrient.getName());
+            showCustomDialog(nutrientInfo);
+        });
     }
 
     @Override
@@ -59,12 +71,40 @@ public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAd
         TextView name;
         TextView value;
         ProgressBar progressBar;
+        ImageButton infoButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.item_name);
             value = itemView.findViewById(R.id.item_value);
             progressBar = itemView.findViewById(R.id.progressBar);
+            infoButton = itemView.findViewById(R.id.info_button);
         }
+    }
+
+    private void showCustomDialog(String message) {
+        ((Activity) context).runOnUiThread(() -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.RoundedAlertDialog);
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            View layout = inflater.inflate(R.layout.toast_layout, null);
+
+            TextView textView = layout.findViewById(R.id.toast_text);
+            textView.setText(message);
+
+            ImageView imageView = layout.findViewById(R.id.toast_image);
+
+            Button btnOk = layout.findViewById(R.id.btn_ok);
+            btnOk.setVisibility(View.VISIBLE);  // Make the button visible
+
+            builder.setView(layout);
+            AlertDialog dialog = builder.create();
+
+            btnOk.setOnClickListener(v -> {
+                dialog.dismiss();  // Dismiss the dialog when the button is clicked
+            });
+
+            dialog.show();
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);  // Adjusting the dialog width to match the content width
+        });
     }
 }
