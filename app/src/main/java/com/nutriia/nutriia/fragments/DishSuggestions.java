@@ -131,6 +131,13 @@ public class DishSuggestions extends Fragment {
                 startActivity(intent);
             });
 
+            TextView textView = itemView.findViewById(R.id.recipe);
+            textView.setOnClickListener(click -> {
+                Intent intent = new Intent(getContext(), DishRecipeActivity.class);
+                intent.putExtra("DISH_NAME", dish.getName());
+                startActivity(intent);
+            });
+
             // Get the RecyclerViews
             RecyclerView macronutrientsRecyclerView = itemView.findViewById(R.id.macronutrients);
             RecyclerView micronutrientsRecyclerView = itemView.findViewById(R.id.micronutrients);

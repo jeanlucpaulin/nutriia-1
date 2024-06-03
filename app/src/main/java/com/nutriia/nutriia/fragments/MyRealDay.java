@@ -2,6 +2,8 @@ package com.nutriia.nutriia.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -82,6 +85,33 @@ public class MyRealDay extends Fragment {
 
 
         Button validateButton = view.findViewById(R.id.validateButton);
+        for(int i = 0; i < viewIds.length; i++) {
+
+            EditText editText = view.findViewById(viewIds[i]).findViewById(R.id.editText);
+            ImageButton deleteButton = view.findViewById(viewIds[i]).findViewById(R.id.imageButton);
+
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (s.length() > 0) {
+                        deleteButton.setImageResource(R.drawable.baseline_close_30_red);
+                    } else {
+                        deleteButton.setEnabled(false);
+                        deleteButton.setImageResource(R.drawable.baseline_close_30);
+                    }
+                }
+            });
+
+            deleteButton.setOnClickListener(v -> {
+                editText.setText("");
+            });
+        }
 
         validateButton.setOnClickListener(v -> {
             validateButton.setEnabled(false);
@@ -91,7 +121,7 @@ public class MyRealDay extends Fragment {
 
             for(int viewId : viewIds) {
                 TextView textView = view.findViewById(viewId).findViewById(R.id.textView);
-                EditText editText = view.findViewById(viewId).findViewById(R.id.editText);
+                EditText editText = view.findViewById(viewId).findViewById(R.id.editText); // Define EditText here
 
                 Set<String> inputs = new HashSet<>();
                 List<String> dishes = getDishes(viewId);
