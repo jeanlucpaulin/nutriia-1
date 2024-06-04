@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -34,6 +36,8 @@ public class DefineGoalButtons extends Fragment {
     private RecyclerView recyclerView;
     private Button validateButton;
     private OnNewGoalSelected callBack;
+    private List<LinearLayout> layouts;
+    private List<Goal> goals;
 
     public DefineGoalButtons() {
         super();
@@ -49,28 +53,47 @@ public class DefineGoalButtons extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.component_redefine_goal_main, container, false);
 
-        /*
-        recyclerView = view.findViewById(R.id.recyclerViewRedefineGoal);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        layouts = new ArrayList<>();
 
-        setGoals();*/
+        for(int id : new int[] {R.id.no_goal, R.id.weight_loss, R.id.muscle_gain, R.id.shape, R.id.sleep}) {
+            layouts.add(view.findViewById(id));
+        }
+
+        layouts.forEach(layout -> layout.setOnClickListener(this::onClickOnGoal));
+
+        GoalsBuilder goalsBuilder = new GoalsBuilder(getResources(), getActivity().getPackageName(), UserSharedPreferences.getInstance(getContext()));
+
+        goals = goalsBuilder.getGoals(getResources(), getActivity().getPackageName());
+
+        for(int i = 0; i < goals.size(); i++) {
+            Goal goal = goals.get(i);
+            LinearLayout layout = layouts.get(i);
+            if(goal.isActual()) layout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_text_meal, null));
+            else layout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_rounded, null));
+        }
+
 
         return view;
     }
 
-    private void setGoals() {
-        List<Fragment> fragments = new ArrayList<>();
+    private void onClickOnGoal(View view) {
+        int selected = -1;
+        for(int i = 0; i < goals.size(); i++) {
+            Goal goal = goals.get(i);
+            LinearLayout layout = layouts.get(i);
+            if (layout.getId() == view.getId()) {
+                layout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_text_meal, null));
+                if (!goal.isActual()) {
+                    goal.setActual(true);
+                    selected = i;
+                }
+            } else {
+                if (goal.isActual()) goal.setActual(false);
 
-        GoalsBuilder goalsBuilder = new GoalsBuilder(getResources(), getActivity().getPackageName(), UserSharedPreferences.getInstance(getContext()));
+                layout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_rounded, null));
+            }
+        }
 
-        List<Goal> goalsList = goalsBuilder.getGoals(getResources(), getActivity().getPackageName());
-
-        goalsList.forEach(goal -> {
-            fragments.add(new RedefineMyGoal(goal));
-        });
-
-        FragmentsAdapter adapter = new FragmentsAdapter(getChildFragmentManager(), fragments, true, callBack);
-        recyclerView.setAdapter(adapter);
+        if(selected != -1) callBack.onNewGoalSelected(selected);
     }
-
 }
