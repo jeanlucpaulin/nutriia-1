@@ -115,9 +115,9 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
         fragments.clear();
         fragments.add(new PageTitle(PageTitle.ActivityType.MAIN));
         fragments.add(new DefineGoalButtons(this));
-        fragments.add(new TipsAdvices());
         fragments.add(new UserProfile(this));
         fragments.add(new RecommendedDailyAmount(this));
+        fragments.add(new TipsAdvices());
         fragments.add(new ExampleTypicalDay());
 
         recyclerView.setAdapter(adapter);
