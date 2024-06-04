@@ -51,6 +51,7 @@
         </activity>
         <activity android:name=".activities.CoachActivity"
             android:exported="true"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".activities.RedefineGoalActivity"
@@ -70,6 +71,7 @@
         <activity
             android:name=".activities.MeetActivity"
             android:exported="true"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait">
         </activity>
 

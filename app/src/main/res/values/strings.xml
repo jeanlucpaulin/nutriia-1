@@ -258,4 +258,5 @@
     <string name="info_fibers">Les fibres sont essentielles pour la santé digestive et se trouvent dans les fruits, les légumes, les céréales complètes et les légumineuses.</string>
     <string name="ok">OK</string>
     <string name="discover_app">Découvrir l\'application</string>
+    <string name="dont_show_again">Ne plus afficher ce message</string>
 </resources>

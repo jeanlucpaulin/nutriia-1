@@ -23,7 +23,7 @@ public class CoachActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+        //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_meet);  // Assurez-vous que le layout XML est correctement nommé
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -32,9 +32,13 @@ public class CoachActivity extends AppCompatActivity {
             return insets;
         });
 
+        getWindow().setStatusBarColor(getColor(R.color.white));
+        getWindow().setNavigationBarColor(getColor(R.color.white));
+
         NavBarListener.init(this, R.id.navbar_coach);
         DrawerMenu.init(this);
         AccountMenu.init(this);
+
 
         //APISend.clear();
 
