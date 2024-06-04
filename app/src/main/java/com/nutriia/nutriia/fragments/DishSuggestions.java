@@ -36,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -200,7 +201,41 @@ public class DishSuggestions extends Fragment {
                     }
                 }
 
-                Collections.sort(macronutrientsList);
+                // Sort the macronutrientsList
+                macronutrientsList.sort(new Comparator<String>() {
+                    @Override
+                    public int compare(String s1, String s2) {
+                        String name1 = s1.split(":")[0];
+                        String name2 = s2.split(":")[0];
+
+                        String nonDigitPart1 = name1.replaceAll("\\d", "");
+                        String nonDigitPart2 = name2.replaceAll("\\d", "");
+
+                        int nonDigitPartComparison = nonDigitPart1.compareTo(nonDigitPart2);
+                        if (nonDigitPartComparison != 0) {
+                            return nonDigitPartComparison;
+                        } else {
+                            String digitPart1 = name1.replaceAll("\\D", "");
+                            String digitPart2 = name2.replaceAll("\\D", "");
+
+                            // If there are no digits in the name, compare the names directly
+                            if (digitPart1.isEmpty() && digitPart2.isEmpty()) {
+                                return name1.compareTo(name2);
+                            }
+
+                            // If one name has digits and the other doesn't, the one with digits comes first
+                            if (digitPart1.isEmpty()) {
+                                return 1;
+                            }
+                            if (digitPart2.isEmpty()) {
+                                return -1;
+                            }
+
+                            // If both names have digits, compare the digit parts as integers
+                            return Integer.compare(Integer.parseInt(digitPart1), Integer.parseInt(digitPart2));
+                        }
+                    }
+                });
 
                 // Fill the micronutrientsList
                 keys = micronutrients.keys();
@@ -214,7 +249,41 @@ public class DishSuggestions extends Fragment {
                     }
                 }
 
-                Collections.sort(micronutrientsList);
+                // Sort the micronutrientsList
+                micronutrientsList.sort(new Comparator<String>() {
+                    @Override
+                    public int compare(String s1, String s2) {
+                        String name1 = s1.split(":")[0];
+                        String name2 = s2.split(":")[0];
+
+                        String nonDigitPart1 = name1.replaceAll("\\d", "");
+                        String nonDigitPart2 = name2.replaceAll("\\d", "");
+
+                        int nonDigitPartComparison = nonDigitPart1.compareTo(nonDigitPart2);
+                        if (nonDigitPartComparison != 0) {
+                            return nonDigitPartComparison;
+                        } else {
+                            String digitPart1 = name1.replaceAll("\\D", "");
+                            String digitPart2 = name2.replaceAll("\\D", "");
+
+                            // If there are no digits in the name, compare the names directly
+                            if (digitPart1.isEmpty() && digitPart2.isEmpty()) {
+                                return name1.compareTo(name2);
+                            }
+
+                            // If one name has digits and the other doesn't, the one with digits comes first
+                            if (digitPart1.isEmpty()) {
+                                return 1;
+                            }
+                            if (digitPart2.isEmpty()) {
+                                return -1;
+                            }
+
+                            // If both names have digits, compare the digit parts as integers
+                            return Integer.compare(Integer.parseInt(digitPart1), Integer.parseInt(digitPart2));
+                        }
+                    }
+                });
 
                 // Update the adapters
                 macronutrientsAdapter.updateData(macronutrientsList);
