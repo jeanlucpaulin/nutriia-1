@@ -67,7 +67,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/app_name_drawer"
-        android:layout_marginBottom="25dp">
+        android:layout_marginBottom="50dp">
 
         <TextView
             android:id="@+id/privacy_policy_text"
@@ -109,7 +109,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="85dp"
         />
 
     <!--

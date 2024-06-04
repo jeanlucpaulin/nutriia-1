@@ -49,16 +49,11 @@ public class DefineGoalButtons extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.component_redefine_goal_main, container, false);
 
-        ViewCompat.setOnApplyWindowInsetsListener(view, (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
+        /*
         recyclerView = view.findViewById(R.id.recyclerViewRedefineGoal);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-        setGoals();
+        setGoals();*/
 
         return view;
     }

@@ -99,6 +99,13 @@
     <string name="enter_something_to_eat">Entrez un plat ou un aliment</string>
     <string name="show_composition">Voir la composition</string>
     <string name="objective">Objectif</string>
+
+    <string name="no_goal_text">Nutrition santé</string>
+    <string name="lose_weight_text">Perte de poids</string>
+    <string name="gain_muscle_text">Prise de muscles</string>
+    <string name="shape_text">Remise en forme</string>
+    <string name="sleep_quality_text">Qualité du sommeil</string>
+
     <string-array name="goals">
         <item>Nutrition santé</item>
         <item>Perte de poids</item>
