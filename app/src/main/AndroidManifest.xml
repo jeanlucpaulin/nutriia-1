@@ -25,6 +25,10 @@
             </intent-filter>
 
         </activity>
+        <activity android:name=".activities.WelcomeActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+        </activity>
         <activity android:name=".activities.ObjectifActivity"
             android:exported="true"
             android:screenOrientation="portrait">

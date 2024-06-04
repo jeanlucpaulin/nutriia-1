@@ -74,6 +74,10 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(!UserSharedPreferences.getInstance(getApplicationContext()).isWelcomeDefined()) {
+            Intent intent = new Intent(this, WelcomeActivity.class);
+            startActivity(intent);
+        }
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
@@ -83,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
 
 
         APISend.obtainAccountInfos(getApplicationContext());

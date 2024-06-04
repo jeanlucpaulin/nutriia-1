@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class UserSharedPreferences {
+    private static final String KEY_WELCOME = "welcome";
     private static final String USER_PREFERENCES = "user_preferences";
     private static final String KEY_GOAL = "user_goal";
     private static final String KEY_HEIGHT = "user_height";
@@ -50,6 +51,9 @@ public class UserSharedPreferences {
         return instance;
     }
 
+    public boolean isWelcomeDefined() {
+        return sharedPreferences.getBoolean(KEY_WELCOME, false);
+    }
     public boolean isUserProfileDefined() {
         return isUserHeightDefined() && isUserWeightDefined();
     }
