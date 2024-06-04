@@ -41,6 +41,7 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA {
     private final List<Fragment> macronutrients = new ArrayList<>();
     private final List<Fragment> micronutrients = new ArrayList<>();
     private TextView caloriesText;
+    private TextView fibersText;
     private RecyclerView macronutrientsListView;
     private RecyclerView micronutrientsListView;
     private ImageView arrow;
@@ -62,6 +63,7 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA {
         macronutrientsListView = view.findViewById(R.id.macronutrients_list);
         micronutrientsListView = view.findViewById(R.id.micronutrients_list);
         caloriesText = view.findViewById(R.id.energy_amount);
+        fibersText = view.findViewById(R.id.fibers_amount);
 
         macronutrientsListView.setLayoutManager(new LinearLayoutManager(getContext()));
         micronutrientsListView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -113,6 +115,7 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA {
         micronutrientsListView.setAdapter(microAdapter);
 
         caloriesText.setText(String.valueOf(day.getCalorie().getValue()));
+        fibersText.setText(String.valueOf(day.getFiber().getValue()));
     }
 
     private void reverseDisplayedItems() {

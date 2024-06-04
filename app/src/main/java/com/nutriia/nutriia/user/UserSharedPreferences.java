@@ -19,6 +19,7 @@ public class UserSharedPreferences {
 
     private static final String KEY_RDA = "RDA_";
     private static final String KEY_CALORIES = "user_calories";
+    private static final String KEY_FIBERS = "user_fibers";
     private static final String KEY_MACRONUTRIENTS = "user_macronutrients";
     private static final String KEY_MICRONUTRIENTS = "user_micronutrients";
     private static final String KEY_MY_DAY = "user_my_day_";
@@ -104,6 +105,10 @@ public class UserSharedPreferences {
     public int getRDACalories() { return sharedPreferences.getInt(KEY_CALORIES, -1); }
 
     public void setRDANutrient(String nutrient, int value) { sharedPreferences.edit().putFloat(KEY_RDA + nutrient, value).apply(); }
+
+    public int getRDAFibers() { return sharedPreferences.getInt(KEY_FIBERS, 0); }
+
+    public void setRDAFibers(int fibers) { sharedPreferences.edit().putInt(KEY_FIBERS, fibers).apply(); }
 
     public float getRDANutrient(String nutrient) { return sharedPreferences.getFloat(KEY_RDA + nutrient, 0); }
 

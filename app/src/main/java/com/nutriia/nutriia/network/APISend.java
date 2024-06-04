@@ -252,6 +252,7 @@ public class APISend {
 
                         userSharedPreferences.setRDACalories(jsonObject.getJSONObject("calories").getInt("value"));
 
+                        userSharedPreferences.setRDAFibers(jsonObject.getJSONObject("fibers").getInt("value"));
 
                         APISend.rdaDefined = true;
 

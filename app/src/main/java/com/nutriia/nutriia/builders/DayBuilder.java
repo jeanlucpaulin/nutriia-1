@@ -25,6 +25,9 @@ public class DayBuilder {
             JSONObject calorie = jsonObject.getJSONObject("calories");
             Nutrient calorieNutrient = new Nutrient("calories", userSharedPreferences.getRDACalories(), calorie.getString("unit"), calorie.getInt("value"));
 
+            JSONObject fiber = jsonObject.getJSONObject("fibers");
+            Nutrient fiberNutrient = new Nutrient("fibers", userSharedPreferences.getRDAFibers(), fiber.getString("unit"), fiber.getInt("value"));
+
             Map<String, Nutrient> macroNutrients = new HashMap<>();
             JSONObject macroNutrientsJson = jsonObject.getJSONObject("macronutrients");
             for(Iterator<String> it = macroNutrientsJson.keys(); it.hasNext(); ) {
@@ -42,7 +45,7 @@ public class DayBuilder {
                 microNutrients.put(key, new Nutrient(key, (int) userSharedPreferences.getRDANutrient(key), nutrient.getString("unit"), nutrient.getInt("value")));
             }
 
-            return new Day(calorieNutrient, macroNutrients, microNutrients);
+            return new Day(calorieNutrient, fiberNutrient, macroNutrients, microNutrients);
 
         } catch (JSONException e) {
             Log.e("API DayBuilder", "Error while building day from JSON", e);
@@ -53,6 +56,7 @@ public class DayBuilder {
 
     public Day buildOnlyWithGoal(UserSharedPreferences sharedPreferences) {
         Nutrient calorieNutrient = new Nutrient("calories", sharedPreferences.getRDACalories(), "kcal", 0);
+        Nutrient fiberNutrient = new Nutrient("fibers", sharedPreferences.getRDAFibers(), "g", 0);
 
         Calendar calendar = Calendar.getInstance();
 
@@ -79,7 +83,7 @@ public class DayBuilder {
             microNutrients.put(key, new Nutrient(key, (int) sharedPreferences.getRDANutrient(key), "mg", (int) sharedPreferences.getMRDNutrient(key)));
         }
 
-        return new Day(calorieNutrient, macroNutrients, microNutrients);
+        return new Day(calorieNutrient, fiberNutrient, macroNutrients, microNutrients);
     }
 
 }
