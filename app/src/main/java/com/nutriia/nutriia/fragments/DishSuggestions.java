@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.Collections;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -199,6 +200,8 @@ public class DishSuggestions extends Fragment {
                     }
                 }
 
+                Collections.sort(macronutrientsList);
+
                 // Fill the micronutrientsList
                 keys = micronutrients.keys();
                 while (keys.hasNext()) {
@@ -210,6 +213,8 @@ public class DishSuggestions extends Fragment {
                         e.printStackTrace();
                     }
                 }
+
+                Collections.sort(micronutrientsList);
 
                 // Update the adapters
                 macronutrientsAdapter.updateData(macronutrientsList);

@@ -26,6 +26,7 @@ import com.nutriia.nutriia.resources.Settings;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class MacronutrientsOfMyDay extends Fragment implements APIResponseValidateDay, APIResponseRDA {
@@ -89,6 +90,15 @@ public class MacronutrientsOfMyDay extends Fragment implements APIResponseValida
                 nutrientsList.add(macronutrients.get(i));
             }
         }
+
+        // Sort the nutrientsList
+        nutrientsList.sort(new Comparator<Nutrient>() {
+            @Override
+            public int compare(Nutrient n1, Nutrient n2) {
+                return n1.getName().compareTo(n2.getName());
+            }
+        });
+
         DayProgressionAdapter dayProgressionAdapter = new DayProgressionAdapter(getContext(), nutrientsList);
         recyclerView.setAdapter(dayProgressionAdapter);
         if(nutrientsList.size() < Settings.getMaxDisplayedItems()) view.findViewById(R.id.details_layout).setVisibility(View.INVISIBLE);

@@ -31,6 +31,8 @@ import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class RecommendedDailyAmount extends Fragment implements APIResponseRDA {
@@ -86,13 +88,26 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA {
     @Override
     public void onAPIRDAResponse() {
         Day day = new DayBuilder().buildOnlyWithGoal(UserSharedPreferences.getInstance(getContext()));
-        List<Fragment> macroFragments = new ArrayList<>();
-        List<Fragment> microFragments = new ArrayList<>();
+        List<Nutrient> macroNutrients = new ArrayList<>(day.getMacroNutrients().values());
+        List<Nutrient> microNutrients = new ArrayList<>(day.getMicroNutrients().values());
 
-        for(Nutrient nutrient : day.getMacroNutrients().values()) {
+        // Sort the nutrients
+        Comparator<Nutrient> nutrientComparator = new Comparator<Nutrient>() {
+            @Override
+            public int compare(Nutrient n1, Nutrient n2) {
+                return n1.getName().compareTo(n2.getName());
+            }
+        };
+        Collections.sort(macroNutrients, nutrientComparator);
+        Collections.sort(microNutrients, nutrientComparator);
+
+        // Convert nutrients to fragments
+        List<Fragment> macroFragments = new ArrayList<>();
+        for(Nutrient nutrient : macroNutrients) {
             macroFragments.add(new NutrientAJR(nutrient));
         }
-        for(Nutrient nutrient : day.getMicroNutrients().values()) {
+        List<Fragment> microFragments = new ArrayList<>();
+        for(Nutrient nutrient : microNutrients) {
             microFragments.add(new NutrientAJR(nutrient));
         }
 
