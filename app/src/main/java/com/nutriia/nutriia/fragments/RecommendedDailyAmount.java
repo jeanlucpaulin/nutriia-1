@@ -1,6 +1,9 @@
 package com.nutriia.nutriia.fragments;
 
 import android.app.Activity;
+import android.graphics.BlurMaskFilter;
+import android.graphics.RenderEffect;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +30,8 @@ import com.nutriia.nutriia.adapters.ItemRDAAdapter;
 import com.nutriia.nutriia.builders.DayBuilder;
 import com.nutriia.nutriia.interfaces.APIResponseRDA;
 import com.nutriia.nutriia.interfaces.IItemRDA;
+import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
+import com.nutriia.nutriia.interfaces.OnUserProfileChanged;
 import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
@@ -35,7 +40,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class RecommendedDailyAmount extends Fragment implements APIResponseRDA {
+public class RecommendedDailyAmount extends Fragment implements APIResponseRDA, OnNewGoalSelected, OnUserProfileChanged {
 
     private static final int MAX_DISPLAYED_ITEMS = 10;
     private static boolean DISPLAY_ALL_ITEMS = false;
@@ -87,6 +92,7 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA {
 
     @Override
     public void onAPIRDAResponse() {
+        removeBlurEffect();
         Day day = new DayBuilder().buildOnlyWithGoal(UserSharedPreferences.getInstance(getContext()));
         List<Nutrient> macroNutrients = new ArrayList<>(day.getMacroNutrients().values());
         List<Nutrient> microNutrients = new ArrayList<>(day.getMicroNutrients().values());
@@ -169,5 +175,25 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA {
         detailsText.setText(text);
         ScrollView scrollView = view.findViewById(R.id.scroll_view);
         scrollView.fullScroll(View.FOCUS_UP);
+    }
+
+    @Override
+    public void onNewGoalSelected(int position) {
+        addBlurEffect();
+    }
+
+    private void addBlurEffect() {
+        float radius = 20f;
+        RenderEffect renderEffect = RenderEffect.createBlurEffect(radius, radius, Shader.TileMode.CLAMP);
+        view.setRenderEffect(renderEffect);
+    }
+
+    private void removeBlurEffect() {
+        view.setRenderEffect(null);
+    }
+
+    @Override
+    public void onUserProfileChanged() {
+        addBlurEffect();
     }
 }

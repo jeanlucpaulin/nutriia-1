@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
 
 
 
-        APISend.obtainAccountInfos(getApplicationContext());
+        //APISend.obtainAccountInfos(getApplicationContext());
 
 
         DrawerMenu.init(this, this);
