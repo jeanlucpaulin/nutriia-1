@@ -4,15 +4,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,11 +21,13 @@ import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.resources.Translator;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAdapter.ViewHolder> {
-    private Context context;
-    private List<Nutrient> nutrientsList;
+    private final Context context;
+    private final List<Nutrient> nutrientsList;
 
     public DayProgressionAdapter(Context context, List<Nutrient> nutrientsList) {
         this.context = context;
@@ -55,10 +53,19 @@ public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAd
         else if (progressRatio <= 70) holder.progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.yellow)));
         else holder.progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lime)));
         holder.progressBar.setProgress(progressRatio);
-
+        if (progressRatio >= 200) {
+            holder.alertButton.setVisibility(View.VISIBLE);
+        } else {
+            holder.alertButton.setVisibility(View.GONE);
+        }
         holder.infoButton.setOnClickListener(v -> {
             String nutrientInfo = Nutrient.getNutrientInfo(context, nutrient.getName());
             showCustomDialog(nutrientInfo);
+        });
+        holder.alertButton.setOnClickListener(v -> {
+            int warningMessageId = getWarningMessageId(nutrient.getName());
+            String warningMessage = context.getString(warningMessageId);
+            showCustomToast(warningMessage);
         });
     }
 
@@ -67,11 +74,12 @@ public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAd
         return nutrientsList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         TextView value;
         ProgressBar progressBar;
         ImageButton infoButton;
+        ImageButton alertButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +87,7 @@ public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAd
             value = itemView.findViewById(R.id.item_value);
             progressBar = itemView.findViewById(R.id.progressBar);
             infoButton = itemView.findViewById(R.id.info_button);
+            alertButton = itemView.findViewById(R.id.alert_button);
         }
     }
 
@@ -91,8 +100,6 @@ public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAd
             TextView textView = layout.findViewById(R.id.toast_text);
             textView.setText(message);
 
-            ImageView imageView = layout.findViewById(R.id.toast_image);
-
             Button btnOk = layout.findViewById(R.id.btn_ok);
             btnOk.setVisibility(View.VISIBLE);  // Make the button visible
 
@@ -104,7 +111,56 @@ public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAd
             });
 
             dialog.show();
-            dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);  // Adjusting the dialog width to match the content width
+            Objects.requireNonNull(dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);  // Adjusting the dialog width to match the content width
         });
+    }
+
+    private void showCustomToast(String message) {
+        ((Activity) context).runOnUiThread(() -> {
+            LayoutInflater inflater = LayoutInflater.from(context);
+            View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) ((ViewGroup) ((Activity) context).findViewById(android.R.id.content)).getChildAt(0), false);
+
+            TextView textView = layout.findViewById(R.id.toast_text);
+            textView.setText(message);
+
+            Toast toast = new Toast(context);
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setView(layout);
+            toast.show();
+        });
+    }
+
+    private int getWarningMessageId(String nutrientName) {
+        HashMap<String, Integer> warningMessagesMap = new HashMap<>();
+        warningMessagesMap.put("vitamin_a", R.string.warning_vitamin_a);
+        warningMessagesMap.put("vitamin_c", R.string.warning_vitamin_c);
+        warningMessagesMap.put("vitamin_d", R.string.warning_vitamin_d);
+        warningMessagesMap.put("vitamin_e", R.string.warning_vitamin_e);
+        warningMessagesMap.put("vitamin_k", R.string.warning_vitamin_k);
+        warningMessagesMap.put("vitamin_b1", R.string.warning_vitamin_b1);
+        warningMessagesMap.put("vitamin_b2", R.string.warning_vitamin_b2);
+        warningMessagesMap.put("vitamin_b3", R.string.warning_vitamin_b3);
+        warningMessagesMap.put("vitamin_b6", R.string.warning_vitamin_b6);
+        warningMessagesMap.put("vitamin_b9", R.string.warning_vitamin_b9);
+        warningMessagesMap.put("vitamin_b12", R.string.warning_vitamin_b12);
+        warningMessagesMap.put("vitamin_b7", R.string.warning_vitamin_b7);
+        warningMessagesMap.put("vitamin_b5", R.string.warning_vitamin_b5);
+        warningMessagesMap.put("calcium", R.string.warning_calcium);
+        warningMessagesMap.put("copper", R.string.warning_copper);
+        warningMessagesMap.put("iron", R.string.warning_iron);
+        warningMessagesMap.put("magnesium", R.string.warning_magnesium);
+        warningMessagesMap.put("manganese", R.string.warning_manganese);
+        warningMessagesMap.put("phosphorus", R.string.warning_phosphorus);
+        warningMessagesMap.put("potassium", R.string.warning_potassium);
+        warningMessagesMap.put("zinc", R.string.warning_zinc);
+        warningMessagesMap.put("carbohydrates", R.string.warning_carbohydrates);
+        warningMessagesMap.put("proteins", R.string.warning_proteins);
+        warningMessagesMap.put("lipids", R.string.warning_lipids);
+        warningMessagesMap.put("fibers", R.string.warning_fibers);
+        Integer warningMessageId = warningMessagesMap.get(nutrientName);
+        if (warningMessageId == null) {
+            warningMessageId = R.string.default_warning_message;
+        }
+        return warningMessageId;
     }
 }

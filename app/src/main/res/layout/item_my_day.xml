@@ -28,6 +28,20 @@
         app:layout_constraintStart_toEndOf="@+id/item_name">
     </ImageButton>
 
+    <ImageButton
+        android:id="@+id/alert_button"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:src="@drawable/menu_icon_alert"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="1dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/info_button"
+        android:visibility="gone">
+    </ImageButton>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
