@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.nutriia.nutriia.FormationItem;
 import com.nutriia.nutriia.R;
@@ -57,6 +58,9 @@ public class FormationActivity extends AppCompatActivity {
         AccountMenu.init(this);
 
         //APISend.clear();
+
+        ImageView imageView = findViewById(R.id.imageView);
+        imageView.setVisibility(ImageView.VISIBLE);
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
