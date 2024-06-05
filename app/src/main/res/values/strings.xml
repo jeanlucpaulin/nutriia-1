@@ -286,4 +286,5 @@
     <string name="warning_lipids">Attention, un excès de lipides peut entraîner des maladies cardiovasculaires.</string>
     <string name="warning_fibers">Attention, un excès de fibres peut causer des troubles digestifs.</string>
     <string name="default_warning_message">Attention, un excès de ce nutriment peut être nocif pour la santé.</string>
+    <string name="welcome_title_message">Decouvrez Nutriia !</string>
 </resources>
