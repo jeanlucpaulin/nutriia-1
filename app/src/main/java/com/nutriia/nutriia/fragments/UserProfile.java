@@ -31,6 +31,7 @@ import com.nutriia.nutriia.interfaces.onActivityFinishListener;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UserProfile extends Fragment implements OnNewGoalSelected {
@@ -38,14 +39,18 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
     private ImageView userGoalIcon;
     private TextView userGoal;
     private Spinner spinnerAge;
+    private Spinner spinnerGender;
     private EditText userWeight;
     private EditText userHeight;
     private TextView userBodyMassIndex;
     private TextView userBodyMassIndexUnit;
     private LinearLayout imcContainer;
     private TextView userIdealWeightData;
+    private TextView metabolismData;
     private Button validateButton;
     private int positionSpinnerAge = -1;
+    private int positionSpinnerGender = -1;
+
     private OnUserProfileChanged onUserProfileChanged;
 
     public UserProfile() {
@@ -71,6 +76,7 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
         userGoal = view.findViewById(R.id.title_objective);
         imcContainer = view.findViewById(R.id.imc_container);
         userIdealWeightData = view.findViewById(R.id.ideal_weight_data);
+        metabolismData = view.findViewById(R.id.basal_metabolism_data);
         validateButton = view.findViewById(R.id.validate_button);
 
         spinnerAge = view.findViewById(R.id.age_data);
@@ -91,6 +97,24 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 positionSpinnerAge = -1;
+            }
+        });
+
+        spinnerGender = view.findViewById(R.id.sex_data);
+        List<String> genders = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.genders)));
+        ArrayAdapter<String> adapterGender = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, genders);
+        adapterGender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerGender.setAdapter(adapterGender);
+
+        spinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                positionSpinnerGender = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                positionSpinnerGender = -1;
             }
         });
 
@@ -119,6 +143,11 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
         if(userSharedPreferences.isUserAgeDefined()) {
             int userAge = userSharedPreferences.getAge();
             spinnerAge.setSelection(userAge - 1);
+        }
+
+        if(userSharedPreferences.isUserGenderDefined()) {
+            int userGender = userSharedPreferences.getGender();
+            spinnerGender.setSelection(userGender);
         }
 
         if(userSharedPreferences.isUserWeightDefined() && userSharedPreferences.isUserHeightDefined()) {
@@ -165,6 +194,14 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
             userIdealWeightData.setText(String.valueOf(idealWeight).concat(" kg"));
         }
 
+        if(userSharedPreferences.isUserGenderDefined() && userSharedPreferences.isUserHeightDefined() && userSharedPreferences.isUserAgeDefined()) {
+            double multiplier = userSharedPreferences.getGender() == 0 ? 1.083 : 0.963;
+            float height = (float) userSharedPreferences.getHeight()/100;
+            int weight = userSharedPreferences.getWeight();
+            double metabolism = (multiplier * Math.pow(weight, 0.48) * Math.pow(height, 0.5) * Math.pow(userSharedPreferences.getAge(), -0.13)) * 1000 / 4.18;
+            metabolismData.setText(String.valueOf((int) metabolism).concat(" kcal"));
+        }
+
         updateGoal(userSharedPreferences.getGoal());
     }
 
@@ -209,6 +246,13 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
         if(positionSpinnerAge != -1) {
             if(positionSpinnerAge + 1 != sharedPreferences.getAge()) {
                 sharedPreferences.setAge(positionSpinnerAge + 1);
+                changed = true;
+            }
+        }
+
+        if(positionSpinnerGender != -1) {
+            if(positionSpinnerGender != sharedPreferences.getGender()) {
+                sharedPreferences.setGender(positionSpinnerGender);
                 changed = true;
             }
         }

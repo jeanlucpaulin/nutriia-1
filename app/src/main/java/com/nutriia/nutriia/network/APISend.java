@@ -201,6 +201,8 @@ public class APISend {
         StringBuilder data = new StringBuilder("{\"user_profile\": {");
         data.append("\"height\": ").append(UserSharedPreferences.getInstance(activity).getHeight()).append(", ");
         data.append("\"weight\": ").append(UserSharedPreferences.getInstance(activity).getWeight()).append(", ");
+        data.append("\"age\": ").append(UserSharedPreferences.getInstance(activity).getAge()).append(", ");
+        data.append("\"gender\": ").append(UserSharedPreferences.getInstance(activity).getGender()).append(", ");
         data.append("\"goal_type\": ").append(UserSharedPreferences.getInstance(activity).getGoal()).append(", ");
         data.append("\"progression\": ").append(UserSharedPreferences.getInstance(activity).getProgression()).append(", ");
         data.append("\"activity_level\": ").append(UserSharedPreferences.getInstance(activity).getActivityLevel()).append(", ");
@@ -381,6 +383,7 @@ public class APISend {
 
             JSONObject userGoal = new JSONObject();
             userGoal.put("calories", UserSharedPreferences.getInstance(activity).getRDACalories());
+            userGoal.put("fibers", UserSharedPreferences.getInstance(activity).getRDAFibers());
             JSONObject userMacronutrients = new JSONObject();
             JSONObject userMicronutrients = new JSONObject();
 
@@ -415,6 +418,8 @@ public class APISend {
                     String responseBody = response.body() != null ? response.body().string() : null;
 
                     try {
+                        Log.d(TAG, "Typical day send" + data.toString());
+                        Log.d(TAG, "Typical day response: " + responseBody);
                         JSONObject jsonObject = new JSONObject(responseBody);
                         TypicalDay breakfast = new TypicalDay("breakfast", parseDishes(jsonObject.getJSONArray("breakfast")));
                         TypicalDay lunch = new TypicalDay("lunch", parseDishes(jsonObject.getJSONArray("lunch")));

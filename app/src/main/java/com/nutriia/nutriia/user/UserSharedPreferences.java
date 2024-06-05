@@ -92,7 +92,7 @@ public class UserSharedPreferences {
 
     public int getGender() { return sharedPreferences.getInt(KEY_GENDER, 0); }
 
-    public boolean isUserGenderDefined() { return sharedPreferences.getInt(KEY_GENDER, -1) != -1; }
+    public boolean isUserGenderDefined() { return sharedPreferences.getInt(KEY_GENDER, 0) != -1; }
 
     public void setActivityLevel(int activityLevel) { sharedPreferences.edit().putInt(KEY_ACTIVITY_LEVEL, activityLevel).apply(); }
 
