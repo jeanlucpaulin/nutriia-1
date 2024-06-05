@@ -319,6 +319,8 @@ public class FoodComposition extends Fragment {
                         String nutrient = key + " (" + macroNutrientsObj.getString(key) + ")";
                         macroNutrients.add(nutrient);
                     }
+                    // Sort the macroNutrients
+                    macroNutrients.sort((s1, s2) -> customNutrientComparator(s1.split(" ")[0], s2.split(" ")[0]));
                     if (macroNutrientAdapter != null) {
                         macroNutrientAdapter.notifyDataSetChanged();
                     }
@@ -332,6 +334,8 @@ public class FoodComposition extends Fragment {
                         String nutrient = key + " (" + microNutrientsObj.getString(key) + ")";
                         microNutrients.add(nutrient);
                     }
+                    // Sort the microNutrients
+                    microNutrients.sort((s1, s2) -> customNutrientComparator(s1.split(" ")[0], s2.split(" ")[0]));
                     if (microNutrientAdapter != null) {
                         microNutrientAdapter.notifyDataSetChanged();
                     }
@@ -344,6 +348,16 @@ public class FoodComposition extends Fragment {
 
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    private int customNutrientComparator(String s1, String s2) {
+        if (s1.startsWith("Vitamin B") && s2.startsWith("Vitamin B")) {
+            int bNumber1 = Integer.parseInt(s1.substring(9));
+            int bNumber2 = Integer.parseInt(s2.substring(9));
+            return Integer.compare(bNumber1, bNumber2);
+        } else {
+            return s1.compareTo(s2);
         }
     }
 
