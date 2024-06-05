@@ -236,7 +236,7 @@ public class APISend {
                             String key = it.next();
                             JSONObject nutrient = macronutrientsJSON.getJSONObject(key);
                             macronutrientsList.add(key);
-                            userSharedPreferences.setRDANutrient(key, nutrient.getInt("value"));
+                            userSharedPreferences.setRDANutrient(key, (float) nutrient.getDouble("value"));
                         }
 
                         userSharedPreferences.setMacronutrients(macronutrientsList);
@@ -247,7 +247,7 @@ public class APISend {
                             String key = it.next();
                             JSONObject nutrient = micronutrientsJSON.getJSONObject(key);
                             micronutrientsList.add(key);
-                            userSharedPreferences.setRDANutrient(key, nutrient.getInt("value"));
+                            userSharedPreferences.setRDANutrient(key, (float) nutrient.getDouble("value"));
                         }
 
                         userSharedPreferences.setMicronutrients(micronutrientsList);
@@ -395,8 +395,11 @@ public class APISend {
                 userMicronutrients.put(micronutrient, UserSharedPreferences.getInstance(activity).getRDANutrient(micronutrient));
             }
 
+            Log.d(TAG, "size :" + (userGoal.length() + userMacronutrients.length() + userMicronutrients.length()));
+
             userGoal.put("macronutrients", userMacronutrients);
             userGoal.put("micronutrients", userMicronutrients);
+
 
             data.put("user_goal", userGoal);
 

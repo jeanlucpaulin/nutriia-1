@@ -111,7 +111,7 @@ public class UserSharedPreferences {
 
     public int getRDACalories() { return sharedPreferences.getInt(KEY_CALORIES, -1); }
 
-    public void setRDANutrient(String nutrient, int value) { sharedPreferences.edit().putFloat(KEY_RDA + nutrient, value).apply(); }
+    public void setRDANutrient(String nutrient, float value) { sharedPreferences.edit().putFloat(KEY_RDA + nutrient, value).apply(); }
 
     public int getRDAFibers() { return sharedPreferences.getInt(KEY_FIBERS, 0); }
 
