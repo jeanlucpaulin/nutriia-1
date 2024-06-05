@@ -32,7 +32,7 @@
         android:justificationMode="inter_word"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"
-        android:gravity="center"
+        android:gravity="start"
         />
 
     <LinearLayout
