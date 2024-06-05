@@ -51,7 +51,6 @@
         app:layout_constraintTop_toBottomOf="@id/component_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/linear_result"
         android:baselineAligned="false"
         android:layout_marginTop="10sp"
         android:layout_marginStart="20sp"
@@ -98,7 +97,7 @@
             android:orientation="vertical"
             android:background="@drawable/orange_rounded"
             android:layout_weight="2"
-            android:layout_marginEnd="5sp"
+            android:layout_marginEnd="5dp"
             android:layout_gravity="center"
             android:gravity="center">
 
@@ -132,7 +131,6 @@
             android:orientation="vertical"
             android:background="@drawable/orange_rounded"
             android:layout_weight="2"
-            android:layout_marginEnd="10sp"
             android:layout_gravity="center"
             android:gravity="center">
 
@@ -160,6 +158,99 @@
 
         </LinearLayout>
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_info_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/linear_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:baselineAligned="false"
+        android:layout_marginTop="10sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginBottom="15dp">
+
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="67dp"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:background="@drawable/orange_rounded"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sexe"
+                android:fontFamily="@font/montserrat"
+                android:textSize="18sp"
+                android:layout_marginStart="8sp"
+                android:layout_marginEnd="8sp"
+                android:textAlignment="center" />
+
+            <Spinner
+                android:id="@+id/sex_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/unknown_information"
+                android:textSize="15sp"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:fontFamily="@font/montserrat_bold"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/basal_metabolism_container"
+            android:layout_width="0dp"
+            android:layout_height="67dp"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_shape"
+            android:layout_weight="2"
+            android:layout_gravity="start"
+            android:gravity="center_vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginStart="15dp"
+                android:layout_gravity="start">
+
+                <TextView
+                    android:id="@+id/basal_metabolism_index"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Métabolisme de base"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="17sp"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/basal_metabolism_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_information"
+                android:fontFamily="@font/montserrat_semibold"
+                android:layout_marginStart="15dp"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -167,7 +258,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/linear_info"
+        app:layout_constraintTop_toBottomOf="@id/linear_info_2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/validate_button"
@@ -180,11 +271,11 @@
         <LinearLayout
             android:id="@+id/imc_container"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="67dp"
             android:orientation="vertical"
             android:background="@drawable/rounded_shape"
             android:layout_weight="2"
-            android:layout_marginEnd="10sp"
+            android:layout_marginEnd="5sp"
             android:layout_gravity="start"
             android:gravity="center_vertical"
             >
@@ -233,11 +324,10 @@
         <LinearLayout
             android:id="@+id/ideal_weight_container"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="67dp"
             android:orientation="vertical"
             android:background="@drawable/rounded_shape"
             android:layout_weight="2"
-            android:layout_marginEnd="10sp"
             android:layout_gravity="start"
             android:gravity="center_vertical"
             >
