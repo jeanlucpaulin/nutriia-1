@@ -54,6 +54,9 @@ public class UserSharedPreferences {
     public boolean isWelcomeDefined() {
         return sharedPreferences.getBoolean(KEY_WELCOME, false);
     }
+    public void setWelcomeDefined(boolean welcome) {
+        sharedPreferences.edit().putBoolean(KEY_WELCOME, welcome).apply();
+    }
     public boolean isUserProfileDefined() {
         return isUserHeightDefined() && isUserWeightDefined();
     }
