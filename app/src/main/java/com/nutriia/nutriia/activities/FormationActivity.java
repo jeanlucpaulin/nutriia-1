@@ -23,6 +23,7 @@ import com.nutriia.nutriia.FormationItem;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.FragmentsAdapter;
 import com.nutriia.nutriia.fragments.Formation;
+import com.nutriia.nutriia.fragments.FormationBanner;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.utils.AccountMenu;
@@ -59,9 +60,6 @@ public class FormationActivity extends AppCompatActivity {
 
         //APISend.clear();
 
-        ImageView imageView = findViewById(R.id.imageView);
-        imageView.setVisibility(ImageView.VISIBLE);
-
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -72,6 +70,7 @@ public class FormationActivity extends AppCompatActivity {
 
     private void setFragments(RecyclerView recyclerView) {
         fragments.clear();
+        fragments.add(new FormationBanner());
 
         fragments.add(new PageTitle(PageTitle.ActivityType.FORMATION));
         getItems().forEach(item -> fragments.add(new Formation(item)));

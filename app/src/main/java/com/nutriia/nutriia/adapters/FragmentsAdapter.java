@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.fragments.DefineGoalButtons;
 import com.nutriia.nutriia.fragments.DefineMyGoal;
+import com.nutriia.nutriia.fragments.FormationBanner;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RedefineMyGoal;
 import com.nutriia.nutriia.interfaces.OnClickOnGoal;
@@ -105,6 +106,17 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
         }
 
         if (fragment instanceof DefineGoalButtons || fragment instanceof RedefineMyGoal) {
+            holder.getContainer().setBackground(null);
+        }
+
+        if (fragment instanceof FormationBanner) {
+            ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+
+            layoutParams.setMargins(0, -20, 0, 0);
+            holder.getContainer().setLayoutParams(layoutParams);
             holder.getContainer().setBackground(null);
         }
 

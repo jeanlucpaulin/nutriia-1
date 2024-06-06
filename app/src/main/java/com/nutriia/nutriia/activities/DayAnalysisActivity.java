@@ -32,6 +32,7 @@ import com.nutriia.nutriia.fragments.FoodComposition;
 import com.nutriia.nutriia.fragments.MacronutrientsOfMyDay;
 import com.nutriia.nutriia.fragments.MicronutrientsOfMyDay;
 import com.nutriia.nutriia.fragments.MorePrecision;
+import com.nutriia.nutriia.fragments.MyDayAnalysis;
 import com.nutriia.nutriia.fragments.MyRealDay;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
@@ -86,6 +87,7 @@ public class DayAnalysisActivity extends AppCompatActivity {
 
     private void setFragments(RecyclerView recyclerView) {
         fragments.clear();
+        fragments.add(new MyDayAnalysis());
 
         fragments.add(new MyRealDay());
         fragments.add(new MacronutrientsOfMyDay());

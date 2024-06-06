@@ -65,7 +65,7 @@ public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAd
         holder.alertButton.setOnClickListener(v -> {
             int warningMessageId = getWarningMessageId(nutrient.getName());
             String warningMessage = context.getString(warningMessageId);
-            showCustomToast(warningMessage);
+            showCustomDialog(warningMessage);
         });
     }
 
@@ -112,21 +112,6 @@ public class DayProgressionAdapter extends RecyclerView.Adapter<DayProgressionAd
 
             dialog.show();
             Objects.requireNonNull(dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);  // Adjusting the dialog width to match the content width
-        });
-    }
-
-    private void showCustomToast(String message) {
-        ((Activity) context).runOnUiThread(() -> {
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) ((ViewGroup) ((Activity) context).findViewById(android.R.id.content)).getChildAt(0), false);
-
-            TextView textView = layout.findViewById(R.id.toast_text);
-            textView.setText(message);
-
-            Toast toast = new Toast(context);
-            toast.setDuration(Toast.LENGTH_LONG);
-            toast.setView(layout);
-            toast.show();
         });
     }
 

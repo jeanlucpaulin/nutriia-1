@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -115,6 +116,7 @@ public class MyRealDay extends Fragment {
         }
 
         validateButton.setOnClickListener(v -> {
+            showCustomToast("Comparaison de votre journée en cours...", Toast.LENGTH_LONG);
             validateButton.setEnabled(false);
             Context context = getContext();
             Map<String, Set<String>> userInput = new HashMap<>();
@@ -185,5 +187,20 @@ public class MyRealDay extends Fragment {
             if(!list1.get(i).equals(list2.get(i))) return false;
         }
         return true;
+    }
+
+    private void showCustomToast(String message, int duration) {
+        requireActivity().runOnUiThread(() -> {
+            LayoutInflater inflater = getLayoutInflater();
+            View layout = inflater.inflate(R.layout.toast_layout, getActivity().findViewById(R.id.toast_layout_root));
+
+            TextView textView = layout.findViewById(R.id.toast_text);
+            textView.setText(message);
+
+            Toast toast = new Toast(getContext());
+            toast.setDuration(duration);
+            toast.setView(layout);
+            toast.show();
+        });
     }
 }
