@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class DayBuilder {
 
@@ -28,7 +29,7 @@ public class DayBuilder {
             JSONObject fiber = jsonObject.getJSONObject("fibers");
             Nutrient fiberNutrient = new Nutrient("fibers", userSharedPreferences.getRDAFibers(), fiber.getString("unit"), fiber.getInt("value"));
 
-            Map<String, Nutrient> macroNutrients = new HashMap<>();
+            Map<String, Nutrient> macroNutrients = new TreeMap<>();
             JSONObject macroNutrientsJson = jsonObject.getJSONObject("macronutrients");
             for(Iterator<String> it = macroNutrientsJson.keys(); it.hasNext(); ) {
                 String key = it.next();
@@ -37,7 +38,7 @@ public class DayBuilder {
                 macroNutrients.put(key, new Nutrient(key, (int) userSharedPreferences.getRDANutrient(key), nutrient.getString("unit"), nutrient.getInt("value")));
             }
 
-            Map<String, Nutrient> microNutrients = new HashMap<>();
+            Map<String, Nutrient> microNutrients = new TreeMap<>();
             JSONObject microNutrientsJson = jsonObject.getJSONObject("micronutrients");
             for(Iterator<String> it = microNutrientsJson.keys(); it.hasNext(); ) {
                 String key = it.next();
@@ -73,12 +74,12 @@ public class DayBuilder {
             sharedPreferences.clearMRD();
         }
 
-        Map<String, Nutrient> macroNutrients = new HashMap<>();
+        Map<String, Nutrient> macroNutrients = new TreeMap<>();
         for(String key : sharedPreferences.getMacronutrients()) {
             macroNutrients.put(key, new Nutrient(key, (int) sharedPreferences.getRDANutrient(key), "g", (int) sharedPreferences.getMRDNutrient(key)));
         }
 
-        Map<String, Nutrient> microNutrients = new HashMap<>();
+        Map<String, Nutrient> microNutrients = new TreeMap<>();
         for(String key : sharedPreferences.getMicronutrients()) {
             microNutrients.put(key, new Nutrient(key, (int) sharedPreferences.getRDANutrient(key), "mg", (int) sharedPreferences.getMRDNutrient(key)));
         }
