@@ -96,9 +96,9 @@ public class DayAnalysisActivity extends AppCompatActivity implements OnValidate
         fragments.add(new MyRealDay(this));
         fragments.add(new MacronutrientsOfMyDay());
         fragments.add(new MicronutrientsOfMyDay());
+        fragments.add(new MyDayAnalysis());
         fragments.add(new FoodComposition());
         fragments.add(new DishSuggestions());
-        fragments.add(new MyDayAnalysis());
 
         recyclerView.setAdapter(adapter);
     }

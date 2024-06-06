@@ -289,4 +289,5 @@
     <string name="welcome_title_message">Decouvrez Nutriia !</string>
     <string name="welcome_page_message">Explication Nutriia</string>
     <string name="page_title_welcome">Choisissez un objectif !</string>
+    <string name="en_attente_de_la_validation_de_votre_journ_e">En attente de la validation de votre journée...</string>
 </resources>
