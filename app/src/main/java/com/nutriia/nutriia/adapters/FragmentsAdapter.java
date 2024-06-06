@@ -100,6 +100,7 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
         Fragment fragment = fragments.get(position);
         if (fragment.isAdded()) {
             fragmentManager.beginTransaction().show(fragment).commit();
+            return;
         }
         if (fragment instanceof PageTitle) {
             holder.getContainer().setBackground(null);

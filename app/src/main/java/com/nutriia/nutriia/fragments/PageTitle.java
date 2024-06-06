@@ -27,7 +27,13 @@ public class PageTitle extends Fragment {
     private final ActivityType activityType;
     private View view;
 
+    public PageTitle() {
+        super();
+        this.activityType = ActivityType.MAIN;
+    }
+
     public PageTitle(ActivityType activityType) {
+        super();
         this.activityType = activityType;
     }
 

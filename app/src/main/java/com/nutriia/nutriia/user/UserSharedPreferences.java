@@ -30,6 +30,7 @@ public class UserSharedPreferences {
     private static final String KEY_MY_DAY_DINNER = "user_my_day_dinner";
     private static final String KEY_MY_DAY_SNACK = "user_my_day_snack";
     private static final String KEY_MY_DAY_CALORIES = "user_my_day_calories";
+    private static final String KEY_MY_DAY_ANALYSIS = "user_my_day_analysis";
 
     private static final String KEY_TYPICAL_DAY_BREAKFAST = "user_typical_day_breakfast";
     private static final String KEY_TYPICAL_DAY_LUNCH = "user_typical_day_lunch";
@@ -126,6 +127,10 @@ public class UserSharedPreferences {
     public void setMRDNutrient(String nutrient, int value) { sharedPreferences.edit().putFloat(KEY_MY_DAY + nutrient, value).apply(); }
 
     public float getMRDNutrient(String nutrient) { return sharedPreferences.getFloat(KEY_MY_DAY + nutrient, 0); }
+
+    public String getDayAnalysis() { return sharedPreferences.getString(KEY_MY_DAY_ANALYSIS, ""); }
+
+    public void setDayAnalysis(String analysis) { sharedPreferences.edit().putString(KEY_MY_DAY_ANALYSIS, analysis).apply(); }
 
     public Set<String> getMacronutrients() {
         return sharedPreferences.getStringSet(KEY_MACRONUTRIENTS, new HashSet<>());

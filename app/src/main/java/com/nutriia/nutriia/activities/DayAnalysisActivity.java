@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nutriia.nutriia.Day;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.DrawerItemAdapter;
 import com.nutriia.nutriia.adapters.FragmentsAdapter;
@@ -37,6 +38,7 @@ import com.nutriia.nutriia.fragments.MyRealDay;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
 import com.nutriia.nutriia.fragments.TipsAdvices;
+import com.nutriia.nutriia.interfaces.OnValidateDay;
 import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 import com.nutriia.nutriia.utils.AccountMenu;
@@ -45,8 +47,10 @@ import com.nutriia.nutriia.utils.NavBarListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class DayAnalysisActivity extends AppCompatActivity {
+public class DayAnalysisActivity extends AppCompatActivity implements OnValidateDay {
 
     private RecyclerView recyclerView;
 
@@ -87,14 +91,35 @@ public class DayAnalysisActivity extends AppCompatActivity {
 
     private void setFragments(RecyclerView recyclerView) {
         fragments.clear();
-        fragments.add(new MyDayAnalysis());
 
-        fragments.add(new MyRealDay());
+
+        fragments.add(new MyRealDay(this));
         fragments.add(new MacronutrientsOfMyDay());
         fragments.add(new MicronutrientsOfMyDay());
         fragments.add(new FoodComposition());
         fragments.add(new DishSuggestions());
+        fragments.add(new MyDayAnalysis());
 
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onValidateDayButtonClick(Map<String, Set<String>> userInput) {
+        APISend.sendValidateDay(this, userInput, this);
+
+        for(Fragment fragment : fragments){
+            if(fragment instanceof OnValidateDay){
+                ((OnValidateDay) fragment).onValidateDayButtonClick(userInput);
+            }
+        }
+    }
+
+    @Override
+    public void onValidateDayResponse(Day day) {
+        for (Fragment fragment : fragments) {
+            if (fragment instanceof OnValidateDay) {
+                ((OnValidateDay) fragment).onValidateDayResponse(day);
+            }
+        }
     }
 }

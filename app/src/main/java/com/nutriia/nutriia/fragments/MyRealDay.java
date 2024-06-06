@@ -19,9 +19,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.nutriia.nutriia.Day;
 import com.nutriia.nutriia.Meal;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.MealsAdapter;
+import com.nutriia.nutriia.interfaces.OnValidateDay;
 import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.resources.Translator;
 import com.nutriia.nutriia.user.Saver;
@@ -39,9 +41,23 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public class MyRealDay extends Fragment {
+public class MyRealDay extends Fragment implements OnValidateDay {
 
     List<Meal> meals;
+
+    private Button validateButton;
+
+    private TextView textViewCalories;
+
+    private OnValidateDay onValidateDay;
+
+    public MyRealDay() {
+        this.onValidateDay = null;
+    }
+
+    public MyRealDay(OnValidateDay onValidateDay) {
+        this.onValidateDay = onValidateDay;
+    }
 
     @Nullable
     @Override
@@ -60,6 +76,8 @@ public class MyRealDay extends Fragment {
         String currentDate = dateFormat.format(calendar.getTime());
 
         String date = userSharedPreferences.getMRDDate();
+
+        textViewCalories = view.findViewById(R.id.calories);
 
         if(!currentDate.equals(date) && !date.isEmpty()) userSharedPreferences.clearMRD();
 
@@ -85,7 +103,8 @@ public class MyRealDay extends Fragment {
         textViewCalories.setText(String.valueOf(Math.max(calories, 0) + " kcal"));
 
 
-        Button validateButton = view.findViewById(R.id.validateButton);
+        validateButton = view.findViewById(R.id.validateButton);
+
         for(int i = 0; i < viewIds.length; i++) {
 
             EditText editText = view.findViewById(viewIds[i]).findViewById(R.id.editText);
@@ -116,7 +135,6 @@ public class MyRealDay extends Fragment {
         }
 
         validateButton.setOnClickListener(v -> {
-            showCustomToast("Comparaison de votre journée en cours...", Toast.LENGTH_LONG);
             validateButton.setEnabled(false);
             Context context = getContext();
             Map<String, Set<String>> userInput = new HashMap<>();
@@ -148,15 +166,15 @@ public class MyRealDay extends Fragment {
             }
 
             if(send) {
-                APISend.sendValidateDay(getActivity(), userInput, result -> {
-                    validateButton.setEnabled(true);
-                    TextView caloriesTextView = view.findViewById(R.id.calories);
-                    int caloriesMRD = userSharedPreferences.getMRDCalories();
-                    caloriesTextView.setText(String.valueOf((Math.max(caloriesMRD, 0)) + " kcal"));
-                });
+
+                if(onValidateDay != null) {
+                    showCustomToast("Comparaison de votre journée en cours...", Toast.LENGTH_LONG);
+                    onValidateDay.onValidateDayButtonClick(userInput);
+                }
             }
             else {
                 Log.d("MyRealDay", "No changes to send");
+                showCustomToast("Journée déjà validée...", Toast.LENGTH_SHORT);
                 validateButton.setEnabled(true);
             }
         });
@@ -202,5 +220,17 @@ public class MyRealDay extends Fragment {
             toast.setView(layout);
             toast.show();
         });
+    }
+
+    @Override
+    public void onValidateDayButtonClick(Map<String, Set<String>> userInput) {
+        return;
+    }
+
+    @Override
+    public void onValidateDayResponse(Day day) {
+        int caloriesMRD = day.getCalorie().getProgress();
+        textViewCalories.setText(String.valueOf((Math.max(caloriesMRD, 0)) + " kcal"));
+        validateButton.setEnabled(true);
     }
 }

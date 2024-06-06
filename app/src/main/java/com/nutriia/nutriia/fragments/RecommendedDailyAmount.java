@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,6 +59,10 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA, 
 
     private AppCompatActivity activity;
 
+    public RecommendedDailyAmount() {
+        super();
+    }
+
     public RecommendedDailyAmount(AppCompatActivity activity) {
         super();
         this.activity = activity;
@@ -67,6 +72,8 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA, 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.component_recommanded_daily_amount, container, false);
+
+        activity = (AppCompatActivity) getActivity();
 
         macronutrientsListView = view.findViewById(R.id.macronutrients_list);
         micronutrientsListView = view.findViewById(R.id.micronutrients_list);
@@ -156,6 +163,8 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA, 
             else if (!macroFragments.isEmpty()) macroFragments.remove(macroFragments.size() - 1);
             else break;
         }
+
+        if(activity == null) return;
 
         ItemRDAAdapter macroAdapter = new ItemRDAAdapter(activity.getSupportFragmentManager(), macroFragments);
         ItemRDAAdapter microAdapter = new ItemRDAAdapter(activity.getSupportFragmentManager(), microFragments);

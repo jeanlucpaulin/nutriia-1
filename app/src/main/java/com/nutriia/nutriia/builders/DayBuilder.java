@@ -46,7 +46,11 @@ public class DayBuilder {
                 microNutrients.put(key, new Nutrient(key, (int) userSharedPreferences.getRDANutrient(key), nutrient.getString("unit"), nutrient.getInt("value")));
             }
 
-            return new Day(calorieNutrient, fiberNutrient, macroNutrients, microNutrients);
+            String analysis = jsonObject.getString("analysis");
+
+            userSharedPreferences.setDayAnalysis(analysis);
+
+            return new Day(calorieNutrient, fiberNutrient, macroNutrients, microNutrients, analysis);
 
         } catch (JSONException e) {
             Log.e("API DayBuilder", "Error while building day from JSON", e);
@@ -84,7 +88,9 @@ public class DayBuilder {
             microNutrients.put(key, new Nutrient(key, (int) sharedPreferences.getRDANutrient(key), "mg", (int) sharedPreferences.getMRDNutrient(key)));
         }
 
-        return new Day(calorieNutrient, fiberNutrient, macroNutrients, microNutrients);
+        String analysis = sharedPreferences.getDayAnalysis();
+
+        return new Day(calorieNutrient, fiberNutrient, macroNutrients, microNutrients, analysis);
     }
 
 }

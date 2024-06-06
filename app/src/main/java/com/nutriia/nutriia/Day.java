@@ -11,11 +11,22 @@ public class Day {
     private Map<String, Nutrient> macroNutrients;
     private Map<String, Nutrient> microNutrients;
 
+    private String analysis;
+
     public Day(Nutrient calorie, Nutrient fiber, Map<String, Nutrient> macroNutrients, Map<String, Nutrient> microNutrients) {
         this.calorie = calorie;
         this.fiber = fiber;
         this.macroNutrients = macroNutrients;
         this.microNutrients = microNutrients;
+        this.analysis = "";
+    }
+
+    public Day(Nutrient calorie, Nutrient fiber, Map<String, Nutrient> macroNutrients, Map<String, Nutrient> microNutrients, String analysis) {
+        this.calorie = calorie;
+        this.fiber = fiber;
+        this.macroNutrients = macroNutrients;
+        this.microNutrients = microNutrients;
+        this.analysis = analysis;
     }
 
     public Nutrient getCalorie() {
@@ -32,6 +43,10 @@ public class Day {
 
     public Map<String, Nutrient> getMicroNutrients() {
         return microNutrients;
+    }
+
+    public String getAnalysis() {
+        return analysis;
     }
 
     @NonNull

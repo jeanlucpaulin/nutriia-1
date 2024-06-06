@@ -20,7 +20,7 @@ import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.DayProgressionAdapter;
 import com.nutriia.nutriia.builders.DayBuilder;
 import com.nutriia.nutriia.interfaces.APIResponseRDA;
-import com.nutriia.nutriia.interfaces.APIResponseValidateDay;
+import com.nutriia.nutriia.interfaces.OnValidateDay;
 import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.resources.Settings;
 import com.nutriia.nutriia.user.UserSharedPreferences;
@@ -28,8 +28,10 @@ import com.nutriia.nutriia.user.UserSharedPreferences;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class MacronutrientsOfMyDay extends Fragment implements APIResponseValidateDay, APIResponseRDA {
+public class MacronutrientsOfMyDay extends Fragment implements OnValidateDay, APIResponseRDA {
     private static boolean DISPLAY_ALL_ITEMS = false;
     private RecyclerView recyclerView;
     private final List<Nutrient> nutrientsList = new ArrayList<>();
@@ -51,8 +53,6 @@ public class MacronutrientsOfMyDay extends Fragment implements APIResponseValida
 
         APISend.obtainsNewGoalRDA(this.getActivity(), this);
 
-        APISend.addValidateDayListener(this);
-
         LinearLayout detailsLayout = view.findViewById(R.id.details_layout);
         detailsText = view.findViewById(R.id.textDetails);
         arrow = view.findViewById(R.id.arrowDetails);
@@ -65,6 +65,11 @@ public class MacronutrientsOfMyDay extends Fragment implements APIResponseValida
         arrow.setRotation(DISPLAY_ALL_ITEMS ? 270 : 90);
 
         return view;
+    }
+
+    @Override
+    public void onValidateDayButtonClick(Map<String, Set<String>> userInput) {
+        return;
     }
 
     @Override

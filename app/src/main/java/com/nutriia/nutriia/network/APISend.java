@@ -16,7 +16,7 @@ import com.nutriia.nutriia.activities.DishRecipeActivity;
 import com.nutriia.nutriia.builders.DayBuilder;
 
 import com.nutriia.nutriia.interfaces.APIResponseRDA;
-import com.nutriia.nutriia.interfaces.APIResponseValidateDay;
+import com.nutriia.nutriia.interfaces.OnValidateDay;
 import com.nutriia.nutriia.user.Saver;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
@@ -41,9 +41,7 @@ public class APISend {
     private static final String TAG = "APISend";
     private static boolean rdaDefined = false;
     private static boolean rdaRequested = false;
-    private static boolean validateDayCallBack = true;
     private static final List<APIResponseRDA> listenersRDA = new ArrayList<>();
-    private static final List<APIResponseValidateDay> listenersValidateDay = new ArrayList<>();
 
     public static void clearRDAListeners() {
         listenersRDA.clear();
@@ -51,16 +49,6 @@ public class APISend {
 
     public static void clear() {
         clearRDAListeners();
-        clearValidateDayListeners();
-        validateDayCallBack = false;
-    }
-
-    public static void clearValidateDayListeners() {
-        listenersValidateDay.clear();
-    }
-
-    public static void addValidateDayListener(APIResponseValidateDay listener) {
-        listenersValidateDay.add(listener);
     }
 
     public static void addRDAListener(APIResponseRDA listener) {
@@ -457,20 +445,45 @@ public class APISend {
         return dishes;
     }
 
-    public static void sendValidateDay(Activity activity, Map<String, Set<String>> userInput, Consumer<Boolean> callback) {
-        validateDayCallBack = true;
+    public static void sendValidateDay(Activity activity, Map<String, Set<String>> userInput, OnValidateDay callback) {
         Context context = activity.getApplicationContext();
         JSONObject data = new JSONObject();
         try {
             data.put("action", "validate_day");
             data.put("user_registrations", new JSONObject(userInput));
 
+            List<String> macronutrients = new ArrayList<>(UserSharedPreferences.getInstance(activity).getMacronutrients());
+            List<String> micronutrients = new ArrayList<>(UserSharedPreferences.getInstance(activity).getMicronutrients());
+
+            JSONObject userGoal = new JSONObject();
+            userGoal.put("calories", UserSharedPreferences.getInstance(activity).getRDACalories());
+            userGoal.put("fibers", UserSharedPreferences.getInstance(activity).getRDAFibers());
+            JSONObject userMacronutrients = new JSONObject();
+            JSONObject userMicronutrients = new JSONObject();
+
+            for(String macronutrient : macronutrients) {
+                userMacronutrients.put(macronutrient, UserSharedPreferences.getInstance(activity).getRDANutrient(macronutrient));
+            }
+
+            for(String micronutrient : micronutrients) {
+                userMicronutrients.put(micronutrient, UserSharedPreferences.getInstance(activity).getRDANutrient(micronutrient));
+            }
+
+            Log.d(TAG, "size :" + (userGoal.length() + userMacronutrients.length() + userMicronutrients.length()));
+
+            userGoal.put("macronutrients", userMacronutrients);
+            userGoal.put("micronutrients", userMicronutrients);
+
+
+            data.put("user_goal", userGoal);
+
+
             Log.d(TAG, "Data: " + data.toString());
 
             new APIRequest("validate_day", data.toString(), context).send(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    if(validateDayCallBack) activity.runOnUiThread(() -> callback.accept(false));
+                    activity.runOnUiThread(() -> callback.onValidateDayResponse(null));
                 }
 
                 @Override
@@ -483,13 +496,15 @@ public class APISend {
                             JSONObject jsonObject = new JSONObject(responseBody);
                             Day day = new DayBuilder().build(jsonObject, UserSharedPreferences.getInstance(context));
                             Saver.saveMyReadDay(context, day);
-                            activity.runOnUiThread(() -> listenersValidateDay.forEach(listener -> listener.onValidateDayResponse(day)));
+                            activity.runOnUiThread(() -> callback.onValidateDayResponse(day));
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
-                    } else
+                    } else {
                         Log.d(TAG, "Request failed with status code: " + response.code() + ", message: " + response.body().string());
-                    if(validateDayCallBack) activity.runOnUiThread(() -> callback.accept(true));
+                        activity.runOnUiThread(() -> callback.onValidateDayResponse(null));
+                    }
+
                 }
             });
         } catch (JSONException e) {
