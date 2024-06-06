@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.BlurMaskFilter;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -184,12 +185,18 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA, 
 
     private void addBlurEffect() {
         float radius = 20f;
-        RenderEffect renderEffect = RenderEffect.createBlurEffect(radius, radius, Shader.TileMode.CLAMP);
-        view.setRenderEffect(renderEffect);
+        RenderEffect renderEffect = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            renderEffect = RenderEffect.createBlurEffect(radius, radius, Shader.TileMode.CLAMP);
+            view.setRenderEffect(renderEffect);
+        }
+
     }
 
     private void removeBlurEffect() {
-        view.setRenderEffect(null);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            view.setRenderEffect(null);
+        }
     }
 
     @Override

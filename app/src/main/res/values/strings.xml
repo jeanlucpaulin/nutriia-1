@@ -288,4 +288,5 @@
     <string name="default_warning_message">Attention, un excès de ce nutriment peut être nocif pour la santé.</string>
     <string name="welcome_title_message">Decouvrez Nutriia !</string>
     <string name="welcome_page_message">Explication Nutriia</string>
+    <string name="page_title_welcome">Choisissez un objectif !</string>
 </resources>
