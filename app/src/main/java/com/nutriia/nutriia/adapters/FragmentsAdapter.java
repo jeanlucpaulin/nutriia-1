@@ -25,18 +25,19 @@ import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
 import com.nutriia.nutriia.interfaces.onItemClickListener;
 
 import java.util.List;
+import java.util.Map;
 
 public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.FragmentViewHolder> implements onItemClickListener {
     private final FragmentManager fragmentManager;
-    private final List<Fragment> fragments;
+    private final Map<Integer, Fragment> fragments;
     private final boolean allowClick;
     private final OnNewGoalSelected callBack;
 
-    public FragmentsAdapter(FragmentManager fragmentManager, List<Fragment> fragments) {
+    public FragmentsAdapter(FragmentManager fragmentManager, Map<Integer, Fragment> fragments) {
         this(fragmentManager, fragments, false, null);
     }
 
-    public FragmentsAdapter(FragmentManager fragmentManager, List<Fragment> fragments, boolean allowClick, OnNewGoalSelected callBack) {
+    public FragmentsAdapter(FragmentManager fragmentManager, Map<Integer, Fragment> fragments, boolean allowClick, OnNewGoalSelected callBack) {
         this.fragmentManager = fragmentManager;
         this.fragments = fragments;
         this.allowClick = allowClick;
@@ -47,7 +48,7 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
     public void onItemClick(int position) {
         if(!allowClick) return;
         if(((RedefineMyGoal) fragments.get(position)).getGoal().isActual()) return;
-        for(Fragment fragment : fragments) {
+        for(Fragment fragment : fragments.values()) {
             if(fragment instanceof RedefineMyGoal) {
                 ((RedefineMyGoal) fragment).setGoalSelected(false);
             }
@@ -98,18 +99,17 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
     @Override
     public void onBindViewHolder(@NonNull FragmentViewHolder holder, int position) {
         Fragment fragment = fragments.get(position);
+        Log.d("FragmentsAdapter", "onBindViewHolder: " + fragment.getClass().getSimpleName() + " " + position);
         if (fragment.isAdded()) {
-            fragmentManager.beginTransaction().show(fragment).commit();
             return;
-        }
-        if (fragment instanceof PageTitle) {
-            holder.getContainer().setBackground(null);
+        } else {
+            fragmentManager.beginTransaction().add(holder.getContainer().getId(), fragment).commit();
         }
 
-        /*if (fragment instanceof DefineGoalButtons || fragment instanceof RedefineMyGoal) {
-            holder.getContainer().setBackground(null);
-        }
-*/
+
+        if (fragment instanceof PageTitle) holder.getContainer().setBackground(null);
+
+
         if (fragment instanceof FormationBanner) {
             ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -120,10 +120,6 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
             holder.getContainer().setLayoutParams(layoutParams);
             holder.getContainer().setBackground(null);
         }
-
-        fragmentManager.beginTransaction()
-                .replace(holder.getContainer().getId(), fragment)
-                .commit();
     }
 
     @Override

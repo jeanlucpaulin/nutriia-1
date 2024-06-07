@@ -33,6 +33,8 @@ import com.nutriia.nutriia.fragments.DishSuggestions;
 import com.nutriia.nutriia.fragments.ExampleTypicalDay;
 import com.nutriia.nutriia.fragments.FoodComposition;
 import com.nutriia.nutriia.fragments.MorePrecision;
+import com.nutriia.nutriia.fragments.MyDayAnalysis;
+import com.nutriia.nutriia.fragments.MyRealDay;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
 import com.nutriia.nutriia.fragments.RedefineMyGoal;
@@ -54,7 +56,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -63,7 +67,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity implements onActivityFinishListener, OnNewGoalSelected, OnUserProfileChanged {
     private RecyclerView recyclerView;
 
-    private final List<Fragment> fragments = new ArrayList<>();
+    private final Map<Integer, Fragment> fragments = new LinkedHashMap<>();
 
     private FragmentsAdapter adapter;
 
@@ -113,12 +117,13 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
 
     private void setFragments(RecyclerView recyclerView) {
         fragments.clear();
-        //fragments.add(new PageTitle(PageTitle.ActivityType.MAIN));
-        fragments.add(new DefineGoalButtons(this));
-        fragments.add(new UserProfile(this));
-        fragments.add(new RecommendedDailyAmount(this));
-        fragments.add(new TipsAdvices());
-        fragments.add(new ExampleTypicalDay());
+
+        fragments.put(0, new PageTitle(PageTitle.ActivityType.MAIN));
+        fragments.put(1, new DefineGoalButtons(this));
+        fragments.put(2, new UserProfile(this));
+        fragments.put(3, new RecommendedDailyAmount(this));
+        fragments.put(4, new TipsAdvices());
+        fragments.put(5, new ExampleTypicalDay());
 
         recyclerView.setAdapter(adapter);
     }
@@ -131,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
         sharedPreferences.clearRDA();
         sharedPreferences.clearTypicalDay();
         APISend.obtainsNewGoalRDA(this, null);
-        for(Fragment fragment : fragments) {
+        for(Fragment fragment : fragments.values()) {
             if(fragment instanceof OnNewGoalSelected) {
                 ((OnNewGoalSelected) fragment).onNewGoalSelected(position);
             }
@@ -145,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
         sharedPreferences.clearTypicalDay();
         APISend.obtainsNewGoalRDA(this, null);
 
-        for(Fragment fragment : fragments) {
+        for(Fragment fragment : fragments.values()) {
             if(fragment instanceof OnUserProfileChanged) {
                 ((OnUserProfileChanged) fragment).onUserProfileChanged();
             }
