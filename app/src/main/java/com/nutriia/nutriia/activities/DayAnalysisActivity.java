@@ -46,6 +46,7 @@ import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -54,7 +55,7 @@ public class DayAnalysisActivity extends AppCompatActivity implements OnValidate
 
     private RecyclerView recyclerView;
 
-    private final List<Fragment> fragments = new ArrayList<>();
+    private final Map<Integer, Fragment> fragments = new LinkedHashMap<>();
 
     private FragmentsAdapter adapter;
 
@@ -93,13 +94,13 @@ public class DayAnalysisActivity extends AppCompatActivity implements OnValidate
         fragments.clear();
 
 
-        fragments.add(new MyRealDay(this));
-        fragments.add(new MacronutrientsOfMyDay());
-        fragments.add(new MicronutrientsOfMyDay());
-        fragments.add(new MyDayAnalysis());
-        fragments.add(new PageTitle(PageTitle.ActivityType.ANALYSIS));
-        fragments.add(new FoodComposition());
-        fragments.add(new DishSuggestions());
+        fragments.put(0, new MyRealDay(this));
+        fragments.put(1, new MacronutrientsOfMyDay());
+        fragments.put(4, new MicronutrientsOfMyDay());
+        fragments.put(3, new MyDayAnalysis());
+        fragments.put(6, new FoodComposition());
+        fragments.put(5, new PageTitle(PageTitle.ActivityType.ANALYSIS));
+        fragments.put(2, new DishSuggestions());
 
         recyclerView.setAdapter(adapter);
     }
@@ -108,7 +109,7 @@ public class DayAnalysisActivity extends AppCompatActivity implements OnValidate
     public void onValidateDayButtonClick(Map<String, Set<String>> userInput) {
         APISend.sendValidateDay(this, userInput, this);
 
-        for(Fragment fragment : fragments){
+        for(Fragment fragment : fragments.values()){
             if(fragment instanceof OnValidateDay){
                 ((OnValidateDay) fragment).onValidateDayButtonClick(userInput);
             }
@@ -117,7 +118,7 @@ public class DayAnalysisActivity extends AppCompatActivity implements OnValidate
 
     @Override
     public void onValidateDayResponse(Day day) {
-        for (Fragment fragment : fragments) {
+        for (Fragment fragment : fragments.values()) {
             if (fragment instanceof OnValidateDay) {
                 ((OnValidateDay) fragment).onValidateDayResponse(day);
             }

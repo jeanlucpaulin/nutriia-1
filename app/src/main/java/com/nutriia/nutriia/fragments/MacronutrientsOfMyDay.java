@@ -96,42 +96,6 @@ public class MacronutrientsOfMyDay extends Fragment implements OnValidateDay, AP
             }
         }
 
-        // Sort the nutrientsList
-        nutrientsList.sort(new Comparator<Nutrient>() {
-            @Override
-            public int compare(Nutrient n1, Nutrient n2) {
-                String name1 = n1.getName();
-                String name2 = n2.getName();
-
-                String nonDigitPart1 = name1.replaceAll("\\d", "");
-                String nonDigitPart2 = name2.replaceAll("\\d", "");
-
-                int nonDigitPartComparison = nonDigitPart1.compareTo(nonDigitPart2);
-                if (nonDigitPartComparison != 0) {
-                    return nonDigitPartComparison;
-                } else {
-                    String digitPart1 = name1.replaceAll("\\D", "");
-                    String digitPart2 = name2.replaceAll("\\D", "");
-
-                    // If there are no digits in the name, compare the names directly
-                    if (digitPart1.isEmpty() && digitPart2.isEmpty()) {
-                        return name1.compareTo(name2);
-                    }
-
-                    // If one name has digits and the other doesn't, the one with digits comes first
-                    if (digitPart1.isEmpty()) {
-                        return 1;
-                    }
-                    if (digitPart2.isEmpty()) {
-                        return -1;
-                    }
-
-                    // If both names have digits, compare the digit parts as integers
-                    return Integer.compare(Integer.parseInt(digitPart1), Integer.parseInt(digitPart2));
-                }
-            }
-        });
-
         DayProgressionAdapter dayProgressionAdapter = new DayProgressionAdapter(getContext(), nutrientsList);
         recyclerView.setAdapter(dayProgressionAdapter);
         if(nutrientsList.size() < Settings.getMaxDisplayedItems()) view.findViewById(R.id.details_layout).setVisibility(View.INVISIBLE);

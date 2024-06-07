@@ -32,15 +32,17 @@ import com.nutriia.nutriia.utils.NavBarListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FormationActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
-    private FragmentsAdapter adapter;
+    private final Map<Integer, Fragment> fragments = new LinkedHashMap<>();
 
-    private final List<Fragment> fragments = new ArrayList<>();
+    private FragmentsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +72,13 @@ public class FormationActivity extends AppCompatActivity {
 
     private void setFragments(RecyclerView recyclerView) {
         fragments.clear();
-        fragments.add(new FormationBanner());
+        fragments.put(0, new FormationBanner());
 
-        fragments.add(new PageTitle(PageTitle.ActivityType.FORMATION));
-        getItems().forEach(item -> fragments.add(new Formation(item)));
+        fragments.put(1, new PageTitle(PageTitle.ActivityType.FORMATION));
+        for(int i = 0; i < getItems().size(); i++) {
+            fragments.put(i + 2, new Formation(getItems().get(i)));
+        }
+
 
         recyclerView.setAdapter(adapter);
     }
