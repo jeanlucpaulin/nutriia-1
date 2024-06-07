@@ -1,5 +1,7 @@
 package com.nutriia.nutriia.fragments;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.widget.AdapterView;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -33,6 +36,7 @@ import com.nutriia.nutriia.user.UserSharedPreferences;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class UserProfile extends Fragment implements OnNewGoalSelected {
 
@@ -120,7 +124,17 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
         updateFields(sharedPreferences);
 
         validateButton.setOnClickListener(v -> saveFields());
+        ImageButton infoButtonIdealWeight = view.findViewById(R.id.info_button_ideal_weight);
+        infoButtonIdealWeight.setOnClickListener(v -> {
+            String message = "Le poids idéal est calculé en utilisant la formule : (Taille en cm - 100) - (Taille en cm - 150) / 4 pour les femmes, ou / 2.5 pour les hommes.";
+            showCustomDialog(message);
+        });
 
+        ImageButton infoButtonBasalMetabolism = view.findViewById(R.id.info_button_basal_metabolism);
+        infoButtonBasalMetabolism.setOnClickListener(v -> {
+            String message = "Le métabolisme de base est calculé en utilisant la formule : (1.083 pour les femmes ou 0.963 pour les hommes) * Poids^0.48 * Taille^0.5 * Age^-0.13.";
+            showCustomDialog(message);
+        });
         return view;
     }
 
@@ -256,6 +270,33 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
             if(onUserProfileChanged != null) {
                 onUserProfileChanged.onUserProfileChanged();
             }
+        }
+    }
+
+    private void showCustomDialog(String message) {
+        Activity activity = getActivity();
+        if (activity != null) {
+            activity.runOnUiThread(() -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.RoundedAlertDialog);
+                LayoutInflater inflater = activity.getLayoutInflater();
+                View layout = inflater.inflate(R.layout.toast_layout, null);
+
+                TextView textView = layout.findViewById(R.id.toast_text);
+                textView.setText(message);
+
+                Button btnOk = layout.findViewById(R.id.btn_ok);
+                btnOk.setVisibility(View.VISIBLE);  // Make the button visible
+
+                builder.setView(layout);
+                AlertDialog dialog = builder.create();
+
+                btnOk.setOnClickListener(v -> {
+                    dialog.dismiss();  // Dismiss the dialog when the button is clicked
+                });
+
+                dialog.show();
+                Objects.requireNonNull(dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            });
         }
     }
 }

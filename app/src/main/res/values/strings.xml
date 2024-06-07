@@ -23,7 +23,7 @@
     <string name="weight">Poids</string>
     <string name="height">Taille</string>
     <string name="age">Âge</string>
-    <string name="body_mass_index">IMC</string>
+    <string name="body_mass_index">Votre indice de masse corporelle : </string>
     <string name="ideal_weight">Poids idéal</string>
     <string name="give_more_precision">Si vous souhaitez des renseignements plus précis, veuillez nous renseigner votre profil.</string>
     <string name="give_more_precision_goal">Si vous souhaitez des renseignement plus précis, veuillez nous renseigner votre objectif.</string>
@@ -292,4 +292,5 @@
     <string name="en_attente_de_la_validation_de_votre_journ_e">En attente de la validation de votre journée…</string>
     <string name="your_day_analysis">Analyse de votre journée (IA)</string>
     <string name="analysis_page_title">Comment améliorer ma nutrition ?</string>
+    <string name="m_tabolisme_de_base">Métabolisme \nde base</string>
 </resources>
