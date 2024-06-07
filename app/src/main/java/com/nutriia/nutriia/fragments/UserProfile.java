@@ -36,8 +36,6 @@ import java.util.List;
 
 public class UserProfile extends Fragment implements OnNewGoalSelected {
 
-    private ImageView userGoalIcon;
-    private TextView userGoal;
     private Spinner spinnerAge;
     private Spinner spinnerGender;
     private EditText userWeight;
@@ -72,8 +70,6 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
         userHeight = view.findViewById(R.id.height_data);
         userBodyMassIndex = view.findViewById(R.id.body_mass_index_data);
         userBodyMassIndexUnit = view.findViewById(R.id.body_mass_index_unit);
-        userGoalIcon = view.findViewById(R.id.image_objective);
-        userGoal = view.findViewById(R.id.title_objective);
         imcContainer = view.findViewById(R.id.imc_container);
         userIdealWeightData = view.findViewById(R.id.ideal_weight_data);
         metabolismData = view.findViewById(R.id.basal_metabolism_data);
@@ -214,8 +210,6 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
         UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(requireContext());
         GoalsBuilder goalsBuilder = new GoalsBuilder(getResources(), requireContext().getPackageName(), userSharedPreferences);
         Goal goal = goalsBuilder.getGoal(goalIndex);
-        userGoalIcon.setImageDrawable(ResourcesCompat.getDrawable(getResources(), goal.getImageResId(), null));
-        userGoal.setText(goal.getText());
     }
 
     private void saveFields() {
