@@ -22,6 +22,8 @@ public class WelcomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_welcome);
 
+        getWindow().setNavigationBarColor(getColor(R.color.green_nutriia));
+
         Button discoverButton = findViewById(R.id.discover_app_button);
 
         CheckBox checkBox = findViewById(R.id.checkbox);

@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
 
     private void setFragments(RecyclerView recyclerView) {
         fragments.clear();
-        fragments.add(new PageTitle(PageTitle.ActivityType.MAIN));
+        //fragments.add(new PageTitle(PageTitle.ActivityType.MAIN));
         fragments.add(new DefineGoalButtons(this));
         fragments.add(new UserProfile(this));
         fragments.add(new RecommendedDailyAmount(this));

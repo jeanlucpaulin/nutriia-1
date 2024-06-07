@@ -106,10 +106,10 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
             holder.getContainer().setBackground(null);
         }
 
-        if (fragment instanceof DefineGoalButtons || fragment instanceof RedefineMyGoal) {
+        /*if (fragment instanceof DefineGoalButtons || fragment instanceof RedefineMyGoal) {
             holder.getContainer().setBackground(null);
         }
-
+*/
         if (fragment instanceof FormationBanner) {
             ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,

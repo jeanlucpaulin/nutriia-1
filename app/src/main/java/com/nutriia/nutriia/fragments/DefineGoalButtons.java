@@ -69,7 +69,7 @@ public class DefineGoalButtons extends Fragment {
             Goal goal = goals.get(i);
             LinearLayout layout = layouts.get(i);
             if(goal.isActual()) layout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_text_meal, null));
-            else layout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_rounded, null));
+            else layout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_buttons_click, null));
         }
 
 
@@ -90,7 +90,7 @@ public class DefineGoalButtons extends Fragment {
             } else {
                 if (goal.isActual()) goal.setActual(false);
 
-                layout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.linear_rounded, null));
+                layout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_buttons_click, null));
             }
         }
 

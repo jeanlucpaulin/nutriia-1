@@ -15,7 +15,7 @@
     <string name="legal_statements">Mentions légales</string>
     <string name="privacy_policy">Politique de confidentialité</string>
     <string name="menu_formations">Formations</string>
-    <string name="title_tips_tricks">Conseils et astuces</string>
+    <string name="title_tips_tricks">Conseils pour votre objectif</string>
     <string name="button_previous_tips_description">Conseil et astuce précédente</string>
     <string name="button_next_tips_description">Conseil et astuce suivante</string>
     <string name="title_more_precision">Plus de précision ?</string>
@@ -31,7 +31,7 @@
     <string name="fill_goal">Renseigner mon objectif</string>
     <string name="unknown_information">\?</string>
     <string name="no_information">Aucune information</string>
-    <string name="recommended_daily_amount">Vos apports recommandés</string>
+    <string name="recommended_daily_amount">Vos apports recommandés selon votre objectif et votre profil (réf. ANSES)</string>
     <string name="energy">Énergie</string>
     <string name="macronutrients">Macronutriments</string>
     <string name="micronutrients">Micronutriments</string>
@@ -94,13 +94,13 @@
     <string name="more_dish_suggestions">Plus de suggestions</string>
     <string name="composition_d_un_aliment">Composition d\'un aliment</string>
     <string name="validate_my_day">Valider ma journée</string>
-    <string name="my_real_day">Ma journée réelle</string>
+    <string name="my_real_day">Mon alimentation du jour</string>
     <string name="welcolme_message">Bonjour, vous souhaitez découvrir l\'application !</string>
     <string name="enter_something_to_eat">Entrez un plat ou un aliment</string>
     <string name="show_composition">Voir la composition</string>
     <string name="objective">Objectif</string>
 
-    <string name="no_goal_text">Nutrition santé</string>
+    <string name="no_goal_text">Adopter une Nutrition Santé</string>
     <string name="lose_weight_text">Perte de poids</string>
     <string name="gain_muscle_text">Prise de muscles</string>
     <string name="shape_text">Remise en forme</string>
@@ -209,7 +209,7 @@
         <item>menu_icon_micronutriment</item>
         <item>menu_icon_nutrition</item>
     </string-array>
-    <string name="formation_page_title">Documentez-vous !</string>
+    <string name="formation_page_title">Documentez-vous …</string>
     <string name="share_app_message">Hey, j\'utilise Nutriia ! Viens décourvrir l\'application ! https://nutriia.fr</string>
     <string name="no_goal_selected">Bienvenue sur l\'application ! Vous n\'avez pas encore sélectionné d\'objectif. Pour obtenir des indications plus précises, vous pouvez cliquer sur l\'un des objectifs ci-dessus. Nous serons ravis de vous guider dans votre découverte.!</string>
     <string name="api_client_url">https://nutriia.fr/api</string>
@@ -288,6 +288,8 @@
     <string name="default_warning_message">Attention, un excès de ce nutriment peut être nocif pour la santé.</string>
     <string name="welcome_title_message">Decouvrez Nutriia !</string>
     <string name="welcome_page_message">Explication Nutriia</string>
-    <string name="page_title_welcome">Choisissez un objectif !</string>
-    <string name="en_attente_de_la_validation_de_votre_journ_e">En attente de la validation de votre journée...</string>
+    <string name="page_title_welcome">Choisissez votre objectif</string>
+    <string name="en_attente_de_la_validation_de_votre_journ_e">En attente de la validation de votre journée…</string>
+    <string name="your_day_analysis">Analyse de votre journée (IA)</string>
+    <string name="analysis_page_title">Comment améliorer ma nutrition ?</string>
 </resources>

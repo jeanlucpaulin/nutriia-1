@@ -21,7 +21,8 @@ public class PageTitle extends Fragment {
 
     public enum ActivityType {
         MAIN,
-        FORMATION
+        FORMATION,
+        ANALYSIS
     }
 
     private final ActivityType activityType;
@@ -46,6 +47,8 @@ public class PageTitle extends Fragment {
 
         if (activityType == ActivityType.FORMATION) {
             title.setText(getFormationPageTitle());
+        } else if (activityType == ActivityType.ANALYSIS) {
+            title.setText(getAnalysisPageTitle());
         } else {
             title.setText(getMainPageTitle());
         }
@@ -59,5 +62,9 @@ public class PageTitle extends Fragment {
 
     private String getFormationPageTitle() {
         return getResources().getString(R.string.formation_page_title);
+    }
+
+    private String getAnalysisPageTitle() {
+        return getResources().getString(R.string.analysis_page_title);
     }
 }
