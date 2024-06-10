@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="@string/welcome_page_message"
+        android:text="@string/intro_text_nutriia"
         android:fontFamily="@font/montserrat"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintBottom_toTopOf="@id/container"
