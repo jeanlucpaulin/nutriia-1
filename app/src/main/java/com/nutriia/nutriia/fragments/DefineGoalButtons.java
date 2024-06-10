@@ -73,6 +73,8 @@ public class DefineGoalButtons extends AppFragment {
             if(goal.isActual()) layout.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.rounded_text_meal, null));
             else layout.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.rounded_buttons_click, null));
         }
+
+        frameLayout.addView(view);
     }
 
     private void onClickOnGoal(View view) {
