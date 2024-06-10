@@ -1,10 +1,12 @@
 package com.nutriia.nutriia.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,18 +19,25 @@ import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.activities.FormationActivity;
 import com.nutriia.nutriia.activities.WebViewActivity;
 
-public class Formation extends Fragment {
+public class Formation extends AppFragment {
 
     private final FormationItem formationItem;
+
+    private Context context;
 
     public Formation(FormationItem formationItem) {
         this.formationItem = formationItem;
     }
 
-    @Nullable
+    private Context getContext() {
+        return context;
+    }
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.component_formation, container, false);
+    public void create(FrameLayout frameLayout) {
+        context = frameLayout.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.component_formation, frameLayout, false);
 
         ImageView imageView = view.findViewById(R.id.icon);
         TextView textView = view.findViewById(R.id.formation);
@@ -40,9 +49,9 @@ public class Formation extends Fragment {
             Intent intent = new Intent(getContext(), WebViewActivity.class);
             intent.putExtra("url", formationItem.getUrl());
             intent.putExtra("title", formationItem.getTitle());
-            startActivity(intent);
+            context.startActivity(intent);
         });
 
-        return view;
+        frameLayout.addView(view);
     }
 }

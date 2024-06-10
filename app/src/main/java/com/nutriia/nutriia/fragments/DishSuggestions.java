@@ -1,5 +1,6 @@
 package com.nutriia.nutriia.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,17 +42,29 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class DishSuggestions extends Fragment {
+public class DishSuggestions extends AppFragment {
 
     private final List<Dish> dishes;
+
+    private Context  context;
 
     public DishSuggestions() {
         dishes = new ArrayList<>();
     }
 
+    private Activity getActivity() {
+        return (Activity) context;
+    }
+
+    private Context getContext() {
+        return context;
+    }
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.component_dish_suggestions, container, false);
+    public void create(FrameLayout frameLayout) {
+        context = frameLayout.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.component_dish_suggestions, frameLayout, false);
 
         LinearLayout listView = view.findViewById(R.id.dish_suggestions_list);
 
@@ -93,7 +107,7 @@ public class DishSuggestions extends Fragment {
             }, this.dishes);
         });
 
-        return view;
+        frameLayout.addView(view);
     }
 
     private void addDishes(List<Dish> dishes, LinearLayout listView) {
@@ -130,14 +144,14 @@ public class DishSuggestions extends Fragment {
             imageButton.setOnClickListener(click -> {
                 Intent intent = new Intent(getContext(), DishRecipeActivity.class);
                 intent.putExtra("DISH_NAME", dish.getName());
-                startActivity(intent);
+                context.startActivity(intent);
             });
 
             TextView textView = itemView.findViewById(R.id.recipe);
             textView.setOnClickListener(click -> {
                 Intent intent = new Intent(getContext(), DishRecipeActivity.class);
                 intent.putExtra("DISH_NAME", dish.getName());
-                startActivity(intent);
+                context.startActivity(intent);
             });
 
             // Get the RecyclerViews
@@ -298,7 +312,7 @@ public class DishSuggestions extends Fragment {
 
     private void showCustomToast(String message, int duration) {
         getActivity().runOnUiThread(() -> {
-            LayoutInflater inflater = getLayoutInflater();
+            LayoutInflater inflater = getActivity().getLayoutInflater();
             View layout = inflater.inflate(R.layout.toast_layout, getActivity().findViewById(R.id.toast_layout_root));
 
             TextView textView = layout.findViewById(R.id.toast_text);

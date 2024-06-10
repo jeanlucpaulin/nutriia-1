@@ -1,10 +1,12 @@
 package com.nutriia.nutriia.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -24,18 +26,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TipsAdvices extends Fragment implements OnNewGoalSelected {
+public class TipsAdvices extends AppFragment implements OnNewGoalSelected {
     private ViewPager2 viewPager;
     private SlideAdapter slideAdapter;
     private ImageButton previousButton;
     private ImageButton nextButton;
     private final List<Slide> slides = new ArrayList<>();
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    private Context context;
 
-        View view = inflater.inflate(R.layout.component_tips, container, false);
+    private Context getContext() {
+        return context;
+    }
+
+
+    @Override
+    public void create(FrameLayout frameLayout) {
+        context = frameLayout.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View view = inflater.inflate(R.layout.component_tips, frameLayout, false);
 
         viewPager = view.findViewById(R.id.viewPager);
 
@@ -65,7 +75,7 @@ public class TipsAdvices extends Fragment implements OnNewGoalSelected {
             }
         });
 
-        return view;
+        frameLayout.addView(view);
     }
 
     @Override
@@ -74,14 +84,14 @@ public class TipsAdvices extends Fragment implements OnNewGoalSelected {
     }
 
     private void updateTips(int goalIndex) {
-        List<String> tipsNames = Arrays.asList(getResources().getStringArray(R.array.tips_names));
+        List<String> tipsNames = Arrays.asList(getContext().getResources().getStringArray(R.array.tips_names));
 
 
-        List<String> tipsTitles = Arrays.asList(getResources().getStringArray(R.array.tips_titles));
+        List<String> tipsTitles = Arrays.asList(getContext().getResources().getStringArray(R.array.tips_titles));
 
         if(slides.isEmpty()) {
             for(int i = 0; i < tipsNames.size(); i++) {
-                List<String> tips = Arrays.asList(getResources().getStringArray(getResources().getIdentifier(tipsNames.get(i), "array", getContext().getPackageName())));
+                List<String> tips = Arrays.asList(getContext().getResources().getStringArray(getContext().getResources().getIdentifier(tipsNames.get(i), "array", getContext().getPackageName())));
                 slides.add(new Slide(tipsTitles.get(i), tips.get(goalIndex)));
             }
 
@@ -91,7 +101,7 @@ public class TipsAdvices extends Fragment implements OnNewGoalSelected {
         }
         else {
             for(int i = 0; i < tipsNames.size(); i++) {
-                List<String> tips = Arrays.asList(getResources().getStringArray(getResources().getIdentifier(tipsNames.get(i), "array", getContext().getPackageName())));
+                List<String> tips = Arrays.asList(getContext().getResources().getStringArray(getContext().getResources().getIdentifier(tipsNames.get(i), "array", getContext().getPackageName())));
                 slides.get(i).setDescription(tips.get(goalIndex));
             }
 

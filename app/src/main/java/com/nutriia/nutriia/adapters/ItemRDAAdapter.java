@@ -47,11 +47,10 @@ public class ItemRDAAdapter extends RecyclerView.Adapter<ItemRDAAdapter.ItemRDAV
     public void onBindViewHolder(@NonNull ItemRDAViewHolder holder, int position) {
         Fragment fragment = fragments.get(position);
         if (fragment.isAdded()) {
-            fragmentManager.beginTransaction().show(fragment).commit();
+            fragmentManager.beginTransaction().remove(fragment).commit();
         }
-
         fragmentManager.beginTransaction()
-                .replace(holder.getContainer().getId(), fragment)
+                .add(holder.getContainer().getId(), fragment)
                 .commit();
     }
 

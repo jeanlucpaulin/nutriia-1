@@ -8,23 +8,17 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.fragments.DefineGoalButtons;
-import com.nutriia.nutriia.fragments.DefineMyGoal;
 import com.nutriia.nutriia.fragments.FormationBanner;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RedefineMyGoal;
-import com.nutriia.nutriia.interfaces.OnClickOnGoal;
 import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
 import com.nutriia.nutriia.interfaces.onItemClickListener;
 
-import java.util.List;
 import java.util.Map;
 
 public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.FragmentViewHolder> implements onItemClickListener {
@@ -107,7 +101,7 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
         }
 
 
-        if (fragment instanceof PageTitle) holder.getContainer().setBackground(null);
+        /*if (fragment instanceof PageTitle) holder.getContainer().setBackground(null);
 
 
         if (fragment instanceof FormationBanner) {
@@ -119,7 +113,7 @@ public class FragmentsAdapter extends RecyclerView.Adapter<FragmentsAdapter.Frag
             layoutParams.setMargins(0, -20, 0, 0);
             holder.getContainer().setLayoutParams(layoutParams);
             holder.getContainer().setBackground(null);
-        }
+        }*/
     }
 
     @Override

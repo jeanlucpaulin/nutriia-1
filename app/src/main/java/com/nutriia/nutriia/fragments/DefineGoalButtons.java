@@ -1,11 +1,13 @@
 package com.nutriia.nutriia.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,26 +34,26 @@ import com.nutriia.nutriia.user.UserSharedPreferences;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefineGoalButtons extends Fragment {
+public class DefineGoalButtons extends AppFragment {
     private RecyclerView recyclerView;
     private Button validateButton;
     private OnNewGoalSelected callBack;
     private List<LinearLayout> layouts;
     private List<Goal> goals;
 
-    public DefineGoalButtons() {
-        super();
-    }
+    private Context context;
 
     public DefineGoalButtons(OnNewGoalSelected callBack) {
         super();
         this.callBack = callBack;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.component_redefine_goal_main, container, false);
+    public void create(FrameLayout frameLayout) {
+        context = frameLayout.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View view = inflater.inflate(R.layout.component_redefine_goal_main, frameLayout, false);
 
         layouts = new ArrayList<>();
 
@@ -61,19 +63,16 @@ public class DefineGoalButtons extends Fragment {
 
         layouts.forEach(layout -> layout.setOnClickListener(this::onClickOnGoal));
 
-        GoalsBuilder goalsBuilder = new GoalsBuilder(getResources(), getActivity().getPackageName(), UserSharedPreferences.getInstance(getContext()));
+        GoalsBuilder goalsBuilder = new GoalsBuilder(context.getResources(), context.getPackageName(), UserSharedPreferences.getInstance(context));
 
-        goals = goalsBuilder.getGoals(getResources(), getActivity().getPackageName());
+        goals = goalsBuilder.getGoals(context.getResources(), context.getPackageName());
 
         for(int i = 0; i < goals.size(); i++) {
             Goal goal = goals.get(i);
             LinearLayout layout = layouts.get(i);
-            if(goal.isActual()) layout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_text_meal, null));
-            else layout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_buttons_click, null));
+            if(goal.isActual()) layout.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.rounded_text_meal, null));
+            else layout.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.rounded_buttons_click, null));
         }
-
-
-        return view;
     }
 
     private void onClickOnGoal(View view) {
@@ -82,7 +81,7 @@ public class DefineGoalButtons extends Fragment {
             Goal goal = goals.get(i);
             LinearLayout layout = layouts.get(i);
             if (layout.getId() == view.getId()) {
-                layout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_text_meal, null));
+                layout.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.rounded_text_meal, null));
                 if (!goal.isActual()) {
                     goal.setActual(true);
                     selected = i;
@@ -90,7 +89,7 @@ public class DefineGoalButtons extends Fragment {
             } else {
                 if (goal.isActual()) goal.setActual(false);
 
-                layout.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_buttons_click, null));
+                layout.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.rounded_buttons_click, null));
             }
         }
 

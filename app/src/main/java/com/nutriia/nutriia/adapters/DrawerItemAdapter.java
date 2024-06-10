@@ -2,7 +2,6 @@ package com.nutriia.nutriia.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,12 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.activities.HealthInformationActivity;
-import com.nutriia.nutriia.activities.ObjectifActivity;
-import com.nutriia.nutriia.activities.RedefineGoalActivity;
 import com.nutriia.nutriia.activities.WebViewActivity;
-import com.nutriia.nutriia.fragments.DefineMyGoal;
-import com.nutriia.nutriia.fragments.RedefineMyGoal;
 import com.nutriia.nutriia.interfaces.onActivityFinishListener;
 
 public class DrawerItemAdapter extends RecyclerView.Adapter<DrawerItemAdapter.ViewHolder> {

@@ -1,5 +1,7 @@
 package com.nutriia.nutriia.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -36,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class FoodComposition extends Fragment {
+public class FoodComposition extends AppFragment {
 
     private EditText editTextPlat;
     private ImageButton deleteButton;
@@ -58,10 +61,27 @@ public class FoodComposition extends Fragment {
     private Handler handler = new Handler();
     private Runnable runnable;
 
-    @Nullable
+    private Context context;
+
+    private View view;
+
+    private View getView() {
+        return view;
+    }
+
+    private Activity getActivity() {
+        return (Activity) context;
+    }
+
+    private Context getContext() {
+        return context;
+    }
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.component_food_composition, container, false);
+    public void create(FrameLayout frameLayout) {
+        context = frameLayout.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.component_food_composition, frameLayout, false);
 
         editTextPlat = view.findViewById(R.id.editplat);
         deleteButton = view.findViewById(R.id.deleteButton);
@@ -70,19 +90,19 @@ public class FoodComposition extends Fragment {
         foodName = view.findViewById(R.id.food_name);
 
         macroNutrientsRecyclerView = view.findViewById(R.id.macronutrients);
-        macroNutrientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        macroNutrientsRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         macroNutrients = new ArrayList<>();
         macroNutrientAdapter = new FoodCompositionAdapter(macroNutrients);
         macroNutrientsRecyclerView.setAdapter(macroNutrientAdapter);
 
         microNutrientsRecyclerView = view.findViewById(R.id.micronutrients);
-        microNutrientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        microNutrientsRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         microNutrients = new ArrayList<>();
         microNutrientAdapter = new FoodCompositionAdapter(microNutrients);
         microNutrientsRecyclerView.setAdapter(microNutrientAdapter);
 
         recyclerViewSuggestions = view.findViewById(R.id.recyclerViewSuggestions);
-        recyclerViewSuggestions.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewSuggestions.setLayoutManager(new LinearLayoutManager(context));
         suggestions = new ArrayList<>();
         suggestionsAdapter = new SuggestionsAdapter(suggestions, suggestion -> {
             if (!isRequestInProgress) {
@@ -94,7 +114,7 @@ public class FoodComposition extends Fragment {
         });
 
         recyclerViewSuggestions.setAdapter(suggestionsAdapter);
-        recyclerViewSuggestions.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
+        recyclerViewSuggestions.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
 
         editTextPlat.addTextChangedListener(new TextWatcher() {
             @Override
@@ -156,14 +176,14 @@ public class FoodComposition extends Fragment {
             editTextPlat.setText("");
         });
 
-        return view;
+        frameLayout.addView(view);
     }
 
     private void fetchSuggestions(String query) {
         new Thread(() -> {
             try {
                 if (query.trim().isEmpty()) {
-                    getActivity().runOnUiThread(() -> {
+                    ((Activity) context).runOnUiThread(() -> {
                         suggestions.clear();
                         recyclerViewSuggestions.setVisibility(View.GONE);
                     });
@@ -206,7 +226,7 @@ public class FoodComposition extends Fragment {
 
                         suggestions.remove(currentText);
 
-                        getActivity().runOnUiThread(() -> {
+                        ((Activity) context).runOnUiThread(() -> {
                             if (suggestions.isEmpty()) {
                                 recyclerViewSuggestions.setVisibility(View.GONE);
                             } else {
@@ -263,7 +283,7 @@ public class FoodComposition extends Fragment {
 
                         if (jsonResponse.has("error")) {
                             String errorMessage = jsonResponse.getString("error");
-                            getActivity().runOnUiThread(() -> showCustomToast(errorMessage, Toast.LENGTH_SHORT));
+                            ((Activity) context).runOnUiThread(() -> showCustomToast(errorMessage, Toast.LENGTH_SHORT));
                         } else {
                             getActivity().runOnUiThread(() -> {
                                 try {
@@ -362,8 +382,8 @@ public class FoodComposition extends Fragment {
     }
 
     private void showCustomToast(String message, int duration) {
-        requireActivity().runOnUiThread(() -> {
-            LayoutInflater inflater = getLayoutInflater();
+        getActivity().runOnUiThread(() -> {
+            LayoutInflater inflater = getActivity().getLayoutInflater();
             View layout = inflater.inflate(R.layout.toast_layout, getActivity().findViewById(R.id.toast_layout_root));
 
             TextView textView = layout.findViewById(R.id.toast_text);

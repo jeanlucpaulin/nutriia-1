@@ -1,7 +1,6 @@
 package com.nutriia.nutriia.activities;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -17,16 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.Goal;
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.adapters.FragmentsAdapter;
 import com.nutriia.nutriia.builders.GoalsBuilder;
-import com.nutriia.nutriia.fragments.DefineMyGoal;
 import com.nutriia.nutriia.fragments.RedefineMyGoal;
 import com.nutriia.nutriia.interfaces.OnClickOnGoal;
 import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RedefineGoalActivity extends AppCompatActivity implements OnClickOnGoal {

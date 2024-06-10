@@ -1,80 +1,43 @@
 package com.nutriia.nutriia.activities;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.ArrayMap;
 import android.util.Log;
-import android.view.Menu;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
-import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.fragment.app.Fragment;
 
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.adapters.DrawerItemAdapter;
-import com.nutriia.nutriia.adapters.FragmentsAdapter;
+import com.nutriia.nutriia.adapters.FragmentsLayoutAdapter;
+import com.nutriia.nutriia.fragments.AppFragment;
 import com.nutriia.nutriia.fragments.DefineGoalButtons;
-import com.nutriia.nutriia.fragments.DefineMyGoal;
-import com.nutriia.nutriia.fragments.DishSuggestions;
 import com.nutriia.nutriia.fragments.ExampleTypicalDay;
-import com.nutriia.nutriia.fragments.FoodComposition;
-import com.nutriia.nutriia.fragments.MorePrecision;
-import com.nutriia.nutriia.fragments.MyDayAnalysis;
-import com.nutriia.nutriia.fragments.MyRealDay;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.fragments.RecommendedDailyAmount;
-import com.nutriia.nutriia.fragments.RedefineMyGoal;
 import com.nutriia.nutriia.fragments.TipsAdvices;
 import com.nutriia.nutriia.fragments.UserProfile;
 import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
 import com.nutriia.nutriia.interfaces.OnUserProfileChanged;
-import com.nutriia.nutriia.interfaces.onActivityFinishListener;
-import com.nutriia.nutriia.network.APIRequest;
 import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 import com.nutriia.nutriia.utils.AccountMenu;
 import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+public class MainActivity extends AppCompatActivity implements OnNewGoalSelected, OnUserProfileChanged {
+    private LinearLayout linearLayout;
 
-public class MainActivity extends AppCompatActivity implements onActivityFinishListener, OnNewGoalSelected, OnUserProfileChanged {
-    private RecyclerView recyclerView;
+    private final List<AppFragment> fragments = new ArrayList<>();
 
-    private final Map<Integer, Fragment> fragments = new LinkedHashMap<>();
+    private FragmentsLayoutAdapter adapter;
 
-    private FragmentsAdapter adapter;
-
-    @Override
-    public void onActivityFinish() {
-        setFragments(recyclerView);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,40 +55,33 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
             return insets;
         });
 
-
-
-
-        //APISend.obtainAccountInfos(getApplicationContext());
-
-
-        DrawerMenu.init(this, this);
+        DrawerMenu.init(this);
         NavBarListener.init(this, R.id.navbar_target);
 
         AccountMenu.init(this);
 
-        //APISend.clear();
 
         //Partie composants
 
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        linearLayout = findViewById(R.id.linear_layout_fragment);
 
-        this.adapter = new FragmentsAdapter(getSupportFragmentManager(), fragments);
+        this.adapter = new FragmentsLayoutAdapter(this, linearLayout);
 
-        this.setFragments(recyclerView);
+        this.setFragments();
     }
 
-    private void setFragments(RecyclerView recyclerView) {
+    private void setFragments() {
         fragments.clear();
 
-        fragments.put(0, new PageTitle(PageTitle.ActivityType.MAIN));
-        fragments.put(1, new DefineGoalButtons(this));
-        fragments.put(2, new UserProfile(this));
-        fragments.put(3, new RecommendedDailyAmount(this));
-        fragments.put(4, new TipsAdvices());
-        fragments.put(5, new ExampleTypicalDay());
+        fragments.add(new PageTitle(PageTitle.ActivityType.MAIN));
+        fragments.add(new DefineGoalButtons(this));
+        fragments.add(new UserProfile(this));
+        fragments.add(new RecommendedDailyAmount());
+        fragments.add(new TipsAdvices());
+        fragments.add(new ExampleTypicalDay());
 
-        recyclerView.setAdapter(adapter);
+
+        adapter.addAll(fragments);
     }
 
     @Override
@@ -136,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
         sharedPreferences.clearRDA();
         sharedPreferences.clearTypicalDay();
         APISend.obtainsNewGoalRDA(this, null);
-        for(Fragment fragment : fragments.values()) {
+        for(AppFragment fragment : fragments) {
             if(fragment instanceof OnNewGoalSelected) {
                 ((OnNewGoalSelected) fragment).onNewGoalSelected(position);
             }
@@ -150,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements onActivityFinishL
         sharedPreferences.clearTypicalDay();
         APISend.obtainsNewGoalRDA(this, null);
 
-        for(Fragment fragment : fragments.values()) {
+        for(AppFragment fragment : fragments) {
             if(fragment instanceof OnUserProfileChanged) {
                 ((OnUserProfileChanged) fragment).onUserProfileChanged();
             }

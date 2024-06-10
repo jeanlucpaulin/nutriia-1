@@ -1,6 +1,7 @@
 package com.nutriia.nutriia.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.BlurMaskFilter;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -28,6 +30,7 @@ import com.nutriia.nutriia.Day;
 import com.nutriia.nutriia.ItemRDA;
 import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.adapters.FragmentsRDAAdapter;
 import com.nutriia.nutriia.adapters.ItemRDAAdapter;
 import com.nutriia.nutriia.builders.DayBuilder;
 import com.nutriia.nutriia.interfaces.APIResponseRDA;
@@ -42,46 +45,45 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class RecommendedDailyAmount extends Fragment implements APIResponseRDA, OnNewGoalSelected, OnUserProfileChanged {
+public class RecommendedDailyAmount extends AppFragment implements APIResponseRDA, OnNewGoalSelected, OnUserProfileChanged {
 
     private static final int MAX_DISPLAYED_ITEMS = 10;
     private static boolean DISPLAY_ALL_ITEMS = false;
 
-    private final List<Fragment> macronutrients = new ArrayList<>();
-    private final List<Fragment> micronutrients = new ArrayList<>();
+    private final List<AppFragment> macronutrients = new ArrayList<>();
+    private final List<AppFragment> micronutrients = new ArrayList<>();
     private TextView caloriesText;
     private TextView fibersText;
-    private RecyclerView macronutrientsListView;
-    private RecyclerView micronutrientsListView;
+    private LinearLayout macronutrientsListView;
+    private LinearLayout micronutrientsListView;
     private ImageView arrow;
     private TextView detailsText;
     private View view;
 
-    private AppCompatActivity activity;
+    private Context context;
 
-    public RecommendedDailyAmount() {
-        super();
+
+    private Context getContext() {
+        return context;
     }
 
-    public RecommendedDailyAmount(AppCompatActivity activity) {
-        super();
-        this.activity = activity;
+    private Activity getActivity() {
+        return (Activity) context;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.component_recommanded_daily_amount, container, false);
+    public void create(FrameLayout frameLayout) {
+        context = frameLayout.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.component_recommanded_daily_amount, frameLayout, false);
 
-        activity = (AppCompatActivity) getActivity();
 
         macronutrientsListView = view.findViewById(R.id.macronutrients_list);
         micronutrientsListView = view.findViewById(R.id.micronutrients_list);
         caloriesText = view.findViewById(R.id.energy_amount);
         fibersText = view.findViewById(R.id.fibers_amount);
 
-        macronutrientsListView.setLayoutManager(new LinearLayoutManager(getContext()));
-        micronutrientsListView.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
         APISend.obtainsNewGoalRDA(this.getActivity(), this);
 
@@ -90,12 +92,12 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA, 
         LinearLayout reverseDISPLAY_ALL_ITEMS = view.findViewById(R.id.detailsButton);
         reverseDISPLAY_ALL_ITEMS.setOnClickListener(v -> reverseDisplayedItems());
 
-        String text = getResources().getString(DISPLAY_ALL_ITEMS ? R.string.less_details : R.string.more_details);
+        String text = getContext().getResources().getString(DISPLAY_ALL_ITEMS ? R.string.less_details : R.string.more_details);
         detailsText.setText(text);
 
         arrow.setRotation(DISPLAY_ALL_ITEMS ? 270 : 90);
 
-        return view;
+        frameLayout.addView(view);
     }
 
     @Override
@@ -104,6 +106,8 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA, 
         Day day = new DayBuilder().buildOnlyWithGoal(UserSharedPreferences.getInstance(getContext()));
         List<Nutrient> macroNutrients = new ArrayList<>(day.getMacroNutrients().values());
         List<Nutrient> microNutrients = new ArrayList<>(day.getMicroNutrients().values());
+        micronutrientsListView.removeAllViews();
+        macronutrientsListView.removeAllViews();
 
         // Sort the nutrients
         Comparator<Nutrient> nutrientComparator = new Comparator<Nutrient>() {
@@ -144,11 +148,11 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA, 
         Collections.sort(microNutrients, nutrientComparator);
 
         // Convert nutrients to fragments
-        List<Fragment> macroFragments = new ArrayList<>();
+        List<AppFragment> macroFragments = new ArrayList<>();
         for(Nutrient nutrient : macroNutrients) {
             macroFragments.add(new NutrientAJR(nutrient));
         }
-        List<Fragment> microFragments = new ArrayList<>();
+        List<AppFragment> microFragments = new ArrayList<>();
         for(Nutrient nutrient : microNutrients) {
             microFragments.add(new NutrientAJR(nutrient));
         }
@@ -164,14 +168,13 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA, 
             else break;
         }
 
-        if(activity == null) return;
+        if(getActivity() == null) return;
 
-        ItemRDAAdapter macroAdapter = new ItemRDAAdapter(activity.getSupportFragmentManager(), macroFragments);
-        ItemRDAAdapter microAdapter = new ItemRDAAdapter(activity.getSupportFragmentManager(), microFragments);
+        FragmentsRDAAdapter macroAdapter = new FragmentsRDAAdapter(getActivity(), macronutrientsListView);
+        FragmentsRDAAdapter microAdapter = new FragmentsRDAAdapter(getActivity(), micronutrientsListView);
 
-
-        macronutrientsListView.setAdapter(macroAdapter);
-        micronutrientsListView.setAdapter(microAdapter);
+        macroAdapter.addAll(macroFragments);
+        microAdapter.addAll(microFragments);
 
         caloriesText.setText(String.valueOf(day.getCalorie().getValue()));
         fibersText.setText(String.valueOf(day.getFiber().getValue()));
@@ -181,7 +184,7 @@ public class RecommendedDailyAmount extends Fragment implements APIResponseRDA, 
         DISPLAY_ALL_ITEMS = !DISPLAY_ALL_ITEMS;
         onAPIRDAResponse();
         arrow.setRotation(arrow.getRotation() + 180);
-        String text = getResources().getString(DISPLAY_ALL_ITEMS ? R.string.less_details : R.string.more_details);
+        String text = getContext().getResources().getString(DISPLAY_ALL_ITEMS ? R.string.less_details : R.string.more_details);
         detailsText.setText(text);
         ScrollView scrollView = view.findViewById(R.id.scroll_view);
         scrollView.fullScroll(View.FOCUS_UP);

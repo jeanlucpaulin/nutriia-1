@@ -1,9 +1,11 @@
 package com.nutriia.nutriia.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,7 +19,7 @@ import com.nutriia.nutriia.user.UserSharedPreferences;
 import java.util.Arrays;
 import java.util.List;
 
-public class PageTitle extends Fragment {
+public class PageTitle extends AppFragment {
 
     public enum ActivityType {
         MAIN,
@@ -27,21 +29,19 @@ public class PageTitle extends Fragment {
 
     private final ActivityType activityType;
     private View view;
-
-    public PageTitle() {
-        super();
-        this.activityType = ActivityType.MAIN;
-    }
+    private Context context;
 
     public PageTitle(ActivityType activityType) {
         super();
         this.activityType = activityType;
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.component_page_title, container, false);
+    public void create(FrameLayout frameLayout) {
+        context = frameLayout.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.component_page_title, frameLayout, false);
 
         TextView title = view.findViewById(R.id.page_title);
 
@@ -53,18 +53,18 @@ public class PageTitle extends Fragment {
             title.setText(getMainPageTitle());
         }
 
-        return view;
+        frameLayout.addView(view);
     }
 
     private String getMainPageTitle() {
-        return getResources().getString(R.string.page_title_welcome);
+        return context.getResources().getString(R.string.page_title_welcome);
     }
 
     private String getFormationPageTitle() {
-        return getResources().getString(R.string.formation_page_title);
+        return context.getResources().getString(R.string.formation_page_title);
     }
 
     private String getAnalysisPageTitle() {
-        return getResources().getString(R.string.analysis_page_title);
+        return context.getResources().getString(R.string.analysis_page_title);
     }
 }

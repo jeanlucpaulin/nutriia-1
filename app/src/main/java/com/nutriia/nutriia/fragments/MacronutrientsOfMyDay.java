@@ -1,9 +1,12 @@
 package com.nutriia.nutriia.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class MacronutrientsOfMyDay extends Fragment implements OnValidateDay, APIResponseRDA {
+public class MacronutrientsOfMyDay extends AppFragment implements OnValidateDay, APIResponseRDA {
     private static boolean DISPLAY_ALL_ITEMS = false;
     private RecyclerView recyclerView;
     private final List<Nutrient> nutrientsList = new ArrayList<>();
@@ -39,19 +42,22 @@ public class MacronutrientsOfMyDay extends Fragment implements OnValidateDay, AP
     private TextView detailsText;
     private ImageView arrow;
     private Day day;
+    private Context context;
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.component_my_day, container, false);
+    public void create(FrameLayout frameLayout) {
+        context = frameLayout.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.component_my_day, frameLayout, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         TextView textView = view.findViewById(R.id.component_title);
         textView.setText(R.string.macronutrients_of_my_day);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        APISend.obtainsNewGoalRDA(this.getActivity(), this);
+        APISend.obtainsNewGoalRDA((Activity) context, this);
 
         LinearLayout detailsLayout = view.findViewById(R.id.details_layout);
         detailsText = view.findViewById(R.id.textDetails);
@@ -59,12 +65,12 @@ public class MacronutrientsOfMyDay extends Fragment implements OnValidateDay, AP
 
         detailsLayout.setOnClickListener(v -> reverseDisplayItems());
 
-        String text = getResources().getString(DISPLAY_ALL_ITEMS ? R.string.less_details : R.string.more_details);
+        String text = context.getResources().getString(DISPLAY_ALL_ITEMS ? R.string.less_details : R.string.more_details);
         detailsText.setText(text);
 
         arrow.setRotation(DISPLAY_ALL_ITEMS ? 270 : 90);
 
-        return view;
+        frameLayout.addView(view);
     }
 
     @Override
@@ -80,7 +86,7 @@ public class MacronutrientsOfMyDay extends Fragment implements OnValidateDay, AP
 
     @Override
     public void onAPIRDAResponse() {
-        UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(getContext());
+        UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(context);
 
         this.day = new DayBuilder().buildOnlyWithGoal(userSharedPreferences);
         update();
@@ -96,14 +102,14 @@ public class MacronutrientsOfMyDay extends Fragment implements OnValidateDay, AP
             }
         }
 
-        DayProgressionAdapter dayProgressionAdapter = new DayProgressionAdapter(getContext(), nutrientsList);
+        DayProgressionAdapter dayProgressionAdapter = new DayProgressionAdapter(context, nutrientsList);
         recyclerView.setAdapter(dayProgressionAdapter);
         if(nutrientsList.size() < Settings.getMaxDisplayedItems()) view.findViewById(R.id.details_layout).setVisibility(View.INVISIBLE);
     }
 
     private void reverseDisplayItems() {
         DISPLAY_ALL_ITEMS = !DISPLAY_ALL_ITEMS;
-        String text = getResources().getString(DISPLAY_ALL_ITEMS ? R.string.less_details : R.string.more_details);
+        String text = context.getResources().getString(DISPLAY_ALL_ITEMS ? R.string.less_details : R.string.more_details);
         detailsText.setText(text);
         arrow.setRotation(DISPLAY_ALL_ITEMS ? 270 : 90);
         update();

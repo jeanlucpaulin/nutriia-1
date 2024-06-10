@@ -2,6 +2,7 @@ package com.nutriia.nutriia.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.widget.AdapterView;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,7 +40,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class UserProfile extends Fragment implements OnNewGoalSelected {
+public class UserProfile extends AppFragment implements OnNewGoalSelected {
 
     private Spinner spinnerAge;
     private Spinner spinnerGender;
@@ -55,20 +57,22 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
 
     private OnUserProfileChanged onUserProfileChanged;
 
-    public UserProfile() {
-        super();
-        onUserProfileChanged = null;
-    }
+    private Context context;
 
     public UserProfile(OnUserProfileChanged onUserProfileChanged) {
         super();
         this.onUserProfileChanged = onUserProfileChanged;
     }
 
-    @Nullable
+    public Context getContext() {
+        return context;
+    }
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.component_informations, container, false);
+    public void create(FrameLayout frameLayout) {
+        context = frameLayout.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.component_informations, frameLayout, false);
 
         userWeight = view.findViewById(R.id.weight_data);
         userHeight = view.findViewById(R.id.height_data);
@@ -84,7 +88,7 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
         for (int i = 1; i <= 100; i++) {
             ages.add(Integer.toString(i));
         }
-        ArrayAdapter<String> adapterAge = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, ages);
+        ArrayAdapter<String> adapterAge = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, ages);
         adapterAge.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAge.setAdapter(adapterAge);
 
@@ -101,8 +105,8 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
         });
 
         spinnerGender = view.findViewById(R.id.sex_data);
-        List<String> genders = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.genders)));
-        ArrayAdapter<String> adapterGender = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, genders);
+        List<String> genders = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.genders)));
+        ArrayAdapter<String> adapterGender = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, genders);
         adapterGender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGender.setAdapter(adapterGender);
 
@@ -135,7 +139,8 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
             String message = "Le métabolisme de base est calculé en utilisant la formule : (1.083 pour les femmes ou 0.963 pour les hommes) * Poids^0.48 * Taille^0.5 * Age^-0.13.";
             showCustomDialog(message);
         });
-        return view;
+
+        frameLayout.addView(view);
     }
 
     private void updateFields(UserSharedPreferences userSharedPreferences)
@@ -167,7 +172,7 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
 
             String userBodyMassIndexText;
             int backgroundColor = R.color.lime;
-            String[] imcValues = getResources().getStringArray(R.array.imc_indicator);
+            String[] imcValues = context.getResources().getStringArray(R.array.imc_indicator);
             if (userBodyMassIndexValue < 16.5) {
                 userBodyMassIndexText = imcValues[0];
                 backgroundColor = R.color.IMC1;
@@ -191,7 +196,7 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
                 backgroundColor = R.color.IMC7;
             }
 
-            ColorStateList colorStateList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), backgroundColor));
+            ColorStateList colorStateList = ColorStateList.valueOf(ContextCompat.getColor(context, backgroundColor));
             imcContainer.setBackgroundTintList(colorStateList);
             userBodyMassIndexUnit.setText(userBodyMassIndexUnitText);
             userBodyMassIndex.setText(userBodyMassIndexText);
@@ -221,13 +226,13 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
     }
 
     private void updateGoal(int goalIndex) {
-        UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(requireContext());
-        GoalsBuilder goalsBuilder = new GoalsBuilder(getResources(), requireContext().getPackageName(), userSharedPreferences);
+        UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(context);
+        GoalsBuilder goalsBuilder = new GoalsBuilder(context.getResources(), context.getPackageName(), userSharedPreferences);
         Goal goal = goalsBuilder.getGoal(goalIndex);
     }
 
     private void saveFields() {
-        UserSharedPreferences sharedPreferences = UserSharedPreferences.getInstance(requireContext());
+        UserSharedPreferences sharedPreferences = UserSharedPreferences.getInstance(context);
 
         boolean changed = false;
 
@@ -274,7 +279,7 @@ public class UserProfile extends Fragment implements OnNewGoalSelected {
     }
 
     private void showCustomDialog(String message) {
-        Activity activity = getActivity();
+        Activity activity = ((Activity) context);
         if (activity != null) {
             activity.runOnUiThread(() -> {
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.RoundedAlertDialog);

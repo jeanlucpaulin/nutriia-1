@@ -1,5 +1,6 @@
 package com.nutriia.nutriia.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -41,7 +43,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public class MyRealDay extends Fragment implements OnValidateDay {
+public class MyRealDay extends AppFragment implements OnValidateDay {
 
     List<Meal> meals;
 
@@ -51,6 +53,8 @@ public class MyRealDay extends Fragment implements OnValidateDay {
 
     private OnValidateDay onValidateDay;
 
+    private Context context;
+
     public MyRealDay() {
         this.onValidateDay = null;
     }
@@ -59,16 +63,18 @@ public class MyRealDay extends Fragment implements OnValidateDay {
         this.onValidateDay = onValidateDay;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.componenent_my_real_day, container, false);
+    public void create(FrameLayout frameLayout) {
+        context = frameLayout.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View view = inflater.inflate(R.layout.componenent_my_real_day, frameLayout, false);
 
         meals = new ArrayList<>(Arrays.asList(new Meal("Breakfast"), new Meal("Lunch"), new Meal("Dinner"), new Meal("Snack")));
 
         int[] viewIds = new int[] {R.id.breakfast, R.id.lunch, R.id.dinner, R.id.snack};
 
-        UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(getContext());
+        UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(context);
 
         Calendar calendar = Calendar.getInstance();
 
@@ -136,7 +142,6 @@ public class MyRealDay extends Fragment implements OnValidateDay {
 
         validateButton.setOnClickListener(v -> {
             validateButton.setEnabled(false);
-            Context context = getContext();
             Map<String, Set<String>> userInput = new HashMap<>();
             boolean send = false;
 
@@ -179,22 +184,23 @@ public class MyRealDay extends Fragment implements OnValidateDay {
             }
         });
 
-        return view;
+        frameLayout.addView(view);
     }
+
 
     private List<String> getDishes(int id) {
         List<String> dishes = new ArrayList<>();
         if(id == R.id.breakfast) {
-            dishes = new ArrayList<>(UserSharedPreferences.getInstance(getContext()).getMRDABreakfast());
+            dishes = new ArrayList<>(UserSharedPreferences.getInstance(context).getMRDABreakfast());
         }
         else if(id == R.id.lunch) {
-            dishes = new ArrayList<>(UserSharedPreferences.getInstance(getContext()).getMRDALunch());
+            dishes = new ArrayList<>(UserSharedPreferences.getInstance(context).getMRDALunch());
         }
         else if(id == R.id.dinner) {
-            dishes = new ArrayList<>(UserSharedPreferences.getInstance(getContext()).getMRDADinner());
+            dishes = new ArrayList<>(UserSharedPreferences.getInstance(context).getMRDADinner());
         }
         else if(id == R.id.snack) {
-            dishes = new ArrayList<>(UserSharedPreferences.getInstance(getContext()).getMRDASnack());
+            dishes = new ArrayList<>(UserSharedPreferences.getInstance(context).getMRDASnack());
         }
         return dishes;
     }
@@ -208,14 +214,14 @@ public class MyRealDay extends Fragment implements OnValidateDay {
     }
 
     private void showCustomToast(String message, int duration) {
-        requireActivity().runOnUiThread(() -> {
-            LayoutInflater inflater = getLayoutInflater();
-            View layout = inflater.inflate(R.layout.toast_layout, getActivity().findViewById(R.id.toast_layout_root));
+        ((Activity) context).runOnUiThread(() -> {
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            View layout = inflater.inflate(R.layout.toast_layout, ((Activity) context).findViewById(R.id.toast_layout_root));
 
             TextView textView = layout.findViewById(R.id.toast_text);
             textView.setText(message);
 
-            Toast toast = new Toast(getContext());
+            Toast toast = new Toast(context);
             toast.setDuration(duration);
             toast.setView(layout);
             toast.show();
@@ -233,4 +239,5 @@ public class MyRealDay extends Fragment implements OnValidateDay {
         textViewCalories.setText(String.valueOf((Math.max(caloriesMRD, 0)) + " kcal"));
         validateButton.setEnabled(true);
     }
+
 }

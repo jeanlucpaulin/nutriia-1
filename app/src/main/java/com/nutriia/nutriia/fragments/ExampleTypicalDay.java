@@ -1,5 +1,7 @@
 package com.nutriia.nutriia.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +30,7 @@ import com.nutriia.nutriia.user.UserSharedPreferences;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExampleTypicalDay extends Fragment implements APIResponseRDA {
+public class ExampleTypicalDay extends AppFragment implements APIResponseRDA {
 
     private View breakfastView;
     private View lunchView;
@@ -35,10 +38,24 @@ public class ExampleTypicalDay extends Fragment implements APIResponseRDA {
     private View snackView;
     private Button relaunchButton = null;
 
-    @Nullable
+    private Context context;
+
+    private Context getContext() {
+        return context;
+    }
+
+    private Activity getActivity() {
+        return (Activity) context;
+    }
+
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.componenent_exemple_typical_day, container, false);
+    public void create(FrameLayout frameLayout) {
+        context = frameLayout.getContext();
+
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View view = inflater.inflate(R.layout.componenent_exemple_typical_day, frameLayout, false);
 
         breakfastView = view.findViewById(R.id.breakfast);
         lunchView = view.findViewById(R.id.lunch);
@@ -64,10 +81,10 @@ public class ExampleTypicalDay extends Fragment implements APIResponseRDA {
         layout.setOnClickListener(click -> {
             Intent intent = new Intent(getContext(), DayAnalysisActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
+            getActivity().startActivity(intent);
         });
 
-        return view;
+        frameLayout.addView(view);
     }
 
     @Override
@@ -110,7 +127,7 @@ public class ExampleTypicalDay extends Fragment implements APIResponseRDA {
 
     private void showCustomToast(String message, int duration) {
         getActivity().runOnUiThread(() -> {
-            LayoutInflater inflater = getLayoutInflater();
+            LayoutInflater inflater = getActivity().getLayoutInflater();
             View layout = inflater.inflate(R.layout.toast_layout, getActivity().findViewById(R.id.toast_layout_root));
 
             TextView textView = layout.findViewById(R.id.toast_text);

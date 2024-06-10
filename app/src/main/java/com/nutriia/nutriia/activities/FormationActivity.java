@@ -18,10 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.nutriia.nutriia.FormationItem;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.FragmentsAdapter;
+import com.nutriia.nutriia.adapters.FragmentsLayoutAdapter;
+import com.nutriia.nutriia.fragments.AppFragment;
 import com.nutriia.nutriia.fragments.Formation;
 import com.nutriia.nutriia.fragments.FormationBanner;
 import com.nutriia.nutriia.fragments.PageTitle;
@@ -38,11 +41,11 @@ import java.util.Map;
 
 public class FormationActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
+    private LinearLayout linearLayout;
 
-    private final Map<Integer, Fragment> fragments = new LinkedHashMap<>();
+    private final List<AppFragment> fragments = new ArrayList<>();
 
-    private FragmentsAdapter adapter;
+    private FragmentsLayoutAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,25 +65,24 @@ public class FormationActivity extends AppCompatActivity {
 
         //APISend.clear();
 
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        linearLayout = findViewById(R.id.linear_layout_fragment);
 
-        this.adapter = new FragmentsAdapter(getSupportFragmentManager(), fragments);
+        this.adapter = new FragmentsLayoutAdapter(this, linearLayout);
 
-        this.setFragments(recyclerView);
+        this.setFragments();
     }
 
-    private void setFragments(RecyclerView recyclerView) {
+    private void setFragments() {
         fragments.clear();
-        fragments.put(0, new FormationBanner());
+        fragments.add(new FormationBanner());
 
-        fragments.put(1, new PageTitle(PageTitle.ActivityType.FORMATION));
+        fragments.add(new PageTitle(PageTitle.ActivityType.FORMATION));
         for(int i = 0; i < getItems().size(); i++) {
-            fragments.put(i + 2, new Formation(getItems().get(i)));
+            fragments.add(new Formation(getItems().get(i)));
         }
 
 
-        recyclerView.setAdapter(adapter);
+        adapter.addAll(fragments);
     }
 
     private List<FormationItem> getItems() {

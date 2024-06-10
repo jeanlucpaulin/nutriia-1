@@ -1,10 +1,12 @@
 package com.nutriia.nutriia.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,22 +25,26 @@ import com.nutriia.nutriia.user.UserSharedPreferences;
 import java.util.Map;
 import java.util.Set;
 
-public class MyDayAnalysis extends Fragment implements OnValidateDay {
+public class MyDayAnalysis extends AppFragment implements OnValidateDay {
 
     private TextView textViewAnalysis;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.component_my_day_analysis, container, false);
+    private Context context;
 
-        Day day = new DayBuilder().buildOnlyWithGoal(UserSharedPreferences.getInstance(getContext()));
+    @Override
+    public void create(FrameLayout frameLayout) {
+
+        context = frameLayout.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.component_my_day_analysis, frameLayout, false);
+
+        Day day = new DayBuilder().buildOnlyWithGoal(UserSharedPreferences.getInstance(context));
 
         textViewAnalysis = view.findViewById(R.id.textViewAnalysis);
 
         onValidateDayResponse(day);
 
-        return view;
+        frameLayout.addView(view);
     }
 
     @Override
