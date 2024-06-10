@@ -61,7 +61,6 @@ public class FormationActivity extends AppCompatActivity {
     private void setFragments() {
         fragments.clear();
         fragments.add(new FormationBanner());
-
         fragments.add(new PageTitle(PageTitle.ActivityType.FORMATION));
         for(int i = 0; i < getItems().size(); i++) {
             fragments.add(new Formation(getItems().get(i)));
