@@ -1,34 +1,19 @@
 package com.nutriia.nutriia.fragments;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.Goal;
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.adapters.FragmentsAdapter;
 import com.nutriia.nutriia.builders.GoalsBuilder;
-import com.nutriia.nutriia.interfaces.OnClickOnGoal;
 import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
-import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;

@@ -304,4 +304,8 @@ public class UserSharedPreferences {
     public String getDishSuggestionsDate(){
         return sharedPreferences.getString(KEY_DISH_SUGGESTIONS_DATE, "");
     }
+
+    public void clearDayAnalysis() {
+        sharedPreferences.edit().remove(KEY_MY_DAY_ANALYSIS).apply();
+    }
 }

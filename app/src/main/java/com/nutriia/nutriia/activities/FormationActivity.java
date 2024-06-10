@@ -1,43 +1,29 @@
 package com.nutriia.nutriia.activities;
 
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.webkit.WebView;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.nutriia.nutriia.FormationItem;
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.adapters.FragmentsAdapter;
 import com.nutriia.nutriia.adapters.FragmentsLayoutAdapter;
 import com.nutriia.nutriia.fragments.AppFragment;
 import com.nutriia.nutriia.fragments.Formation;
 import com.nutriia.nutriia.fragments.FormationBanner;
 import com.nutriia.nutriia.fragments.PageTitle;
-import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.utils.AccountMenu;
 import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class FormationActivity extends AppCompatActivity {
 
@@ -75,7 +61,6 @@ public class FormationActivity extends AppCompatActivity {
     private void setFragments() {
         fragments.clear();
         fragments.add(new FormationBanner());
-
         fragments.add(new PageTitle(PageTitle.ActivityType.FORMATION));
         for(int i = 0; i < getItems().size(); i++) {
             fragments.add(new Formation(getItems().get(i)));

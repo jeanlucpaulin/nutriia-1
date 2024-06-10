@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import androidx.fragment.app.Fragment;
 
 import com.nutriia.nutriia.fragments.AppFragment;
+import com.nutriia.nutriia.fragments.FormationBanner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,9 @@ public class FragmentsLayoutAdapter {
                 ViewGroup.LayoutParams.WRAP_CONTENT
         );
 
-        layoutParams.setMargins(40, 20, 40, 20);
+        if (fragment instanceof FormationBanner){
+            layoutParams.setMargins(0, 0, 0, 0);
+        } else layoutParams.setMargins(40, 20, 40, 20);
 
         frameLayout.setLayoutParams(layoutParams);
 

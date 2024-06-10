@@ -3,10 +3,8 @@ package com.nutriia.nutriia.fragments;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.widget.AdapterView;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +13,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.Fragment;
 
 import com.nutriia.nutriia.Goal;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.builders.GoalsBuilder;
 import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
 import com.nutriia.nutriia.interfaces.OnUserProfileChanged;
-import com.nutriia.nutriia.interfaces.onActivityFinishListener;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
