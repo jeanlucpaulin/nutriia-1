@@ -2,31 +2,22 @@ package com.nutriia.nutriia.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import com.nutriia.nutriia.Day;
 import com.nutriia.nutriia.Meal;
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.adapters.MealsAdapter;
 import com.nutriia.nutriia.interfaces.OnValidateDay;
-import com.nutriia.nutriia.network.APISend;
 import com.nutriia.nutriia.resources.Translator;
 import com.nutriia.nutriia.user.Saver;
 import com.nutriia.nutriia.user.UserSharedPreferences;
@@ -41,7 +32,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
 
 public class MyRealDay extends AppFragment implements OnValidateDay {
 
