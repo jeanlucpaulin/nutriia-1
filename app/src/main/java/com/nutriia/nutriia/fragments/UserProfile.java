@@ -130,13 +130,13 @@ public class UserProfile extends AppFragment implements OnNewGoalSelected {
         validateButton.setOnClickListener(v -> saveFields());
         ImageButton infoButtonIdealWeight = view.findViewById(R.id.info_button_ideal_weight);
         infoButtonIdealWeight.setOnClickListener(v -> {
-            String message = "Le poids idéal est calculé en utilisant la formule : (Taille en cm - 100) - (Taille en cm - 150) / 4 pour les femmes, ou / 2.5 pour les hommes.";
+            String message = getContext().getString(R.string.ideal_weight_formula);
             showCustomDialog(message);
         });
 
         ImageButton infoButtonBasalMetabolism = view.findViewById(R.id.info_button_basal_metabolism);
         infoButtonBasalMetabolism.setOnClickListener(v -> {
-            String message = "Le métabolisme de base est calculé en utilisant la formule : (1.083 pour les femmes ou 0.963 pour les hommes) * Poids^0.48 * Taille^0.5 * Age^-0.13.";
+            String message = getContext().getString(R.string.basal_metabolism_formula);
             showCustomDialog(message);
         });
 
