@@ -2,25 +2,17 @@ package com.nutriia.nutriia.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.nutriia.nutriia.Day;
 import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.adapters.DayProgressionAdapter;
+import com.nutriia.nutriia.adapters.FragmentsDayProgressionAdapter;
 import com.nutriia.nutriia.builders.DayBuilder;
 import com.nutriia.nutriia.interfaces.APIResponseRDA;
 import com.nutriia.nutriia.interfaces.OnValidateDay;
@@ -29,14 +21,13 @@ import com.nutriia.nutriia.resources.Settings;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class MacronutrientsOfMyDay extends AppFragment implements OnValidateDay, APIResponseRDA {
+public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIResponseRDA {
     private static boolean DISPLAY_ALL_ITEMS = false;
-    private RecyclerView recyclerView;
+    private LinearLayout layout_fragments;
     private final List<Nutrient> nutrientsList = new ArrayList<>();
     private View view;
     private TextView detailsText;
@@ -44,6 +35,16 @@ public class MacronutrientsOfMyDay extends AppFragment implements OnValidateDay,
     private Day day;
     private Context context;
 
+    private final Type type;
+
+    public enum Type {
+        MACRONUTRIENTS,
+        MICRONUTRIENTS
+    }
+
+    public NutrientsOfMyDay(Type type) {
+        this.type = type;
+    }
 
     @Override
     public void create(FrameLayout frameLayout) {
@@ -51,11 +52,11 @@ public class MacronutrientsOfMyDay extends AppFragment implements OnValidateDay,
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.component_my_day, frameLayout, false);
 
-        recyclerView = view.findViewById(R.id.recyclerView);
+        layout_fragments = view.findViewById(R.id.linear_layout_fragment);
         TextView textView = view.findViewById(R.id.component_title);
-        textView.setText(R.string.macronutrients_of_my_day);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        if(type == Type.MACRONUTRIENTS) textView.setText(R.string.macronutrients_of_my_day);
+        else textView.setText(R.string.micronutrients_of_my_day);
 
         APISend.obtainsNewGoalRDA((Activity) context, this);
 
@@ -94,16 +95,17 @@ public class MacronutrientsOfMyDay extends AppFragment implements OnValidateDay,
 
     private void update() {
         nutrientsList.clear();
-        List<Nutrient> macronutrients = new ArrayList<>(day.getMacroNutrients().values());
+        layout_fragments.removeAllViews();
+        List<Nutrient> macronutrients = new ArrayList<>(this.type == Type.MACRONUTRIENTS ? day.getMacroNutrients().values() : day.getMicroNutrients().values());
         if(DISPLAY_ALL_ITEMS) nutrientsList.addAll(macronutrients);
         else {
             for(int i = 0; i < Settings.getMaxDisplayedItems() && i < macronutrients.size(); i++) {
                 nutrientsList.add(macronutrients.get(i));
             }
         }
+        FragmentsDayProgressionAdapter adapter = new FragmentsDayProgressionAdapter(context, layout_fragments);
 
-        DayProgressionAdapter dayProgressionAdapter = new DayProgressionAdapter(context, nutrientsList);
-        recyclerView.setAdapter(dayProgressionAdapter);
+        adapter.addAll(nutrientsList);
         if(nutrientsList.size() < Settings.getMaxDisplayedItems()) view.findViewById(R.id.details_layout).setVisibility(View.INVISIBLE);
     }
 
