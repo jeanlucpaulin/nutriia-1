@@ -1,6 +1,7 @@
 package com.nutriia.nutriia.adapters;
 
 import android.content.Context;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -34,7 +35,17 @@ public class FragmentsLayoutAdapter {
         fragments.add(fragment);
 
         FrameLayout frameLayout = new FrameLayout(context);
-        frameLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+
+        layoutParams.setMargins(40, 20, 40, 20);
+
+        frameLayout.setLayoutParams(layoutParams);
+
+
         linearLayout.addView(frameLayout);
 
 

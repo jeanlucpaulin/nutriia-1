@@ -3,20 +3,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/goalLayout"
-    android:layout_width="330dp"
+    android:layout_width="match_parent"
     android:layout_height="80dp"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:background="@drawable/linear_rounded">
 
     <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:id="@+id/icon"
         android:src="@drawable/menu_icon_plant"
         android:contentDescription="Formation"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginStart="15dp"
         />
 
     <TextView
@@ -25,10 +28,11 @@
         android:id="@+id/formation"
         android:text="Formation"
         android:textColor="@color/black"
-        android:textSize="23sp"
+        android:textSize="20sp"
         android:fontFamily="@font/montserrat_light"
         android:textAlignment="viewStart"
         android:layout_toRightOf="@id/icon"
+        android:layout_marginStart="15dp"
         android:layout_centerVertical="true"
         />
 

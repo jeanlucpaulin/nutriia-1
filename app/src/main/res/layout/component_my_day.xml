@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/linear_rounded">
 
     <TextView
         android:id="@+id/component_title"
@@ -26,21 +27,19 @@
         android:text="@string/goal"
         android:fontFamily="@font/montserrat"
         android:layout_marginEnd="20sp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintTop_toBottomOf="@id/component_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/recyclerView"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recyclerView"
-        android:layout_marginTop="5sp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="15dp"
         app:layout_constraintTop_toBottomOf="@id/component_title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/details_layout"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout
         android:id="@+id/details_layout"
@@ -50,6 +49,7 @@
         app:layout_constraintTop_toBottomOf="@id/recyclerView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         >
 
         <TextView
@@ -61,7 +61,8 @@
             android:fontFamily="@font/montserrat_light"
             android:textSize="15sp"
             android:layout_marginEnd="3dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
             />
 
         <ImageView
