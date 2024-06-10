@@ -28,14 +28,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:baselineAligned="false"
-        android:layout_marginTop="15sp"
+        android:layout_marginTop="10sp"
         android:layout_marginStart="15sp"
         android:layout_marginEnd="15sp"
         android:layout_marginBottom="15dp">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="67dp"
+            android:layout_height="70dp"
             android:orientation="vertical"
             android:layout_weight="2.1"
             android:background="@drawable/orange_rounded"
@@ -63,7 +63,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="67dp"
+            android:layout_height="70dp"
             android:orientation="vertical"
             android:layout_weight="1.4"
             android:background="@drawable/orange_rounded"
@@ -94,7 +94,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="67dp"
+            android:layout_height="70dp"
             android:orientation="vertical"
             android:layout_weight="1"
             android:background="@drawable/orange_rounded"
@@ -129,7 +129,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="67dp"
+            android:layout_height="70dp"
             android:orientation="vertical"
             android:layout_weight="1"
             android:background="@drawable/orange_rounded"
@@ -202,7 +202,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/body_mass_index"
                     android:fontFamily="@font/montserrat"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:layout_marginEnd="5sp"
                     android:textAlignment="center"/>
 
@@ -301,7 +301,7 @@
             android:layout_width="64dp"
             android:layout_height="67dp"
             android:layout_gravity="start"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:background="@drawable/rounded_shape"
             android:gravity="center_vertical"
             android:orientation="vertical">

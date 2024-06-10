@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/goal"
         android:text="Prise de muscles"
-        android:textSize="15sp"
+        android:textSize="13sp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/montserrat"
         android:textColor="@color/black"

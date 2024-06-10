@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements OnNewGoalSelected
 
     private void setFragments() {
         fragments.clear();
-
+    //    fragments.add(new PageTitle(PageTitle.ActivityType.MAIN));
         fragments.add(new DefineGoalButtons(this));
         fragments.add(new UserProfile(this));
         fragments.add(new RecommendedDailyAmount());
