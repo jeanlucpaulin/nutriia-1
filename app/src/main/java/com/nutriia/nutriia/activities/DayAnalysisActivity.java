@@ -8,8 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.nutriia.nutriia.Day;
 import com.nutriia.nutriia.R;
@@ -17,8 +15,7 @@ import com.nutriia.nutriia.adapters.FragmentsLayoutAdapter;
 import com.nutriia.nutriia.fragments.AppFragment;
 import com.nutriia.nutriia.fragments.DishSuggestions;
 import com.nutriia.nutriia.fragments.FoodComposition;
-import com.nutriia.nutriia.fragments.MacronutrientsOfMyDay;
-import com.nutriia.nutriia.fragments.MicronutrientsOfMyDay;
+import com.nutriia.nutriia.fragments.NutrientsOfMyDay;
 import com.nutriia.nutriia.fragments.MyDayAnalysis;
 import com.nutriia.nutriia.fragments.MyRealDay;
 import com.nutriia.nutriia.fragments.PageTitle;
@@ -75,8 +72,8 @@ public class DayAnalysisActivity extends AppCompatActivity implements OnValidate
         fragments.clear();
 
         fragments.add(new MyRealDay(this));
-        fragments.add(new MacronutrientsOfMyDay());
-        fragments.add(new MicronutrientsOfMyDay());
+        fragments.add(new NutrientsOfMyDay(NutrientsOfMyDay.Type.MACRONUTRIENTS));
+        fragments.add(new NutrientsOfMyDay(NutrientsOfMyDay.Type.MICRONUTRIENTS));
         fragments.add(new MyDayAnalysis());
         fragments.add(new PageTitle(PageTitle.ActivityType.ANALYSIS));
         fragments.add(new FoodComposition());
