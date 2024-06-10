@@ -70,12 +70,10 @@ public class DayBuilder {
 
         String date = sharedPreferences.getMRDDate();
 
-        Log.d("DayBuilder", "Current date: " + currentDate);
-        Log.d("DayBuilder", "Date: " + date);
-
         if(!currentDate.equals(date) && !date.isEmpty()) {
             Log.d("DayBuilder", "Clearing MRD");
             sharedPreferences.clearMRD();
+            sharedPreferences.clearDayAnalysis();
         }
 
         Map<String, Nutrient> macroNutrients = new TreeMap<>();
