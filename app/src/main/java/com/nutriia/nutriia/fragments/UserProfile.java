@@ -32,7 +32,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class UserProfile extends AppFragment implements OnNewGoalSelected {
+public class UserProfile extends AppFragment {
     private View view;
     private Spinner spinnerAge;
     private Spinner spinnerGender;
@@ -212,18 +212,6 @@ public class UserProfile extends AppFragment implements OnNewGoalSelected {
             metabolismData.setText(String.valueOf((int) metabolism).concat(" kcal"));
         }
 
-        updateGoal(userSharedPreferences.getGoal());
-    }
-
-    @Override
-    public void onNewGoalSelected(int position) {
-        updateGoal(position);
-    }
-
-    private void updateGoal(int goalIndex) {
-        UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(context);
-        GoalsBuilder goalsBuilder = new GoalsBuilder(context.getResources(), context.getPackageName(), userSharedPreferences);
-        Goal goal = goalsBuilder.getGoal(goalIndex);
     }
 
     private void saveFields() {
