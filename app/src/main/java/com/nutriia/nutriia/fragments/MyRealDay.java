@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -37,6 +38,8 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
 
     List<Meal> meals;
 
+    private View view;
+
     private Button validateButton;
 
     private TextView textViewCalories;
@@ -45,9 +48,7 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
 
     private Context context;
 
-    public MyRealDay() {
-        this.onValidateDay = null;
-    }
+
 
     public MyRealDay(OnValidateDay onValidateDay) {
         this.onValidateDay = onValidateDay;
@@ -58,7 +59,7 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
         context = frameLayout.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.componenent_my_real_day, frameLayout, false);
+        view = inflater.inflate(R.layout.componenent_my_real_day, frameLayout, false);
 
         meals = new ArrayList<>(Arrays.asList(new Meal("Breakfast"), new Meal("Lunch"), new Meal("Dinner"), new Meal("Snack")));
 
@@ -132,6 +133,7 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
 
         validateButton.setOnClickListener(v -> {
             validateButton.setEnabled(false);
+            closeKeyboard();
             Map<String, Set<String>> userInput = new HashMap<>();
             boolean send = false;
 
@@ -175,6 +177,11 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
         });
 
         frameLayout.addView(view);
+    }
+
+    private void closeKeyboard() {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 

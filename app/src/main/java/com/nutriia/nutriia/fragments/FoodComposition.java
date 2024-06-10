@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -157,6 +158,7 @@ public class FoodComposition extends AppFragment {
         layout.setOnClickListener(click -> {
             String foodName = editTextPlat.getText().toString().trim();
             if (!foodName.isEmpty()) {
+                closeKeyboard();
                 showCustomToast("Recherche de l'aliment en cours...", Toast.LENGTH_LONG);
                 fetchFoodComposition(foodName);
             } else {
@@ -177,6 +179,11 @@ public class FoodComposition extends AppFragment {
         });
 
         frameLayout.addView(view);
+    }
+
+    private void closeKeyboard() {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private void fetchSuggestions(String query) {

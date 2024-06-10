@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class UserProfile extends AppFragment implements OnNewGoalSelected {
-
+    private View view;
     private Spinner spinnerAge;
     private Spinner spinnerGender;
     private EditText userWeight;
@@ -63,7 +64,7 @@ public class UserProfile extends AppFragment implements OnNewGoalSelected {
     public void create(FrameLayout frameLayout) {
         context = frameLayout.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.component_informations, frameLayout, false);
+        view = inflater.inflate(R.layout.component_informations, frameLayout, false);
 
         userWeight = view.findViewById(R.id.weight_data);
         userHeight = view.findViewById(R.id.height_data);
@@ -118,7 +119,10 @@ public class UserProfile extends AppFragment implements OnNewGoalSelected {
 
         updateFields(sharedPreferences);
 
-        validateButton.setOnClickListener(v -> saveFields());
+        validateButton.setOnClickListener(v -> {
+            closeKeyboard();
+            saveFields();
+        });
         ImageButton infoButtonIdealWeight = view.findViewById(R.id.info_button_ideal_weight);
         infoButtonIdealWeight.setOnClickListener(v -> {
             String message = getContext().getString(R.string.ideal_weight_formula);
@@ -294,5 +298,10 @@ public class UserProfile extends AppFragment implements OnNewGoalSelected {
                 Objects.requireNonNull(dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             });
         }
+    }
+
+    private void closeKeyboard() {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
