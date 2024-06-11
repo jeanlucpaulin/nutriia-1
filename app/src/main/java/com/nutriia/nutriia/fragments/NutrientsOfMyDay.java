@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -124,6 +125,10 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
     }
 
     private void update() {
+        if(day == null) {
+            Log.w("NutrientsOfMyDay", "Day is null");
+            return;
+        }
         nutrientsList.clear();
         layout_fragments.removeAllViews();
         List<Nutrient> macronutrients = new ArrayList<>(this.type == Type.MACRONUTRIENTS ? day.getMacroNutrients().values() : day.getMicroNutrients().values());

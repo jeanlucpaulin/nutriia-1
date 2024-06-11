@@ -232,8 +232,14 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
 
     @Override
     public void onValidateDayResponse(Day day) {
-        int caloriesMRD = day.getCalorie().getProgress();
-        textViewCalories.setText(String.valueOf((Math.max(caloriesMRD, 0)) + " kcal"));
+        if(day == null) {
+            showCustomToast("Erreur lors de la comparaison de votre journée", Toast.LENGTH_SHORT);
+        }
+        else {
+            int caloriesMRD = day.getCalorie().getProgress();
+            textViewCalories.setText(String.valueOf((Math.max(caloriesMRD, 0)) + " kcal"));
+        }
+
         validateButton.setEnabled(true);
     }
 

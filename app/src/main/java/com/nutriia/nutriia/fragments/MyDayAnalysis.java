@@ -75,7 +75,7 @@ public class MyDayAnalysis extends AppFragment implements OnValidateDay {
     @Override
     public void onValidateDayResponse(Day day) {
         if(day == null) Log.d("MyDayAnalysis", "Day is null");
-        textViewAnalysis.setText(day.getAnalysis());
+        else textViewAnalysis.setText(day.getAnalysis());
         removeLoading();
     }
 }
