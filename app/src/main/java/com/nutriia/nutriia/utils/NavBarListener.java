@@ -52,7 +52,7 @@ public class NavBarListener {
             } else layout.setOnClickListener(NavBarListener::eventMeets);
         }
 
-        layout = activity.findViewById(R.id.navbar_coach);
+        /*layout = activity.findViewById(R.id.navbar_coach);
         if (layout != null) {
             if (R.id.navbar_coach == current) {
                 TextView text = activity.findViewById(R.id.navbar_coach_text);
@@ -60,7 +60,7 @@ public class NavBarListener {
                 text.setTypeface(ResourcesCompat.getFont(activity, R.font.montserrat_bold));
                 ((ImageView) activity.findViewById(R.id.navbar_coach_image)).setImageDrawable(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.menu_icon_chat_ai_full, activity.getTheme()));
             } else layout.setOnClickListener(NavBarListener::eventCoach);
-        }
+        }*/
 
         layout = activity.findViewById(R.id.navbar_learn);
         if (layout != null) {

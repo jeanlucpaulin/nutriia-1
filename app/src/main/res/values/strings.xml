@@ -2,7 +2,7 @@
     <string name="app_name">NutriiA</string>
     <string name="menu_target">Accueil\nObjectifs</string>
     <string name="menu_analysis">Analyse de ma journée</string>
-    <string name="menu_meet">Chat Conseiller</string>
+    <string name="menu_meet">Chat IA Conseiller</string>
     <string name="menu_coach">Chat IA</string>
     <string name="menu_learn">Formations</string>
     <string name="side_navigation_target">Redéfinir mon objectif</string>
