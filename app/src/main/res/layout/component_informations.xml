@@ -173,12 +173,25 @@
         </LinearLayout>
     </LinearLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/validate_button"
+        android:text="@string/validate"
+        android:fontFamily="@font/montserrat"
+        android:backgroundTint="@color/lime"
+        app:layout_constraintTop_toBottomOf="@id/linear_info_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+android:layout_marginTop="10sp"
+        />
+
     <LinearLayout
         android:id="@+id/linear_info_3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/linear_info_2"
+        app:layout_constraintTop_toBottomOf="@id/validate_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:baselineAligned="false"
@@ -245,12 +258,12 @@
         app:layout_constraintTop_toBottomOf="@id/linear_info_3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/validate_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:baselineAligned="false"
         android:layout_marginTop="10sp"
         android:layout_marginStart="15sp"
         android:layout_marginEnd="15sp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="15dp">
 
         <LinearLayout
             android:id="@+id/ideal_weight_container"
@@ -355,19 +368,5 @@
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/validate_button"
-        android:text="@string/validate"
-        android:fontFamily="@font/montserrat"
-        android:backgroundTint="@color/lime"
-        app:layout_constraintTop_toBottomOf="@id/linear_result"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="10dp"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
