@@ -19,22 +19,26 @@
         android:gravity="center"
         android:textSize="30sp"/>
 
-    <TextView
-        android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/intro_text_nutriia"
-        android:fontFamily="@font/montserrat"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintBottom_toTopOf="@id/container"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:justificationMode="inter_word"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"
-        android:gravity="start"
-        />
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/intro_text_nutriia"
+            android:fontFamily="@font/montserrat"
+            android:justificationMode="inter_word"
+            android:gravity="start" />
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/container"
@@ -59,7 +63,6 @@
             android:text="@string/discover_app"
             android:id="@+id/discover_app_button"
             android:backgroundTint="@color/orange"/>
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
