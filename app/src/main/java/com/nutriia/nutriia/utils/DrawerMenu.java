@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.view.Menu;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,7 +34,12 @@ public class DrawerMenu {
         LinearLayout legalStatementsLayout = activity.findViewById(R.id.legal_statements_layout);
         LinearLayout privacyPolicyLayout = activity.findViewById(R.id.privacy_policy_layout);
 
-        lateralOpenButton.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+        lateralOpenButton.setOnClickListener(v -> {
+            //close keybord
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            drawerLayout.openDrawer(GravityCompat.START);
+        });
         lateralCloseButton.setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.START));
 
         Menu menu = new PopupMenu(activity, null).getMenu();
