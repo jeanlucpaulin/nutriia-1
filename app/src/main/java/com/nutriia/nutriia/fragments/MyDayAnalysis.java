@@ -1,6 +1,8 @@
 package com.nutriia.nutriia.fragments;
 
 import android.content.Context;
+import android.graphics.RenderEffect;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +30,7 @@ import java.util.Set;
 public class MyDayAnalysis extends AppFragment implements OnValidateDay {
 
     private TextView textViewAnalysis;
+    private View view;
 
     private Context context;
 
@@ -36,7 +39,7 @@ public class MyDayAnalysis extends AppFragment implements OnValidateDay {
 
         context = frameLayout.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.component_my_day_analysis, frameLayout, false);
+        view = inflater.inflate(R.layout.component_my_day_analysis, frameLayout, false);
 
         Day day = new DayBuilder().buildOnlyWithGoal(UserSharedPreferences.getInstance(context));
 
@@ -49,12 +52,30 @@ public class MyDayAnalysis extends AppFragment implements OnValidateDay {
 
     @Override
     public void onValidateDayButtonClick(Map<String, Set<String>> userInput) {
+        setLoading();
+    }
 
+    private void setLoading(){
+        float radius = 20f;
+        RenderEffect renderEffect = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            renderEffect = RenderEffect.createBlurEffect(radius, radius, Shader.TileMode.CLAMP);
+            textViewAnalysis.setRenderEffect(renderEffect);
+        }
+        view.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+    }
+
+    private void removeLoading(){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            textViewAnalysis.setRenderEffect(null);
+        }
+        view.findViewById(R.id.progressBar).setVisibility(View.GONE);
     }
 
     @Override
     public void onValidateDayResponse(Day day) {
         if(day == null) Log.d("MyDayAnalysis", "Day is null");
         textViewAnalysis.setText(day.getAnalysis());
+        removeLoading();
     }
 }

@@ -7,18 +7,30 @@
     android:layout_height="wrap_content"
     android:background="@drawable/linear_rounded">
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        app:layout_constraintTop_toTopOf="@id/scroll_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/scroll_view"
+        />
+
+
     <TextView
         android:id="@+id/component_title"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/recommended_daily_amount"
         android:fontFamily="@font/montserrat_medium"
         android:textSize="20sp"
         android:layout_marginStart="20sp"
-        android:layout_marginEnd="20sp"
+        android:layout_marginEnd="10sp"
         android:layout_marginTop="15sp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <ScrollView
         android:id="@+id/scroll_view"

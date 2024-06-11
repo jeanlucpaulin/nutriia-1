@@ -42,6 +42,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarLoading"
+        app:layout_constraintTop_toTopOf="@id/linear_layout_fragment"
+        app:layout_constraintBottom_toBottomOf="@id/linear_layout_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
     <LinearLayout
         android:id="@+id/details_layout"
         android:layout_width="wrap_content"

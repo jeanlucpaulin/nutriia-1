@@ -3,6 +3,8 @@ package com.nutriia.nutriia.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.RenderEffect;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,7 @@ public class ExampleTypicalDay extends AppFragment implements APIResponseRDA {
     private View lunchView;
     private View dinnerView;
     private View snackView;
+    private View view;
     private Button relaunchButton = null;
 
     private Context context;
@@ -55,7 +58,7 @@ public class ExampleTypicalDay extends AppFragment implements APIResponseRDA {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.componenent_exemple_typical_day, frameLayout, false);
+        view = inflater.inflate(R.layout.componenent_exemple_typical_day, frameLayout, false);
 
         breakfastView = view.findViewById(R.id.breakfast);
         lunchView = view.findViewById(R.id.lunch);
@@ -123,6 +126,7 @@ public class ExampleTypicalDay extends AppFragment implements APIResponseRDA {
             stringBuilder.append(dish.getName()).append(i == typicalDay.getDishes().size()-1 ? "" : "\n");
         }
         editText.setText(stringBuilder.toString());
+        removeLoading();
     }
 
     private void showCustomToast(String message, int duration) {
@@ -138,5 +142,25 @@ public class ExampleTypicalDay extends AppFragment implements APIResponseRDA {
             toast.setView(layout);
             toast.show();
         });
+        setLoading();
+    }
+
+    private void setLoading(){
+        float radius = 20f;
+        RenderEffect renderEffect = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            renderEffect = RenderEffect.createBlurEffect(radius, radius, Shader.TileMode.CLAMP);
+            view.findViewById(R.id.linearLayout).setRenderEffect(renderEffect);
+        }
+        view.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.relaunchButton).setBackgroundColor(getContext().getColor(R.color.grey));
+    }
+
+    private void removeLoading(){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            view.findViewById(R.id.linearLayout).setRenderEffect(null);
+        }
+        view.findViewById(R.id.progressBar).setVisibility(View.GONE);
+        view.findViewById(R.id.relaunchButton).setBackgroundColor(getContext().getColor(R.color.orange));
     }
 }

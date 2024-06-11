@@ -86,7 +86,7 @@ public class RecommendedDailyAmount extends AppFragment implements APIResponseRD
 
     @Override
     public void onAPIRDAResponse() {
-        removeBlurEffect();
+        removeLoadingEffect();
         Day day = new DayBuilder().buildOnlyWithGoal(UserSharedPreferences.getInstance(getContext()));
         List<Nutrient> macroNutrients = new ArrayList<>(day.getMacroNutrients().values());
         List<Nutrient> microNutrients = new ArrayList<>(day.getMicroNutrients().values());
@@ -176,27 +176,30 @@ public class RecommendedDailyAmount extends AppFragment implements APIResponseRD
 
     @Override
     public void onNewGoalSelected(int position) {
-        addBlurEffect();
+        addLoadingEffect();
     }
 
-    private void addBlurEffect() {
+    private void addLoadingEffect() {
         float radius = 20f;
         RenderEffect renderEffect = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
             renderEffect = RenderEffect.createBlurEffect(radius, radius, Shader.TileMode.CLAMP);
-            view.setRenderEffect(renderEffect);
+            view.findViewById(R.id.scroll_view).setRenderEffect(renderEffect);
         }
-
+        view.findViewById(R.id.detailsButton).setVisibility(View.GONE);
+        view.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
     }
 
-    private void removeBlurEffect() {
+    private void removeLoadingEffect() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            view.setRenderEffect(null);
+            view.findViewById(R.id.scroll_view).setRenderEffect(null);
         }
+        view.findViewById(R.id.progressBar).setVisibility(View.GONE);
+        view.findViewById(R.id.detailsButton).setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onUserProfileChanged() {
-        addBlurEffect();
+        addLoadingEffect();
     }
 }

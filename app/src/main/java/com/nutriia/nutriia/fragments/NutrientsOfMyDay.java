@@ -2,6 +2,8 @@ package com.nutriia.nutriia.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.RenderEffect;
+import android.graphics.Shader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -76,21 +78,49 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
 
     @Override
     public void onValidateDayButtonClick(Map<String, Set<String>> userInput) {
-        return;
+        setLoading();
     }
+
+    private void setLoading(){
+        float radius = 20f;
+        RenderEffect renderEffect = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            renderEffect = RenderEffect.createBlurEffect(radius, radius, Shader.TileMode.CLAMP);
+            view.findViewById(R.id.linear_layout_fragment).setRenderEffect(renderEffect);
+        }
+        view.findViewById(R.id.progressBarLoading).setVisibility(View.VISIBLE);
+
+        if (view.findViewById(R.id.details_layout).getVisibility() == View.VISIBLE) {
+            view.findViewById(R.id.details_layout).setVisibility(View.GONE);
+        }
+    }
+
+    private void removeLoadingEffect(){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            view.findViewById(R.id.linear_layout_fragment).setRenderEffect(null);
+        }
+
+        view.findViewById(R.id.progressBarLoading).setVisibility(View.GONE);
+
+        if (view.findViewById(R.id.details_layout).getVisibility() == View.GONE) {
+            view.findViewById(R.id.details_layout).setVisibility(View.VISIBLE);
+        }
+    }
+
 
     @Override
     public void onValidateDayResponse(Day day) {
         this.day = day;
         update();
+        removeLoadingEffect();
     }
 
     @Override
     public void onAPIRDAResponse() {
         UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(context);
-
         this.day = new DayBuilder().buildOnlyWithGoal(userSharedPreferences);
         update();
+        removeLoadingEffect();
     }
 
     private void update() {
