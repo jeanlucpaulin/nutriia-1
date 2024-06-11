@@ -127,6 +127,7 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
     private void update() {
         if(day == null) {
             Log.w("NutrientsOfMyDay", "Day is null");
+            return;
         }
         nutrientsList.clear();
         layout_fragments.removeAllViews();
