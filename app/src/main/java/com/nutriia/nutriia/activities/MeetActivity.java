@@ -55,7 +55,7 @@ public class MeetActivity extends AppCompatActivity {
                 injectJavaScript();
             }
         });
-        webView.loadUrl("https://nutriia.fr/en_us/advisor-chat/");
+        webView.loadUrl("https://nutriia.fr/en_us/mobile-chatbot/");
     }
 
     private void injectJavaScript() {
