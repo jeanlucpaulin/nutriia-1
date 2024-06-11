@@ -3,7 +3,9 @@ package com.nutriia.nutriia.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,10 +62,14 @@ public class MainActivity extends AppCompatActivity implements OnNewGoalSelected
 
         AccountMenu.init(this);
 
-
         //Partie composants
 
         linearLayout = findViewById(R.id.linear_layout_fragment);
+
+        linearLayout.setOnClickListener(v -> {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        });
 
         this.adapter = new FragmentsLayoutAdapter(this, linearLayout);
 
