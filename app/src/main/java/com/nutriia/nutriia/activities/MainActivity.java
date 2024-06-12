@@ -3,6 +3,7 @@ package com.nutriia.nutriia.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -15,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.FragmentsLayoutAdapter;
+import com.nutriia.nutriia.detectors.SwipeGestureDetector;
 import com.nutriia.nutriia.fragments.AppFragment;
 import com.nutriia.nutriia.fragments.DefineGoalButtons;
 import com.nutriia.nutriia.fragments.ExampleTypicalDay;
@@ -24,7 +26,9 @@ import com.nutriia.nutriia.fragments.TipsAdvices;
 import com.nutriia.nutriia.fragments.UserProfile;
 import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
 import com.nutriia.nutriia.interfaces.OnUserProfileChanged;
+import com.nutriia.nutriia.interfaces.SwipeGestureCallBack;
 import com.nutriia.nutriia.network.APISend;
+import com.nutriia.nutriia.resources.Settings;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 import com.nutriia.nutriia.utils.AccountMenu;
 import com.nutriia.nutriia.utils.DrawerMenu;
@@ -33,7 +37,7 @@ import com.nutriia.nutriia.utils.NavBarListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnNewGoalSelected, OnUserProfileChanged {
+public class MainActivity extends AppCompatActivity implements OnNewGoalSelected, OnUserProfileChanged, SwipeGestureCallBack {
     private LinearLayout linearLayout;
 
     private final List<AppFragment> fragments = new ArrayList<>();
@@ -70,6 +74,11 @@ public class MainActivity extends AppCompatActivity implements OnNewGoalSelected
             InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         });
+
+        GestureDetector gestureDetector = new GestureDetector(this, new SwipeGestureDetector(this));
+
+        linearLayout.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
+
 
         this.adapter = new FragmentsLayoutAdapter(this, linearLayout);
 
@@ -116,5 +125,10 @@ public class MainActivity extends AppCompatActivity implements OnNewGoalSelected
                 ((OnUserProfileChanged) fragment).onUserProfileChanged();
             }
         }
+    }
+
+    @Override
+    public void onSwipe(SwipeGestureDetector.SwipeDirection direction) {
+        if(Settings.authorizeSwipeOnActivity()) NavBarListener.swipeActivity(this, direction);
     }
 }

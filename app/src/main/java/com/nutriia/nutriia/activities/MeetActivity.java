@@ -1,6 +1,7 @@
 package com.nutriia.nutriia.activities;
 
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -12,12 +13,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.detectors.SwipeGestureDetector;
+import com.nutriia.nutriia.interfaces.SwipeGestureCallBack;
 import com.nutriia.nutriia.network.APISend;
+import com.nutriia.nutriia.resources.Settings;
 import com.nutriia.nutriia.utils.AccountMenu;
 import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
 
-public class MeetActivity extends AppCompatActivity {
+public class MeetActivity extends AppCompatActivity implements SwipeGestureCallBack {
 
     private WebView webView;
 
@@ -43,6 +47,12 @@ public class MeetActivity extends AppCompatActivity {
         //APISend.clear();
 
         webView = findViewById(R.id.webview);
+
+        GestureDetector gestureDetector = new GestureDetector(this, new SwipeGestureDetector(this));
+
+        webView.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
+
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setLoadWithOverviewMode(true);
@@ -82,5 +92,10 @@ public class MeetActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onSwipe(SwipeGestureDetector.SwipeDirection direction) {
+        if(Settings.authorizeSwipeOnActivity()) NavBarListener.swipeActivity(this, direction);
     }
 }

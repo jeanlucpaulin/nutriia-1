@@ -7,4 +7,7 @@ public class Settings {
     public static int getMaxDisplayedItems() {
         return 8;
     }
+    public static boolean authorizeSwipeOnActivity() {
+        return true;
+    }
 }
