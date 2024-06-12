@@ -151,6 +151,7 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
 
         adapter.addAll(nutrientsList);
         if(nutrientsList.size() < Settings.getMaxDisplayedItems()) view.findViewById(R.id.details_layout).setVisibility(View.INVISIBLE);
+        else view.findViewById(R.id.details_layout).setVisibility(View.VISIBLE);
     }
 
     private void reverseDisplayItems() {

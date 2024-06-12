@@ -16,8 +16,8 @@ public class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListene
         DOWN
     }
 
-    private static final int SWIPE_THRESHOLD = 5;
-    private static final int SWIPE_VELOCITY_THRESHOLD = 5;
+    private static final int SWIPE_THRESHOLD = 100;
+    private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
     private final SwipeGestureCallBack callBack;
 
