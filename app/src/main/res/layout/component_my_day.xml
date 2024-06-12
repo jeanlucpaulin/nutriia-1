@@ -13,6 +13,16 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="15dp" />
 
+    <TextView
+        android:id="@+id/goal_second"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/goal"
+        android:fontFamily="@font/montserrat"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintTop_toTopOf="@id/linear_layout_calor_fiber"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

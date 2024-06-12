@@ -63,12 +63,15 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
         LinearLayout calorFiberLayout = view.findViewById(R.id.linear_layout_calor_fiber);
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) calorFiberLayout.getLayoutParams();
 
+        TextView goal_secondTextView = view.findViewById(R.id.goal_second);
+
         if(type == Type.MACRONUTRIENTS) {
             textView.setText(R.string.macronutrients_of_my_day);
             params.topToTop = R.id.guideline;
         } else {
             textView.setText(R.string.micronutrients_of_my_day);
             params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+            goal_secondTextView.setVisibility(View.GONE);
         }
 
         calorFiberLayout.setLayoutParams(params);
