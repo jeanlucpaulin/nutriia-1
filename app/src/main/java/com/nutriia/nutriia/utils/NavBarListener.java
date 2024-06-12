@@ -15,6 +15,7 @@ import com.nutriia.nutriia.activities.FormationActivity;
 import com.nutriia.nutriia.activities.MainActivity;
 import com.nutriia.nutriia.activities.MeetActivity;
 import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.detectors.SwipeGestureDetector;
 
 public class NavBarListener {
 
@@ -98,5 +99,28 @@ public class NavBarListener {
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    public static void swipeActivity(AppCompatActivity activity, SwipeGestureDetector.SwipeDirection direction) {
+        switch (direction) {
+            case LEFT:
+                if (activity instanceof MainActivity) {
+                    eventAnalysis(activity.findViewById(R.id.navbar_analysis));
+                } else if (activity instanceof DayAnalysisActivity) {
+                    eventMeets(activity.findViewById(R.id.navbar_meet));
+                } else if (activity instanceof MeetActivity) {
+                    eventLearn(activity.findViewById(R.id.navbar_learn));
+                }
+                break;
+            case RIGHT:
+                if (activity instanceof DayAnalysisActivity) {
+                    eventTarget(activity.findViewById(R.id.navbar_target));
+                } else if (activity instanceof MeetActivity) {
+                    eventAnalysis(activity.findViewById(R.id.navbar_analysis));
+                } else if (activity instanceof FormationActivity) {
+                    eventMeets(activity.findViewById(R.id.navbar_meet));
+                }
+                break;
+        }
     }
 }

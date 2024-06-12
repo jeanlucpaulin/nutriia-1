@@ -1,6 +1,10 @@
 package com.nutriia.nutriia.activities;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
@@ -13,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.nutriia.nutriia.Day;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.FragmentsLayoutAdapter;
+import com.nutriia.nutriia.detectors.SwipeGestureDetector;
 import com.nutriia.nutriia.fragments.AppFragment;
 import com.nutriia.nutriia.fragments.DishSuggestions;
 import com.nutriia.nutriia.fragments.FoodComposition;
@@ -21,7 +26,9 @@ import com.nutriia.nutriia.fragments.MyDayAnalysis;
 import com.nutriia.nutriia.fragments.MyRealDay;
 import com.nutriia.nutriia.fragments.PageTitle;
 import com.nutriia.nutriia.interfaces.OnValidateDay;
+import com.nutriia.nutriia.interfaces.SwipeGestureCallBack;
 import com.nutriia.nutriia.network.APISend;
+import com.nutriia.nutriia.resources.Settings;
 import com.nutriia.nutriia.utils.AccountMenu;
 import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
@@ -31,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class DayAnalysisActivity extends AppCompatActivity implements OnValidateDay {
+public class DayAnalysisActivity extends AppCompatActivity implements OnValidateDay, SwipeGestureCallBack {
 
     private LinearLayout linearLayout;
 
@@ -68,6 +75,10 @@ public class DayAnalysisActivity extends AppCompatActivity implements OnValidate
             InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         });
+
+        GestureDetector gestureDetector = new GestureDetector(this, new SwipeGestureDetector(this));
+
+        linearLayout.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
 
         this.adapter = new FragmentsLayoutAdapter(this, linearLayout);
 
@@ -108,5 +119,10 @@ public class DayAnalysisActivity extends AppCompatActivity implements OnValidate
                 ((OnValidateDay) fragment).onValidateDayResponse(day);
             }
         }
+    }
+
+    @Override
+    public void onSwipe(SwipeGestureDetector.SwipeDirection direction) {
+        if(Settings.authorizeSwipeOnActivity()) NavBarListener.swipeActivity(this, direction);
     }
 }

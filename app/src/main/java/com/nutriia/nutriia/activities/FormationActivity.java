@@ -8,15 +8,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import android.view.GestureDetector;
 import android.widget.LinearLayout;
 
 import com.nutriia.nutriia.FormationItem;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.FragmentsLayoutAdapter;
+import com.nutriia.nutriia.detectors.SwipeGestureDetector;
 import com.nutriia.nutriia.fragments.AppFragment;
 import com.nutriia.nutriia.fragments.Formation;
 import com.nutriia.nutriia.fragments.FormationBanner;
 import com.nutriia.nutriia.fragments.PageTitle;
+import com.nutriia.nutriia.interfaces.SwipeGestureCallBack;
+import com.nutriia.nutriia.resources.Settings;
 import com.nutriia.nutriia.utils.AccountMenu;
 import com.nutriia.nutriia.utils.DrawerMenu;
 import com.nutriia.nutriia.utils.NavBarListener;
@@ -25,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FormationActivity extends AppCompatActivity {
+public class FormationActivity extends AppCompatActivity implements SwipeGestureCallBack {
 
     private LinearLayout linearLayout;
 
@@ -52,6 +56,11 @@ public class FormationActivity extends AppCompatActivity {
         //APISend.clear();
 
         linearLayout = findViewById(R.id.linear_layout_fragment);
+
+        GestureDetector gestureDetector = new GestureDetector(this, new SwipeGestureDetector(this));
+
+        linearLayout.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
+
 
         this.adapter = new FragmentsLayoutAdapter(this, linearLayout);
 
@@ -83,5 +92,10 @@ public class FormationActivity extends AppCompatActivity {
         }
 
         return items;
+    }
+
+    @Override
+    public void onSwipe(SwipeGestureDetector.SwipeDirection direction) {
+        if(Settings.authorizeSwipeOnActivity()) NavBarListener.swipeActivity(this, direction);
     }
 }
