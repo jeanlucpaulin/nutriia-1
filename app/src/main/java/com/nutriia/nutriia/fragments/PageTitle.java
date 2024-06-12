@@ -24,7 +24,8 @@ public class PageTitle extends AppFragment {
     public enum ActivityType {
         MAIN,
         FORMATION,
-        ANALYSIS
+        ANALYSIS,
+        HELP
     }
 
     private final ActivityType activityType;
@@ -49,6 +50,8 @@ public class PageTitle extends AppFragment {
             title.setText(getFormationPageTitle());
         } else if (activityType == ActivityType.ANALYSIS) {
             title.setText(getAnalysisPageTitle());
+        } else if (activityType == ActivityType.HELP) {
+            title.setText(getHelpPageTitle());
         } else {
             title.setText(getMainPageTitle());
         }
@@ -62,6 +65,10 @@ public class PageTitle extends AppFragment {
 
     private String getFormationPageTitle() {
         return context.getResources().getString(R.string.formation_page_title);
+    }
+
+    private String getHelpPageTitle() {
+        return context.getResources().getString(R.string.help_page_title);
     }
 
     private String getAnalysisPageTitle() {

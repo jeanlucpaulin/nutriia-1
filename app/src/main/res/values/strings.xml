@@ -291,7 +291,8 @@
     <string name="page_title_welcome">Choisissez votre objectif</string>
     <string name="en_attente_de_la_validation_de_votre_journ_e">En attente de la validation de votre journée…</string>
     <string name="your_day_analysis">Analyse de votre journée (IA)</string>
-    <string name="analysis_page_title">Comment améliorer ma nutrition ?</string>
+    <string name="help_page_title">Aide pour améliorer ma nutrition</string>
+    <string name="analysis_page_title">Analyse de ma journée</string>
     <string name="m_tabolisme_de_base">Métabolisme \nde base</string>
     <string name="ideal_weight_formula">Le poids idéal est calculé en utilisant la formule suivante : (Taille en cm - 100) - (Taille en cm - 150) / 4 pour les femmes, ou (Taille en cm - 150) / 2.5 pour les hommes.</string>
     <string name="basal_metabolism_formula">Le métabolisme de base est calculé en utilisant la formule suivante : (0,963 pour les femmes ou 1,083 pour les hommes) * Poids^0.48 * Taille^0.5 * Age^-0.13.</string>
