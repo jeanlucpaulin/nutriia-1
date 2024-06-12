@@ -256,7 +256,7 @@
     <string name="info_proteins">Les protéines sont essentielles pour la croissance et la réparation des tissus. On les trouve dans la viande, le poisson, les œufs, les produits laitiers, les légumineuses et les noix.</string>
     <string name="info_lipids">Les lipides sont importants pour la santé et se trouvent dans des aliments tels que les avocats, les noix, les poissons gras et l\'huile d\'olive.</string>
     <string name="info_fibers">Les fibres sont essentielles pour la santé digestive et se trouvent dans les fruits, les légumes, les céréales complètes et les légumineuses.</string>
-    <string name="ok">OK</string>
+    <string name="info_calories">Les calories sont une mesure de l\'énergie, essentielles pour les fonctions vitales et l\'activité physique. Elles proviennent des protéines, glucides et lipides.</string>
     <string name="discover_app">Découvrir l\'application</string>
     <string name="dont_show_again">Ne plus afficher ce message</string>
     <string name="sexe">Sexe</string>
@@ -285,7 +285,9 @@
     <string name="warning_proteins">Attention, un excès de protéines peut causer des lésions rénales et des déséquilibres métaboliques.</string>
     <string name="warning_lipids">Attention, un excès de lipides peut entraîner des maladies cardiovasculaires.</string>
     <string name="warning_fibers">Attention, un excès de fibres peut causer des troubles digestifs.</string>
+    <string name="warning_calories">Attention, un excès de calories peut entraîner une prise de poids et des problèmes de santé associés.</string>
     <string name="default_warning_message">Attention, un excès de ce nutriment peut être nocif pour la santé.</string>
+    <string name="ok">OK</string>
     <string name="welcome_title_message">Decouvrez Nutriia !</string>
     <string name="welcome_page_message">Explication Nutriia</string>
     <string name="page_title_welcome">Choisissez votre objectif</string>

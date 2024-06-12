@@ -11,6 +11,7 @@ public class Translator {
 
      static {
         dictionnary = new HashMap<>();
+        dictionnary.put("calories", Map.of(LANGUAGES.FR_fr, "Calories"));
         dictionnary.put("proteins", Map.of(LANGUAGES.FR_fr, "Protéines"));
         dictionnary.put("carbohydrates", Map.of(LANGUAGES.FR_fr, "Glucides"));
         dictionnary.put("lipids", Map.of(LANGUAGES.FR_fr, "Lipides"));

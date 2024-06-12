@@ -42,8 +42,6 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
 
     private Button validateButton;
 
-    private TextView textViewCalories;
-
     private OnValidateDay onValidateDay;
 
     private Context context;
@@ -74,8 +72,6 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
 
         String date = userSharedPreferences.getMRDDate();
 
-        textViewCalories = view.findViewById(R.id.calories);
-
         if(!currentDate.equals(date) && !date.isEmpty()) userSharedPreferences.clearMRD();
 
         for(int i = 0; i < viewIds.length; i++) {
@@ -94,11 +90,6 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
             textView.setText(Translator.translate(meals.get(i).getName()));
 
         }
-
-        TextView textViewCalories = view.findViewById(R.id.calories);
-        int calories = userSharedPreferences.getMRDCalories();
-        textViewCalories.setText(String.valueOf(Math.max(calories, 0) + " kcal"));
-
 
         validateButton = view.findViewById(R.id.validateButton);
 
@@ -235,12 +226,6 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
         if(day == null) {
             showCustomToast("Erreur lors de la comparaison de votre journée", Toast.LENGTH_SHORT);
         }
-        else {
-            int caloriesMRD = day.getCalorie().getProgress();
-            textViewCalories.setText(String.valueOf((Math.max(caloriesMRD, 0)) + " kcal"));
-        }
-
         validateButton.setEnabled(true);
     }
-
 }
