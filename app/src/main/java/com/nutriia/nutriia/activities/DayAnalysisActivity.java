@@ -79,6 +79,7 @@ public class DayAnalysisActivity extends AppCompatActivity implements OnValidate
 
         fragments.add(new MyRealDay(this));
         fragments.add(new PageTitle(PageTitle.ActivityType.ANALYSIS));
+        fragments.add(new NutrientsOfMyDay(NutrientsOfMyDay.Type.ENERGY));
         fragments.add(new NutrientsOfMyDay(NutrientsOfMyDay.Type.MACRONUTRIENTS));
         fragments.add(new NutrientsOfMyDay(NutrientsOfMyDay.Type.MICRONUTRIENTS));
         fragments.add(new MyDayAnalysis());

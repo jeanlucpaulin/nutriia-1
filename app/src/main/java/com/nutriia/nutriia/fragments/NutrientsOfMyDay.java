@@ -12,8 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import com.nutriia.nutriia.Day;
 import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
@@ -43,6 +41,7 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
     private final Type type;
 
     public enum Type {
+        ENERGY,
         MACRONUTRIENTS,
         MICRONUTRIENTS
     }
@@ -60,18 +59,9 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
         layout_fragments = view.findViewById(R.id.linear_layout_fragment);
         TextView textView = view.findViewById(R.id.component_title);
 
-        LinearLayout calorFiberLayout = view.findViewById(R.id.linear_layout_calor_fiber);
-        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) calorFiberLayout.getLayoutParams();
-
-        if(type == Type.MACRONUTRIENTS) {
-            textView.setText(R.string.macronutrients_of_my_day);
-            params.topToTop = R.id.guideline;
-        } else {
-            textView.setText(R.string.micronutrients_of_my_day);
-            params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
-        }
-
-        calorFiberLayout.setLayoutParams(params);
+        if(type == Type.MACRONUTRIENTS) textView.setText(R.string.macronutrients_of_my_day);
+        else if(type == Type.MICRONUTRIENTS) textView.setText(R.string.micronutrients_of_my_day);
+        else if(type == Type.ENERGY) textView.setVisibility(View.GONE);
 
         APISend.obtainsNewGoalRDA((Activity) context, this);
 
@@ -100,8 +90,6 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
             renderEffect = RenderEffect.createBlurEffect(radius, radius, Shader.TileMode.CLAMP);
             view.findViewById(R.id.linear_layout_fragment).setRenderEffect(renderEffect);
-            view.findViewById(R.id.linear_layout_calor_fiber).setRenderEffect(renderEffect);
-
         }
         view.findViewById(R.id.progressBarLoading).setVisibility(View.VISIBLE);
 
@@ -113,7 +101,6 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
     private void removeLoadingEffect(){
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
             view.findViewById(R.id.linear_layout_fragment).setRenderEffect(null);
-            view.findViewById(R.id.linear_layout_calor_fiber).setRenderEffect(null);
         }
 
         view.findViewById(R.id.progressBarLoading).setVisibility(View.GONE);
@@ -140,35 +127,31 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
     }
 
     private void update() {
-        if (day == null) {
+        if(day == null) {
             Log.w("NutrientsOfMyDay", "Day is null");
             return;
         }
-
         nutrientsList.clear();
         layout_fragments.removeAllViews();
-        List<Nutrient> macronutrients = new ArrayList<>(this.type == Type.MACRONUTRIENTS ? day.getMacroNutrients().values() : day.getMicroNutrients().values());
-
-        if (DISPLAY_ALL_ITEMS) {
-            nutrientsList.addAll(macronutrients);
-        } else {
-            for (int i = 0; i < Settings.getMaxDisplayedItems() && i < macronutrients.size(); i++) {
-                nutrientsList.add(macronutrients.get(i));
+        List<Nutrient> nutrients;
+        if(type == Type.MACRONUTRIENTS) nutrients = new ArrayList<>(day.getMacroNutrients().values());
+        else if(type == Type.MICRONUTRIENTS) nutrients = new ArrayList<>(day.getMicroNutrients().values());
+        else {
+            nutrients = new ArrayList<>();
+            nutrients.add(day.getCalorie());
+            nutrients.add(day.getFiber());
+        }
+        if(DISPLAY_ALL_ITEMS) nutrientsList.addAll(nutrients);
+        else {
+            for(int i = 0; i < Settings.getMaxDisplayedItems() && i < nutrients.size(); i++) {
+                nutrientsList.add(nutrients.get(i));
             }
         }
-
         FragmentsDayProgressionAdapter adapter = new FragmentsDayProgressionAdapter(context, layout_fragments);
+
         adapter.addAll(nutrientsList);
-
-        if (nutrientsList.size() < Settings.getMaxDisplayedItems()) {
-            view.findViewById(R.id.details_layout).setVisibility(View.INVISIBLE);
-        }
-
-        if (type == Type.MACRONUTRIENTS) {
-            adapter.updateCalorFiberLayout(view, day);
-        }
+        if(nutrientsList.size() < Settings.getMaxDisplayedItems()) view.findViewById(R.id.details_layout).setVisibility(View.INVISIBLE);
     }
-
 
     private void reverseDisplayItems() {
         DISPLAY_ALL_ITEMS = !DISPLAY_ALL_ITEMS;

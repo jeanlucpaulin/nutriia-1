@@ -20,7 +20,6 @@ import com.nutriia.nutriia.Nutrient;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.fragments.AppFragment;
 import com.nutriia.nutriia.resources.Translator;
-import com.nutriia.nutriia.Day;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,68 +45,50 @@ public class FragmentsDayProgressionAdapter {
         }
     }
 
-    private void addNutrientViewToLayout(Nutrient nutrient, LinearLayout layout) {
-        View nutrientView = LayoutInflater.from(context).inflate(R.layout.item_my_day, layout, false);
+    public void add(Nutrient nutrient) {
+        nutrients.add(nutrient);
 
-        TextView nameTextView = nutrientView.findViewById(R.id.item_name);
-        TextView valueTextView = nutrientView.findViewById(R.id.item_value);
-        ProgressBar progressBar = nutrientView.findViewById(R.id.progressBar);
-        ImageButton infoButton = nutrientView.findViewById(R.id.info_button);
-        ImageButton alertButton = nutrientView.findViewById(R.id.alert_button);
+        FrameLayout frameLayout = new FrameLayout(context);
+        frameLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        context = frameLayout.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View view = inflater.inflate(R.layout.item_my_day, frameLayout, false);
+
+        TextView nameTextView = view.findViewById(R.id.item_name);
+        TextView valueTextView = view.findViewById(R.id.item_value);
+        ProgressBar progressBar = view.findViewById(R.id.progressBar);
+        ImageButton infoButton = view.findViewById(R.id.info_button);
+        ImageButton alertButton = view.findViewById(R.id.alert_button);
 
         String nutrientName = Translator.translate(nutrient.getName()) + " (" + nutrient.getProgress() + " " + nutrient.getUnit() + ")";
         nameTextView.setText(nutrientName);
         valueTextView.setText(String.valueOf(nutrient.getValue() + " " + nutrient.getUnit()));
-
         int progressRatio = (int) ((float) nutrient.getProgress() / nutrient.getValue() * 100);
-        if (progressRatio <= 30) {
-            progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.red)));
-        } else if (progressRatio <= 70) {
-            progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.yellow)));
-        } else {
-            progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lime)));
-        }
+
+        if(progressRatio <= 30) progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.red)));
+        else if (progressRatio <= 70) progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.yellow)));
+        else progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lime)));
         progressBar.setProgress(progressRatio);
         if (progressRatio >= 200) {
             alertButton.setVisibility(View.VISIBLE);
         } else {
             alertButton.setVisibility(View.GONE);
         }
-
         infoButton.setOnClickListener(v -> {
             String nutrientInfo = Nutrient.getNutrientInfo(context, nutrient.getName());
             showCustomDialog(nutrientInfo);
         });
-
         alertButton.setOnClickListener(v -> {
             int warningMessageId = getWarningMessageId(nutrient.getName());
             String warningMessage = context.getString(warningMessageId);
             showCustomDialog(warningMessage);
         });
 
-        layout.addView(nutrientView);
-    }
+        frameLayout.addView(view);
 
-    public void add(Nutrient nutrient) {
-        nutrients.add(nutrient);
-        addNutrientViewToLayout(nutrient, linearLayout);
-    }
-
-    public void updateCalorFiberLayout(View view, Day day) {
-        LinearLayout calorFiberLayout = view.findViewById(R.id.linear_layout_calor_fiber);
-        calorFiberLayout.removeAllViews();
-
-        Nutrient calories = day.getCalorie();
-        Nutrient fibers = day.getFiber();
-
-        // Créer une liste de nutriments contenant seulement les calories et les fibres
-        List<Nutrient> nutrientsList = new ArrayList<>();
-        nutrientsList.add(calories);
-        nutrientsList.add(fibers);
-
-        for (Nutrient nutrient : nutrientsList) {
-            addNutrientViewToLayout(nutrient, calorFiberLayout);
-        }
+        linearLayout.addView(frameLayout);
     }
 
     private void showCustomDialog(String message) {
@@ -161,8 +142,6 @@ public class FragmentsDayProgressionAdapter {
         warningMessagesMap.put("proteins", R.string.warning_proteins);
         warningMessagesMap.put("lipids", R.string.warning_lipids);
         warningMessagesMap.put("fibers", R.string.warning_fibers);
-        warningMessagesMap.put("calories", R.string.warning_calories);
-
         Integer warningMessageId = warningMessagesMap.get(nutrientName);
         if (warningMessageId == null) {
             warningMessageId = R.string.default_warning_message;

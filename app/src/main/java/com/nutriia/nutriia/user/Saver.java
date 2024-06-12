@@ -51,6 +51,8 @@ public class Saver {
         UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(context);
         Nutrient calorie = day.getCalorie();
         userSharedPreferences.setMRDCalories(calorie.getProgress());
+        Nutrient fiber = day.getFiber();
+        userSharedPreferences.setMRDFibers(fiber.getProgress());
         for(Nutrient macronutrient : day.getMacroNutrients().values()) {
             userSharedPreferences.setMRDNutrient(macronutrient.getName(), macronutrient.getProgress());
         }

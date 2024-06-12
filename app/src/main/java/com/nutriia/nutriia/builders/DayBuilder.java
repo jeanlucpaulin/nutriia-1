@@ -60,8 +60,8 @@ public class DayBuilder {
     }
 
     public Day buildOnlyWithGoal(UserSharedPreferences sharedPreferences) {
-        Nutrient calorieNutrient = new Nutrient("calories", sharedPreferences.getRDACalories(), "kcal", 0);
-        Nutrient fiberNutrient = new Nutrient("fibers", sharedPreferences.getRDAFibers(), "g", 0);
+        Nutrient calorieNutrient = new Nutrient("calories", sharedPreferences.getRDACalories(), "kcal", sharedPreferences.getMRDCalories());
+        Nutrient fiberNutrient = new Nutrient("fibers", sharedPreferences.getRDAFibers(), "g", (int) sharedPreferences.getMRDFibers());
 
         Calendar calendar = Calendar.getInstance();
 

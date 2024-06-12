@@ -122,7 +122,11 @@ public class UserSharedPreferences {
 
     public void setMRDCalories(int calories) { sharedPreferences.edit().putInt(KEY_MY_DAY_CALORIES, calories).apply(); }
 
-    public int getMRDCalories() { return sharedPreferences.getInt(KEY_MY_DAY_CALORIES, -1); }
+    public int getMRDCalories() { return sharedPreferences.getInt(KEY_MY_DAY_CALORIES, 0); }
+
+    public float getMRDFibers() { return sharedPreferences.getFloat(KEY_MY_DAY + "Fibers", 0); }
+
+    public void setMRDFibers(float fibers) { sharedPreferences.edit().putFloat(KEY_MY_DAY + "Fibers", fibers).apply(); }
 
     public void setMRDNutrient(String nutrient, int value) { sharedPreferences.edit().putFloat(KEY_MY_DAY + nutrient, value).apply(); }
 
