@@ -24,7 +24,7 @@
 
     <LinearLayout
         android:id="@+id/no_goal"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="75dp"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +41,7 @@
             android:src="@drawable/menu_icon_target_outline_old"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginStart="15dp"
             />
 
         <TextView
@@ -51,7 +52,7 @@
             android:fontFamily="@font/montserrat"
             android:textColor="@color/black"
             android:textAlignment="textStart"
-            android:layout_margin="10dp"
+            android:layout_margin="15dp"
             />
     </LinearLayout>
 
