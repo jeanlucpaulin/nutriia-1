@@ -302,7 +302,7 @@ public class FoodComposition extends AppFragment {
                         }
                     } catch (JSONException e) {
                         Log.e("fetchFoodComposition", "Invalid JSON response", e);
-                        getActivity().runOnUiThread(() -> showCustomToast("Invalid response from server", Toast.LENGTH_SHORT));
+                        getActivity().runOnUiThread(() -> showCustomToast("Aucun résultat trouvé pour " + foodName, Toast.LENGTH_SHORT));
                     }
                 } else {
                     getActivity().runOnUiThread(() -> showCustomToast("Erreur de connexion", Toast.LENGTH_SHORT));
