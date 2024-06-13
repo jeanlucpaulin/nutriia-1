@@ -30,6 +30,7 @@ public class UserSharedPreferences {
     private static final String KEY_MY_DAY_DINNER = "user_my_day_dinner";
     private static final String KEY_MY_DAY_SNACK = "user_my_day_snack";
     private static final String KEY_MY_DAY_CALORIES = "user_my_day_calories";
+    private static final String KEY_MY_DAY_FIBERS = "user_my_day_fibers";
     private static final String KEY_MY_DAY_ANALYSIS = "user_my_day_analysis";
 
     private static final String KEY_TYPICAL_DAY_BREAKFAST = "user_typical_day_breakfast";
@@ -124,9 +125,9 @@ public class UserSharedPreferences {
 
     public int getMRDCalories() { return sharedPreferences.getInt(KEY_MY_DAY_CALORIES, 0); }
 
-    public float getMRDFibers() { return sharedPreferences.getFloat(KEY_MY_DAY + "Fibers", 0); }
+    public float getMRDFibers() { return sharedPreferences.getFloat(KEY_MY_DAY_FIBERS, 0); }
 
-    public void setMRDFibers(float fibers) { sharedPreferences.edit().putFloat(KEY_MY_DAY + "Fibers", fibers).apply(); }
+    public void setMRDFibers(float fibers) { sharedPreferences.edit().putFloat(KEY_MY_DAY_FIBERS, fibers).apply(); }
 
     public void setMRDNutrient(String nutrient, int value) { sharedPreferences.edit().putFloat(KEY_MY_DAY + nutrient, value).apply(); }
 
@@ -216,6 +217,7 @@ public class UserSharedPreferences {
             sharedPreferences.edit().remove(KEY_MY_DAY + nutrient).apply();
         }
         sharedPreferences.edit().remove(KEY_MY_DAY_CALORIES).apply();
+        sharedPreferences.edit().remove(KEY_MY_DAY_FIBERS).apply();
         sharedPreferences.edit().remove(KEY_MY_DAY_DATE).apply();
         sharedPreferences.edit().remove(KEY_MY_DAY_BREAKFAST).apply();
         sharedPreferences.edit().remove(KEY_MY_DAY_LUNCH).apply();
