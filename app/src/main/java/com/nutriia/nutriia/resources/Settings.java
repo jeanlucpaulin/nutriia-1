@@ -8,6 +8,12 @@ public class Settings {
         return 8;
     }
     public static boolean authorizeSwipeOnActivity() {
-        return true;
+        return false;
+    }
+    public static int getMinimumAge() {
+        return 18;
+    }
+    public static int getMaximumAge() {
+        return 100;
     }
 }

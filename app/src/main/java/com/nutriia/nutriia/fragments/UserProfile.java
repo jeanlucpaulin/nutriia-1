@@ -25,6 +25,7 @@ import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.builders.GoalsBuilder;
 import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
 import com.nutriia.nutriia.interfaces.OnUserProfileChanged;
+import com.nutriia.nutriia.resources.Settings;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class UserProfile extends AppFragment {
 
         spinnerAge = view.findViewById(R.id.age_data);
         List<String> ages = new ArrayList<>();
-        for (int i = 1; i <= 100; i++) {
+        for (int i = Settings.getMinimumAge(); i <= Settings.getMaximumAge(); i++) {
             ages.add(Integer.toString(i));
         }
         ArrayAdapter<String> adapterAge = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, ages);
@@ -152,7 +153,7 @@ public class UserProfile extends AppFragment {
 
         if(userSharedPreferences.isUserAgeDefined()) {
             int userAge = userSharedPreferences.getAge();
-            spinnerAge.setSelection(userAge - 1);
+            spinnerAge.setSelection(userAge - Settings.getMinimumAge());
         }
 
         if(userSharedPreferences.isUserGenderDefined()) {
@@ -240,8 +241,8 @@ public class UserProfile extends AppFragment {
         }
 
         if(positionSpinnerAge != -1) {
-            if(positionSpinnerAge + 1 != sharedPreferences.getAge()) {
-                sharedPreferences.setAge(positionSpinnerAge + 1);
+            if(positionSpinnerAge + Settings.getMinimumAge() != sharedPreferences.getAge()) {
+                sharedPreferences.setAge(positionSpinnerAge + Settings.getMinimumAge());
                 changed = true;
             }
         }
