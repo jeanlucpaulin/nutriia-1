@@ -82,7 +82,7 @@
 
             <Spinner
                 android:id="@+id/age_data"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:dropDownWidth="match_parent"
@@ -106,7 +106,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="67dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
             android:background="@drawable/orange_rounded"
@@ -140,7 +140,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="67dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
             android:background="@drawable/orange_rounded"

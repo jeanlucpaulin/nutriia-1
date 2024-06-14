@@ -29,19 +29,35 @@
         app:layout_constraintStart_toEndOf="@+id/item_name">
     </ImageButton>
 
-    <ImageButton
-        android:id="@+id/alert_button"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:src="@drawable/menu_icon_alert"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        android:layout_marginTop="1dp"
-        android:layout_marginStart="10dp"
+    <LinearLayout
+        android:id="@+id/alert_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/item_value"
         app:layout_constraintStart_toEndOf="@+id/info_button"
-        android:visibility="gone">
-    </ImageButton>
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="15dp">
+
+        <TextView
+            android:id="@+id/alert_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/excess"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/red"
+            android:layout_marginEnd="5dp" />
+
+        <ImageButton
+            android:id="@+id/alert_button"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/menu_icon_right_chevron"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+             />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/item_value"
