@@ -23,6 +23,7 @@
 
 
     <LinearLayout
+        android:elevation="3dp"
         android:id="@+id/no_goal"
         android:layout_width="wrap_content"
         android:layout_height="75dp"
@@ -57,6 +58,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:elevation="3dp"
         android:id="@+id/weight_loss"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -95,6 +97,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:elevation="3dp"
         android:id="@+id/muscle_gain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -133,6 +136,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:elevation="3dp"
         android:id="@+id/shape"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -171,6 +175,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:elevation="3dp"
         android:id="@+id/sleep"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
