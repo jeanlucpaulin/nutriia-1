@@ -62,6 +62,7 @@ public class FragmentsDayProgressionAdapter {
         ImageButton infoButton = view.findViewById(R.id.info_button);
         LinearLayout alertlayout = view.findViewById(R.id.alert_layout);
         TextView alertTextView = view.findViewById(R.id.alert_text);
+        ImageButton alertButton = view.findViewById(R.id.alert_button);
 
         String nutrientName = Translator.translate(nutrient.getName()) + " (" + nutrient.getProgress() + " " + nutrient.getUnit() + ")";
         nameTextView.setText(nutrientName);
@@ -74,19 +75,25 @@ public class FragmentsDayProgressionAdapter {
         progressBar.setProgress(progressRatio);
         if (progressRatio >= 200) {
             alertlayout.setVisibility(View.VISIBLE);
-            alertlayout.setOnClickListener(v -> {
+            View.OnClickListener clickListener = v ->  {
                 int warningMessageId = getExcessMessageId(nutrient.getName());
                 String warningMessage = context.getString(warningMessageId);
                 showCustomDialog(warningMessage);
-            });
+            };
+
+            alertlayout.setOnClickListener(clickListener);
+            alertButton.setOnClickListener(clickListener);
         } else if ( 1 <= progressRatio && progressRatio <= 30){
             alertlayout.setVisibility(View.VISIBLE);
             alertTextView.setText(R.string.deficit);
-            alertlayout.setOnClickListener(v -> {
+            View.OnClickListener clickListener = v ->  {
                 int warningMessageId = getDeficitMessageId(nutrient.getName());
                 String warningMessage = context.getString(warningMessageId);
                 showCustomDialog(warningMessage);
-            });
+            };
+
+            alertlayout.setOnClickListener(clickListener);
+            alertButton.setOnClickListener(clickListener);
         } else {
             alertlayout.setVisibility(View.GONE);
         }
