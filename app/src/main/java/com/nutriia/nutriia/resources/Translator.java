@@ -39,6 +39,10 @@ public class Translator {
         dictionnary.put("phosphorus", Map.of(LANGUAGES.FR_fr, "Phosphore"));
         dictionnary.put("potassium", Map.of(LANGUAGES.FR_fr, "Potassium"));
         dictionnary.put("zinc", Map.of(LANGUAGES.FR_fr, "Zinc"));
+        dictionnary.put("iodine", Map.of(LANGUAGES.FR_fr, "Iode"));
+        dictionnary.put("selenium", Map.of(LANGUAGES.FR_fr, "Sélénium"));
+        dictionnary.put("sodium", Map.of(LANGUAGES.FR_fr, "Sodium"));
+        dictionnary.put("fluoride", Map.of(LANGUAGES.FR_fr, "Fluor"));
         dictionnary.put("breakfast", Map.of(LANGUAGES.FR_fr, "Petit déjeuner"));
         dictionnary.put("lunch", Map.of(LANGUAGES.FR_fr, "Déjeuner"));
         dictionnary.put("dinner", Map.of(LANGUAGES.FR_fr, "Diner"));
