@@ -9,9 +9,9 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.nutriia.nutriia.Day;
-import com.nutriia.nutriia.Dish;
-import com.nutriia.nutriia.TypicalDay;
+import com.nutriia.nutriia.models.Day;
+import com.nutriia.nutriia.models.Dish;
+import com.nutriia.nutriia.models.TypicalDay;
 import com.nutriia.nutriia.activities.DishRecipeActivity;
 import com.nutriia.nutriia.builders.DayBuilder;
 

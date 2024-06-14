@@ -1,13 +1,10 @@
-package com.nutriia.nutriia;
+package com.nutriia.nutriia.models;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.List;
-import java.util.ArrayList;
 
 public class Dish {
     private final String name;

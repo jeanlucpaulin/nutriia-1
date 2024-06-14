@@ -5,24 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import com.nutriia.nutriia.Dish;
+import com.nutriia.nutriia.models.Dish;
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.TypicalDay;
+import com.nutriia.nutriia.models.TypicalDay;
 import com.nutriia.nutriia.activities.DayAnalysisActivity;
 import com.nutriia.nutriia.interfaces.APIResponseRDA;
 import com.nutriia.nutriia.network.APISend;

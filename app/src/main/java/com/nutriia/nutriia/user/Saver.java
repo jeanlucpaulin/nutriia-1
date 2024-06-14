@@ -3,18 +3,15 @@ package com.nutriia.nutriia.user;
 import android.content.Context;
 import android.util.Log;
 
-import com.nutriia.nutriia.Day;
-import com.nutriia.nutriia.Dish;
-import com.nutriia.nutriia.Nutrient;
+import com.nutriia.nutriia.models.Day;
+import com.nutriia.nutriia.models.Dish;
+import com.nutriia.nutriia.models.Nutrient;
 import com.nutriia.nutriia.utils.Date;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 public class Saver {

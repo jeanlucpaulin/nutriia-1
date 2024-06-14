@@ -1,6 +1,6 @@
 package com.nutriia.nutriia.builders;
 
-import com.nutriia.nutriia.Dish;
+import com.nutriia.nutriia.models.Dish;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;

@@ -20,10 +20,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
-import com.nutriia.nutriia.Goal;
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.builders.GoalsBuilder;
-import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
 import com.nutriia.nutriia.interfaces.OnUserProfileChanged;
 import com.nutriia.nutriia.resources.Settings;
 import com.nutriia.nutriia.user.UserSharedPreferences;

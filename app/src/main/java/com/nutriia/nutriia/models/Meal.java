@@ -1,8 +1,4 @@
-package com.nutriia.nutriia;
-
-import androidx.annotation.NonNull;
-
-import java.util.List;
+package com.nutriia.nutriia.models;
 
 public class Meal {
     private String name;

@@ -1,4 +1,4 @@
-package com.nutriia.nutriia;
+package com.nutriia.nutriia.models;
 
 import androidx.annotation.NonNull;
 

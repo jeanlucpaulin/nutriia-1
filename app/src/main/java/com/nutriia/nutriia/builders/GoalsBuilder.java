@@ -2,7 +2,7 @@ package com.nutriia.nutriia.builders;
 
 import android.content.res.Resources;
 
-import com.nutriia.nutriia.Goal;
+import com.nutriia.nutriia.models.Goal;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 

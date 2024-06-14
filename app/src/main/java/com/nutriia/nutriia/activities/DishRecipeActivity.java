@@ -14,13 +14,11 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.nutriia.nutriia.Dish;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.FoodCompositionAdapter;
 import com.nutriia.nutriia.network.APISend;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DishRecipeActivity extends AppCompatActivity {
 

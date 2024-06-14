@@ -1,18 +1,12 @@
 package com.nutriia.nutriia.fragments;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import com.nutriia.nutriia.Nutrient;
+import com.nutriia.nutriia.models.Nutrient;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.resources.Translator;
 

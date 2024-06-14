@@ -5,9 +5,8 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
 
-import com.nutriia.nutriia.Slide;
+import com.nutriia.nutriia.models.Slide;
 
 import java.util.List;
 

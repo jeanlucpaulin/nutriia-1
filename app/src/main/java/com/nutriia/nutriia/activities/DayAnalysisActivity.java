@@ -1,10 +1,7 @@
 package com.nutriia.nutriia.activities;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
@@ -14,7 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.nutriia.nutriia.Day;
+import com.nutriia.nutriia.models.Day;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.FragmentsLayoutAdapter;
 import com.nutriia.nutriia.detectors.SwipeGestureDetector;

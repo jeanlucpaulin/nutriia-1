@@ -1,6 +1,6 @@
 package com.nutriia.nutriia.interfaces;
 
-import com.nutriia.nutriia.Day;
+import com.nutriia.nutriia.models.Day;
 
 import java.util.Map;
 import java.util.Set;

@@ -11,7 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 import android.view.GestureDetector;
 import android.widget.LinearLayout;
 
-import com.nutriia.nutriia.FormationItem;
+import com.nutriia.nutriia.models.FormationItem;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.FragmentsLayoutAdapter;
 import com.nutriia.nutriia.detectors.SwipeGestureDetector;

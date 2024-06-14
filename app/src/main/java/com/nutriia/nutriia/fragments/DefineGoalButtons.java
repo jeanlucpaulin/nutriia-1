@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.nutriia.nutriia.Goal;
+import com.nutriia.nutriia.models.Goal;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.builders.GoalsBuilder;
 import com.nutriia.nutriia.interfaces.OnNewGoalSelected;

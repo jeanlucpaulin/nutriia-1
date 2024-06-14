@@ -15,8 +15,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nutriia.nutriia.Day;
-import com.nutriia.nutriia.Meal;
+import com.nutriia.nutriia.models.Day;
+import com.nutriia.nutriia.models.Meal;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.builders.DayBuilder;
 import com.nutriia.nutriia.interfaces.OnValidateDay;

@@ -1,4 +1,4 @@
-package com.nutriia.nutriia;
+package com.nutriia.nutriia.models;
 
 import java.util.List;
 import java.util.HashSet;

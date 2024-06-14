@@ -2,17 +2,15 @@ package com.nutriia.nutriia.builders;
 
 import android.util.Log;
 
-import com.nutriia.nutriia.Day;
-import com.nutriia.nutriia.Nutrient;
+import com.nutriia.nutriia.models.Day;
+import com.nutriia.nutriia.models.Nutrient;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;

@@ -16,9 +16,8 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
-import com.nutriia.nutriia.Nutrient;
+import com.nutriia.nutriia.models.Nutrient;
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.fragments.AppFragment;
 import com.nutriia.nutriia.resources.Translator;
 
 import java.util.ArrayList;

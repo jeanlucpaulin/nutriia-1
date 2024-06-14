@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nutriia.nutriia.Day;
-import com.nutriia.nutriia.Nutrient;
+import com.nutriia.nutriia.models.Day;
+import com.nutriia.nutriia.models.Nutrient;
 import com.nutriia.nutriia.R;
 import com.nutriia.nutriia.adapters.FragmentsDayProgressionAdapter;
 import com.nutriia.nutriia.builders.DayBuilder;

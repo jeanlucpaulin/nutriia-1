@@ -1,4 +1,4 @@
-package com.nutriia.nutriia;
+package com.nutriia.nutriia.models;
 
 public class Goal {
     private int imageResId;

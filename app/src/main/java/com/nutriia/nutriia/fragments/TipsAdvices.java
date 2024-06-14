@@ -1,30 +1,22 @@
 package com.nutriia.nutriia.fragments;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.nutriia.nutriia.R;
-import com.nutriia.nutriia.Slide;
+import com.nutriia.nutriia.models.Slide;
 import com.nutriia.nutriia.adapters.SlideAdapter;
 import com.nutriia.nutriia.interfaces.OnNewGoalSelected;
 import com.nutriia.nutriia.user.UserSharedPreferences;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TipsAdvices extends AppFragment implements OnNewGoalSelected {
     private ViewPager2 viewPager;
