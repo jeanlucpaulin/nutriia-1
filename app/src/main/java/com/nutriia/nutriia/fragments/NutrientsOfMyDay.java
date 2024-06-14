@@ -7,6 +7,7 @@ import android.graphics.Shader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -150,7 +151,12 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
         FragmentsDayProgressionAdapter adapter = new FragmentsDayProgressionAdapter(context, layout_fragments);
 
         adapter.addAll(nutrientsList);
-        if(nutrientsList.size() < Settings.getMaxDisplayedItems()) view.findViewById(R.id.details_layout).setVisibility(View.INVISIBLE);
+        if(nutrientsList.size() < Settings.getMaxDisplayedItems()) {
+            LinearLayout layout = view.findViewById(R.id.details_layout);
+            layout.setVisibility(View.INVISIBLE);
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layout.getLayoutParams();
+            params.setMargins(0, 0, 0, 0);
+        }
         else view.findViewById(R.id.details_layout).setVisibility(View.VISIBLE);
     }
 
