@@ -18,8 +18,18 @@ import java.util.Locale;
 import java.util.Set;
 
 public class Saver {
+    private static Set<String> getSavedMRDInput(String input) {
+        ArrayList<String> inputList = new ArrayList<>(Arrays.asList(input.split("[\n,;.]")));
+        Set<String> dishes = new HashSet<>();
+        for(String dish : inputList) {
+            if(!dish.isEmpty() && !dish.equals(" ") && !dish.equals("\n")) {
+                dishes.add(dish);
+            }
+        }
+        return dishes;
+    }
     public static Set<String> saveMRDInputBreakfast(Context context, String input) {
-        Set<String> dishes = new HashSet<>(Arrays.asList(input.split("[\n,;.]")));
+        Set<String> dishes = getSavedMRDInput(input);
         Log.d("Saver", "saveMRDInputBreakfast: " + dishes.toString());
         UserSharedPreferences.getInstance(context).setMRDABreakfast(dishes);
 
@@ -27,21 +37,23 @@ public class Saver {
     }
 
     public static Set<String> saveMRDInputLunch(Context context, String input) {
-        Set<String> dishes = new HashSet<>(Arrays.asList(input.split("[\n,;.]")));
+        Set<String> dishes = getSavedMRDInput(input);
         UserSharedPreferences.getInstance(context).setMRDALunch(dishes);
 
         return dishes;
     }
 
     public static Set<String> saveMRDInputDinner(Context context, String input) {
-        Set<String> dishes = new HashSet<>(Arrays.asList(input.split("[\n,;.]")));
+        Set<String> dishes = getSavedMRDInput(input);
+        Log.d("Saver", "saveMRDInputDinner: " + dishes.toString());
         UserSharedPreferences.getInstance(context).setMRDADinner(dishes);
 
         return dishes;
     }
 
     public static Set<String> saveMRDInputSnack(Context context, String input) {
-        Set<String> dishes = new HashSet<>(Arrays.asList(input.split("[\n,;.]")));
+        Set<String> dishes = getSavedMRDInput(input);
+        Log.d("Saver", "saveMRDInputDinner: " + dishes.toString());
         UserSharedPreferences.getInstance(context).setMRDASnack(dishes);
 
         return dishes;

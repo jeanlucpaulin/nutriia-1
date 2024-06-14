@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.nutriia.nutriia.Day;
 import com.nutriia.nutriia.Meal;
 import com.nutriia.nutriia.R;
+import com.nutriia.nutriia.builders.DayBuilder;
 import com.nutriia.nutriia.interfaces.OnValidateDay;
 import com.nutriia.nutriia.resources.Translator;
 import com.nutriia.nutriia.user.Saver;
@@ -127,6 +128,7 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
             closeKeyboard();
             Map<String, Set<String>> userInput = new HashMap<>();
             boolean send = false;
+            int empty = 0;
 
             for(int viewId : viewIds) {
                 TextView textView = view.findViewById(viewId).findViewById(R.id.textView);
@@ -136,16 +138,24 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
                 List<String> dishes = getDishes(viewId);
 
                 if(viewId == R.id.breakfast) {
-                    inputs = Saver.saveMRDInputBreakfast(context, editText.getText().toString());
+                    String text = editText.getText().toString();
+                    if(!text.isEmpty()) inputs = Saver.saveMRDInputBreakfast(context, text);
+                    else empty++;
                 }
                 else if(viewId == R.id.lunch) {
-                    inputs = Saver.saveMRDInputLunch(context, editText.getText().toString());
+                    String text = editText.getText().toString();
+                    if(!text.isEmpty()) inputs = Saver.saveMRDInputLunch(context, text);
+                    else empty++;
                 }
                 else if(viewId == R.id.dinner) {
-                    inputs = Saver.saveMRDInputDinner(context, editText.getText().toString());
+                    String text = editText.getText().toString();
+                    if(!text.isEmpty()) inputs = Saver.saveMRDInputDinner(context, text);
+                    else empty++;
                 }
                 else if(viewId == R.id.snack){
-                    inputs = Saver.saveMRDInputSnack(context, editText.getText().toString());
+                    String text = editText.getText().toString();
+                    if(!text.isEmpty()) inputs = Saver.saveMRDInputSnack(context, text);
+                    else empty++;
                 }
 
                 userInput.put(textView.getText().toString().toLowerCase(), inputs);
@@ -153,7 +163,13 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
                 if(!send && !inputEquals(dishes, new ArrayList<>(inputs))) send = true;
             }
 
-            if(send) {
+            if(empty == 4) {
+                showCustomToast("Veuillez renseigner au moins un repas", Toast.LENGTH_SHORT);
+                validateButton.setEnabled(true);
+                userSharedPreferences.clearMRD();
+                onValidateDay.onValidateDayResponse(new DayBuilder().buildOnlyWithGoal(userSharedPreferences));
+            }
+            else if(send) {
 
                 if(onValidateDay != null) {
                     showCustomToast("Comparaison de votre journée en cours...", Toast.LENGTH_LONG);
