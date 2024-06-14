@@ -225,6 +225,7 @@ public class APISend {
                             JSONObject nutrient = macronutrientsJSON.getJSONObject(key);
                             macronutrientsList.add(key);
                             userSharedPreferences.setRDANutrient(key, (float) nutrient.getDouble("value"));
+                            userSharedPreferences.setNutrientUnit(key, nutrient.getString("unit"));
                         }
 
                         userSharedPreferences.setMacronutrients(macronutrientsList);
@@ -236,13 +237,15 @@ public class APISend {
                             JSONObject nutrient = micronutrientsJSON.getJSONObject(key);
                             micronutrientsList.add(key);
                             userSharedPreferences.setRDANutrient(key, (float) nutrient.getDouble("value"));
+                            userSharedPreferences.setNutrientUnit(key, nutrient.getString("unit"));
                         }
 
                         userSharedPreferences.setMicronutrients(micronutrientsList);
 
                         userSharedPreferences.setRDACalories(jsonObject.getJSONObject("calories").getInt("value"));
-
+                        userSharedPreferences.setNutrientUnit("calories", jsonObject.getJSONObject("calories").getString("unit"));
                         userSharedPreferences.setRDAFibers(jsonObject.getJSONObject("fibers").getInt("value"));
+                        userSharedPreferences.setNutrientUnit("fibers", jsonObject.getJSONObject("fibers").getString("unit"));
 
                         APISend.rdaDefined = true;
 

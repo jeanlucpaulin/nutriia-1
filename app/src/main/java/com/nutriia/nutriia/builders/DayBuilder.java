@@ -60,8 +60,8 @@ public class DayBuilder {
     }
 
     public Day buildOnlyWithGoal(UserSharedPreferences sharedPreferences) {
-        Nutrient calorieNutrient = new Nutrient("calories", sharedPreferences.getRDACalories(), "kcal", sharedPreferences.getMRDCalories());
-        Nutrient fiberNutrient = new Nutrient("fibers", sharedPreferences.getRDAFibers(), "g", (int) sharedPreferences.getMRDFibers());
+        Nutrient calorieNutrient = new Nutrient("calories", sharedPreferences.getRDACalories(), sharedPreferences.getNutrientUnit("calories"), sharedPreferences.getMRDCalories());
+        Nutrient fiberNutrient = new Nutrient("fibers", sharedPreferences.getRDAFibers(), sharedPreferences.getNutrientUnit("fibers"), (int) sharedPreferences.getMRDFibers());
 
         Calendar calendar = Calendar.getInstance();
 
@@ -78,12 +78,12 @@ public class DayBuilder {
 
         Map<String, Nutrient> macroNutrients = new TreeMap<>();
         for(String key : sharedPreferences.getMacronutrients()) {
-            macroNutrients.put(key, new Nutrient(key, (int) sharedPreferences.getRDANutrient(key), "g", (int) sharedPreferences.getMRDNutrient(key)));
+            macroNutrients.put(key, new Nutrient(key, (int) sharedPreferences.getRDANutrient(key), sharedPreferences.getNutrientUnit(key), (int) sharedPreferences.getMRDNutrient(key)));
         }
 
         Map<String, Nutrient> microNutrients = new TreeMap<>();
         for(String key : sharedPreferences.getMicronutrients()) {
-            microNutrients.put(key, new Nutrient(key, (int) sharedPreferences.getRDANutrient(key), "mg", (int) sharedPreferences.getMRDNutrient(key)));
+            microNutrients.put(key, new Nutrient(key, (int) sharedPreferences.getRDANutrient(key), sharedPreferences.getNutrientUnit(key), (int) sharedPreferences.getMRDNutrient(key)));
         }
 
         String analysis = sharedPreferences.getDayAnalysis();

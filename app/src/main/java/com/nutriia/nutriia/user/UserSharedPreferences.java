@@ -18,6 +18,7 @@ public class UserSharedPreferences {
     private static final String KEY_ACTIVITY_LEVEL = "user_activity_level";
     private static final String KEY_PROGRESSION = "user_progression";
 
+    private static final String KEY_NUTRIENT = "NUTRIENT_";
     private static final String KEY_RDA = "RDA_";
     private static final String KEY_CALORIES = "user_calories";
     private static final String KEY_FIBERS = "user_fibers";
@@ -137,10 +138,18 @@ public class UserSharedPreferences {
 
     public void setDayAnalysis(String analysis) { sharedPreferences.edit().putString(KEY_MY_DAY_ANALYSIS, analysis).apply(); }
 
+    public String getNutrientUnit(String nutrient) {
+        return sharedPreferences.getString(KEY_NUTRIENT + nutrient, "");
+    }
+
+    public void setNutrientUnit(String nutrient, String unit) {
+        sharedPreferences.edit().putString(KEY_NUTRIENT + nutrient, unit).apply();
+    }
+
+
     public Set<String> getMacronutrients() {
         return sharedPreferences.getStringSet(KEY_MACRONUTRIENTS, new HashSet<>());
     }
-
     public void setMacronutrients(Set<String> macronutrients) {
         sharedPreferences.edit().putStringSet(KEY_MACRONUTRIENTS, macronutrients).apply();
     }
