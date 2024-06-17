@@ -260,30 +260,27 @@ public class UserProfile extends AppFragment {
     }
 
     private void showCustomDialog(String message) {
-        Activity activity = ((Activity) context);
-        if (activity != null) {
-            activity.runOnUiThread(() -> {
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.RoundedAlertDialog);
-                LayoutInflater inflater = activity.getLayoutInflater();
-                View layout = inflater.inflate(R.layout.toast_layout, null);
+        ((Activity) context).runOnUiThread(() -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.RoundedAlertDialog);
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            View layout = inflater.inflate(R.layout.dialog_layout, null);
 
-                TextView textView = layout.findViewById(R.id.toast_text);
-                textView.setText(message);
+            TextView textView = layout.findViewById(R.id.dialog_text);
+            textView.setText(message);
 
-                Button btnOk = layout.findViewById(R.id.btn_ok);
-                btnOk.setVisibility(View.VISIBLE);  // Make the button visible
+            Button btnOk = layout.findViewById(R.id.btn_ok);
+            btnOk.setVisibility(View.VISIBLE);
 
-                builder.setView(layout);
-                AlertDialog dialog = builder.create();
+            builder.setView(layout);
+            AlertDialog dialog = builder.create();
 
-                btnOk.setOnClickListener(v -> {
-                    dialog.dismiss();  // Dismiss the dialog when the button is clicked
-                });
-
-                dialog.show();
-                Objects.requireNonNull(dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            btnOk.setOnClickListener(v -> {
+                dialog.dismiss();
             });
-        }
+
+            dialog.show();
+            Objects.requireNonNull(dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);  // Adjusting the dialog width to match the content width
+        });
     }
 
     private void closeKeyboard() {
