@@ -73,7 +73,10 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
 
         String date = userSharedPreferences.getMRDDate();
 
-        if(!currentDate.equals(date) && !date.isEmpty()) userSharedPreferences.clearMRD();
+        if(!currentDate.equals(date) && !date.isEmpty()) {
+            userSharedPreferences.clearMRD();
+            userSharedPreferences.clearDayAnalysis();
+        }
 
         for(int i = 0; i < viewIds.length; i++) {
             TextView textView = view.findViewById(viewIds[i]).findViewById(R.id.textView);
@@ -87,7 +90,7 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
                 content.append(dishes.get(j)).append(j == dishes.size()-1 ? "" : "\n");
             }
 
-            editText.setText(content.toString());
+            if(!content.toString().isEmpty()) editText.setText(content.toString());
             textView.setText(Translator.translate(meals.get(i).getName()));
 
         }
@@ -140,22 +143,34 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
                 if(viewId == R.id.breakfast) {
                     String text = editText.getText().toString();
                     if(!text.isEmpty()) inputs = Saver.saveMRDInputBreakfast(context, text);
-                    else empty++;
+                    else {
+                        Saver.saveMRDInputBreakfast(context, "");
+                        empty++;
+                    }
                 }
                 else if(viewId == R.id.lunch) {
                     String text = editText.getText().toString();
                     if(!text.isEmpty()) inputs = Saver.saveMRDInputLunch(context, text);
-                    else empty++;
+                    else {
+                        Saver.saveMRDInputLunch(context, "");
+                        empty++;
+                    }
                 }
                 else if(viewId == R.id.dinner) {
                     String text = editText.getText().toString();
                     if(!text.isEmpty()) inputs = Saver.saveMRDInputDinner(context, text);
-                    else empty++;
+                    else {
+                        Saver.saveMRDInputDinner(context, "");
+                        empty++;
+                    }
                 }
                 else if(viewId == R.id.snack){
                     String text = editText.getText().toString();
                     if(!text.isEmpty()) inputs = Saver.saveMRDInputSnack(context, text);
-                    else empty++;
+                    else {
+                        Saver.saveMRDInputSnack(context, "");
+                        empty++;
+                    }
                 }
 
                 userInput.put(textView.getText().toString().toLowerCase(), inputs);
