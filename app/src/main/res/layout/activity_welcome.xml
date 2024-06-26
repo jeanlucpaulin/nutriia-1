@@ -40,7 +40,9 @@
         android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"
         android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp">
+        android:layout_marginEnd="40dp"
+        android:fadeScrollbars="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true">
 
         <TextView
             android:layout_width="match_parent"
@@ -49,6 +51,7 @@
             android:fontFamily="@font/montserrat"
             android:justificationMode="inter_word"
             android:textSize="15sp"
+            android:padding="10dp"
             android:gravity="start" />
     </ScrollView>
 
