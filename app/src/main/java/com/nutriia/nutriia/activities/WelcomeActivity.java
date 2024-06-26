@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,10 +29,31 @@ public class WelcomeActivity extends AppCompatActivity {
 
         CheckBox checkBox = findViewById(R.id.checkbox);
 
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> UserSharedPreferences.getInstance(getApplicationContext()).setWelcomeDefined(isChecked));
+        changeButtonState(discoverButton, checkBox.isChecked());
+
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            UserSharedPreferences.getInstance(getApplicationContext()).setWelcomeDefined(isChecked);
+
+            changeButtonState(discoverButton, isChecked);
+
+        });
 
         discoverButton.setOnClickListener(v -> finish());
 
+        LinearLayout layout = findViewById(R.id.show_eula_layout);
+
+        layout.setOnClickListener(v -> {
+            Intent intent = new Intent(WelcomeActivity.this, WebViewActivity.class);
+            intent.putExtra("url", "https://nutriia.fr/fr/eula-inapp/");
+            intent.putExtra("title", this.getString(R.string.eula_title));
+            this.startActivity(intent);
+        });
 
     }
+
+    private void changeButtonState(Button button, boolean state) {
+        button.setEnabled(state);
+        button.setAlpha(state ? 1f : 0.5f);
+    }
+
 }
