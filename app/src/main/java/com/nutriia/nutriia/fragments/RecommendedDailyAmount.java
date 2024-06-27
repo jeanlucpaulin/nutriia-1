@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -30,7 +31,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class RecommendedDailyAmount extends AppFragment implements APIResponseRDA, OnNewGoalSelected, OnUserProfileChanged {
-
+    private static final String TAG = "RecommendedDailyAmount";
     private static final int MAX_DISPLAYED_ITEMS = 10;
     private static boolean DISPLAY_ALL_ITEMS = false;
 
@@ -68,9 +69,6 @@ public class RecommendedDailyAmount extends AppFragment implements APIResponseRD
         fibersText = view.findViewById(R.id.fibers_amount);
 
 
-
-        APISend.obtainsNewGoalRDA(this.getActivity(), this);
-
         arrow = view.findViewById(R.id.arrowDetails);
         detailsText = view.findViewById(R.id.textDetails);
         LinearLayout reverseDISPLAY_ALL_ITEMS = view.findViewById(R.id.detailsButton);
@@ -80,6 +78,14 @@ public class RecommendedDailyAmount extends AppFragment implements APIResponseRD
         detailsText.setText(text);
 
         arrow.setRotation(DISPLAY_ALL_ITEMS ? 270 : 90);
+
+        addLoadingEffect();
+
+        Log.d(TAG, "create: LoadingEffect added");
+
+        APISend.obtainsNewGoalRDA(this.getActivity(), this);
+
+        Log.d(TAG, "create: obtainsNewGoalRDA called");
 
         frameLayout.addView(view);
     }
@@ -92,44 +98,6 @@ public class RecommendedDailyAmount extends AppFragment implements APIResponseRD
         List<Nutrient> microNutrients = new ArrayList<>(day.getMicroNutrients().values());
         micronutrientsListView.removeAllViews();
         macronutrientsListView.removeAllViews();
-
-        // Sort the nutrients
-        Comparator<Nutrient> nutrientComparator = new Comparator<Nutrient>() {
-            @Override
-            public int compare(Nutrient n1, Nutrient n2) {
-                String name1 = n1.getName();
-                String name2 = n2.getName();
-
-                String nonDigitPart1 = name1.replaceAll("\\d", "");
-                String nonDigitPart2 = name2.replaceAll("\\d", "");
-
-                int nonDigitPartComparison = nonDigitPart1.compareTo(nonDigitPart2);
-                if (nonDigitPartComparison != 0) {
-                    return nonDigitPartComparison;
-                } else {
-                    String digitPart1 = name1.replaceAll("\\D", "");
-                    String digitPart2 = name2.replaceAll("\\D", "");
-
-                    // If there are no digits in the name, compare the names directly
-                    if (digitPart1.isEmpty() && digitPart2.isEmpty()) {
-                        return name1.compareTo(name2);
-                    }
-
-                    // If one name has digits and the other doesn't, the one with digits comes first
-                    if (digitPart1.isEmpty()) {
-                        return 1;
-                    }
-                    if (digitPart2.isEmpty()) {
-                        return -1;
-                    }
-
-                    // If both names have digits, compare the digit parts as integers
-                    return Integer.compare(Integer.parseInt(digitPart1), Integer.parseInt(digitPart2));
-                }
-            }
-        };
-        Collections.sort(macroNutrients, nutrientComparator);
-        Collections.sort(microNutrients, nutrientComparator);
 
         // Convert nutrients to fragments
         List<AppFragment> macroFragments = new ArrayList<>();
