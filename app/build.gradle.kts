@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.nutriia.nutriia"
+    namespace = "com.nutriia.nutriiaemf"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.nutriia.nutriia"
+        applicationId = "com.nutriia.nutriiaemf"
         minSdk = 26
         targetSdk = 34
         versionCode = 6
