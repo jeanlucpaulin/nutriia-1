@@ -90,7 +90,7 @@
     <string name="macronutrients_of_my_day">Macronutriments du jour</string>
     <string name="micronutrients_of_my_day">Micronutriments du jour</string>
     <string name="goal">Objectif</string>
-    <string name="dish_suggestion">Suggestions de plats (IA)</string>
+    <string name="dish_suggestion">Suggestion de plat (IA)</string>
     <string name="more_dish_suggestions">Plus de suggestions</string>
     <string name="composition_d_un_aliment">Composition d\'un aliment</string>
     <string name="validate_my_day">Valider ma journée</string>
