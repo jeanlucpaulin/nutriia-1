@@ -31,7 +31,7 @@
     <string name="fill_goal">Renseigner mon objectif</string>
     <string name="unknown_information">\?</string>
     <string name="no_information">Aucune information</string>
-    <string name="recommended_daily_amount">Vos apports recommandés selon votre objectif et votre profil (réf. ANSES)</string>
+    <string name="recommended_daily_amount">Vos apports recommandés selon votre objectif et votre profil</string>
     <string name="energy">Énergie</string>
     <string name="macronutrients">Macronutriments</string>
     <string name="micronutrients">Micronutriments</string>
