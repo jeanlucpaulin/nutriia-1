@@ -17,12 +17,23 @@ import com.nutriia.nutriiaemf.activities.MeetActivity;
 import com.nutriia.nutriiaemf.R;
 import com.nutriia.nutriiaemf.detectors.SwipeGestureDetector;
 
+
+/**
+ *
+ * This class is used to manage the navigation bar of the application.
+ * You can define the navigation bar in the layout of the activity and then call the init method to initialize the navigation bar.
+ * The init method will set the listener for each item of the navigation bar.
+ *
+ */
+
 public class NavBarListener {
 
     private static AppCompatActivity activity;
 
     public static void init(AppCompatActivity activity, int current){
         NavBarListener.activity = activity;
+
+        /* Set the listener for item "eventTarget" */
         LinearLayout layout = activity.findViewById(R.id.navbar_target);
         if (layout != null) {
             if (R.id.navbar_target == current) {
@@ -33,6 +44,7 @@ public class NavBarListener {
             } else layout.setOnClickListener(NavBarListener::eventTarget);
         }
 
+        /* Set the listener for item "eventAnalysis" */
         layout = activity.findViewById(R.id.navbar_analysis);
         if (layout != null) {
             if (R.id.navbar_analysis == current) {
@@ -43,6 +55,7 @@ public class NavBarListener {
             } else layout.setOnClickListener(NavBarListener::eventAnalysis);
         }
 
+        /* Set the listener for item "eventMeets" */
         layout = activity.findViewById(R.id.navbar_meet);
         if (layout != null) {
             if (R.id.navbar_meet == current) {
@@ -53,16 +66,7 @@ public class NavBarListener {
             } else layout.setOnClickListener(NavBarListener::eventMeets);
         }
 
-        /*layout = activity.findViewById(R.id.navbar_coach);
-        if (layout != null) {
-            if (R.id.navbar_coach == current) {
-                TextView text = activity.findViewById(R.id.navbar_coach_text);
-                text.setTextColor(activity.getResources().getColor(R.color.lime, activity.getTheme()));
-                text.setTypeface(ResourcesCompat.getFont(activity, R.font.montserrat_bold));
-                ((ImageView) activity.findViewById(R.id.navbar_coach_image)).setImageDrawable(ResourcesCompat.getDrawable(activity.getResources(), R.drawable.menu_icon_chat_ai_full, activity.getTheme()));
-            } else layout.setOnClickListener(NavBarListener::eventCoach);
-        }*/
-
+        /* Set the listener for item "eventCoach" */
         layout = activity.findViewById(R.id.navbar_learn);
         if (layout != null) {
             if (R.id.navbar_learn == current) {
@@ -74,6 +78,10 @@ public class NavBarListener {
         }
     }
 
+    /**
+     * This section contains the listener for each item of the navigation bar.
+     * Each listener will call the navigate method to switch to the corresponding activity.
+     */
     private static void eventTarget(View v){
         navigate(v, MainActivity.class);
     }
@@ -86,14 +94,16 @@ public class NavBarListener {
         navigate(v, MeetActivity.class);
     }
 
-    private static void eventCoach(View v){
-        navigate(v, CoachActivity.class);
-    }
-
     private static void eventLearn(View v){
         navigate(v, FormationActivity.class);
     }
 
+
+    /**
+     * This method is used to switch to the activity corresponding to the activityClass parameter.
+     * @param v The view that triggered the event
+     * @param activityClass The class of the activity to switch to
+     */
     private static void navigate(View v, Class<?> activityClass){
         Intent intent = new Intent(activity, activityClass);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -101,6 +111,11 @@ public class NavBarListener {
         activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
+/**
+     * This method is used to switch to the activity corresponding to the activityClass parameter. This method is currently unused.
+     * @param activity The activity to switch to
+     * @param direction The direction of the swipe
+     */
     public static void swipeActivity(AppCompatActivity activity, SwipeGestureDetector.SwipeDirection direction) {
         switch (direction) {
             case LEFT:

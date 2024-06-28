@@ -20,28 +20,34 @@ import com.nutriia.nutriiaemf.R;
 import com.nutriia.nutriiaemf.activities.WebViewActivity;
 import com.nutriia.nutriiaemf.adapters.DrawerItemAdapter;
 
+/**
+ * This class is used to manage the drawer menu of the application.
+ * You can define the drawer menu in the layout of the activity and then call the init method to initialize the drawer menu.
+ * The init method will set the listener for each item of the drawer menu.
+ */
 public class DrawerMenu {
 
     private static AppCompatActivity activity;
 
     public static void init(AppCompatActivity activity) {
-        DrawerMenu.activity = activity;
 
+        /* Find elements in the layout */
+        DrawerMenu.activity = activity;
         DrawerLayout drawerLayout = activity.findViewById(R.id.drawer_layout);
         ImageButton lateralOpenButton = activity.findViewById(R.id.lateral_open);
         ImageButton lateralCloseButton = activity.findViewById(R.id.lateral_close);
-        //Button disconnectButton = activity.findViewById(R.id.disconnect_button);
         LinearLayout legalStatementsLayout = activity.findViewById(R.id.legal_statements_layout);
         LinearLayout privacyPolicyLayout = activity.findViewById(R.id.privacy_policy_layout);
 
+        /* Set the listener for each item of the drawer menu */
         lateralOpenButton.setOnClickListener(v -> {
-            //close keybord
-            InputMethodManager imm = (InputMethodManager) activity.getSystemService(activity.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(activity.INPUT_METHOD_SERVICE); //It closed the keyboard when the drawer is opened
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             drawerLayout.openDrawer(GravityCompat.START);
         });
         lateralCloseButton.setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.START));
 
+        /* Set the drawer menu */
         Menu menu = new PopupMenu(activity, null).getMenu();
         activity.getMenuInflater().inflate(R.menu.drawer_items, menu);
         RecyclerView navRecyclerView = activity.findViewById(R.id.drawer_nav_recycler_view);
@@ -49,6 +55,7 @@ public class DrawerMenu {
         DrawerItemAdapter navAdapter = new DrawerItemAdapter(menu, activity);
         navRecyclerView.setAdapter(navAdapter);
 
+        /* Set the listener for the legal statements and privacy policy */
         legalStatementsLayout.setOnClickListener(v -> {
             Intent intent = new Intent(activity, WebViewActivity.class);
             intent.putExtra("url", "https://nutriia.fr/fr/legal-statements/");
@@ -63,14 +70,8 @@ public class DrawerMenu {
             activity.startActivity(intent);
         });
 
-        /*disconnectButton.setOnClickListener(v -> {
-            UserSharedPreferences.getInstance(activity.getApplicationContext()).clear();
-            activity.startActivity(new Intent(activity, AppLaunchActivity.class));
-        });*/
-
-
+        /* Set the app version */
         TextView appVersionDrawer = activity.findViewById(R.id.app_version_drawer);
-
         try {
             PackageInfo packageInfo = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0);
             String version = packageInfo.versionName;
