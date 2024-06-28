@@ -1,5 +1,8 @@
 package com.nutriia.nutriiaemf.models;
 
+/**
+ * Model for goal
+ */
 public class Goal {
     private int imageResId;
 
@@ -7,8 +10,9 @@ public class Goal {
 
     private String description;
 
-    private boolean isSelected;
-
+    /**
+     * Indicates if the goal is actual
+     */
     private boolean isActual;
 
     public Goal(int imageResId, String text, String description) {
@@ -35,12 +39,4 @@ public class Goal {
     public boolean isActual() { return isActual; }
 
     public void setActual(boolean actual) { isActual = actual; }
-
-    public boolean isSelected() {
-        return isSelected;
-    }
-
-    public void setSelected(boolean selected) {
-        isSelected = selected;
-    }
 }

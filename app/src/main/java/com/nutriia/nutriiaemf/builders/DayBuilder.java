@@ -16,8 +16,18 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * DayBuilder class
+ * This class is used to build a Day from a JSON object or from UserSharedPreferences object
+ */
 public class DayBuilder {
 
+    /**
+     * Build a Day object from a JSON object
+     * @param jsonObject JSON object
+     * @param userSharedPreferences UserSharedPreferences object
+     * @return
+     */
     public Day build(JSONObject jsonObject, UserSharedPreferences userSharedPreferences) {
 
         try {
@@ -57,6 +67,11 @@ public class DayBuilder {
         }
     }
 
+    /**
+     * Build a Day object from UserSharedPreferences object
+     * @param sharedPreferences UserSharedPreferences object
+     * @return
+     */
     public Day buildOnlyWithGoal(UserSharedPreferences sharedPreferences) {
         Nutrient calorieNutrient = new Nutrient("calories", sharedPreferences.getRDACalories(), sharedPreferences.getNutrientUnit("calories"), sharedPreferences.getMRDCalories());
         Nutrient fiberNutrient = new Nutrient("fibers", sharedPreferences.getRDAFibers(), sharedPreferences.getNutrientUnit("fibers"), (int) sharedPreferences.getMRDFibers());

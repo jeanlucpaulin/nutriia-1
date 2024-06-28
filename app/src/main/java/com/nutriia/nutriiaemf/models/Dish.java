@@ -6,6 +6,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Model for Dish
+ * Contains the information for a dish
+ */
 public class Dish {
     private final String name;
     private final String recipe;

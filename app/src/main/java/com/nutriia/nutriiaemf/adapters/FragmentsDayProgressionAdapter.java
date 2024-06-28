@@ -38,12 +38,20 @@ public class FragmentsDayProgressionAdapter {
         this.linearLayout = linearLayout;
     }
 
+    /**
+     * Add all nutrients to the adapter
+     * @param nutrients List of nutrients
+     */
     public void addAll(List<Nutrient> nutrients) {
         for (Nutrient nutrient : nutrients) {
             add(nutrient);
         }
     }
 
+    /**
+     * Add a nutrient to the adapter
+     * @param nutrient Nutrient to add
+     */
     public void add(Nutrient nutrient) {
         nutrients.add(nutrient);
 
@@ -66,8 +74,10 @@ public class FragmentsDayProgressionAdapter {
         String nutrientName = Translator.translate(nutrient.getName()) + " (" + nutrient.getProgress() + " " + nutrient.getUnit() + ")";
         nameTextView.setText(nutrientName);
         valueTextView.setText(String.valueOf(nutrient.getValue() + " " + nutrient.getUnit()));
+
         int progressRatio = (int) ((float) nutrient.getProgress() / nutrient.getValue() * 100);
 
+        //Test on progress ratio
         if(progressRatio <= 30) progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.red)));
         else if (progressRatio <= 70) progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.yellow)));
         else progressBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lime)));

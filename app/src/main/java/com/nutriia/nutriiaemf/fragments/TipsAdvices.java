@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * TipsAdvices class
+ * This class is used to create a tips and advices fragment
+ */
 public class TipsAdvices extends AppFragment implements OnNewGoalSelected {
     private ViewPager2 viewPager;
     private SlideAdapter slideAdapter;
@@ -49,6 +53,7 @@ public class TipsAdvices extends AppFragment implements OnNewGoalSelected {
         previousButton = view.findViewById(R.id.previousButton);
         nextButton = view.findViewById(R.id.nextButton);
 
+        // Set the previous and next buttons
         previousButton.setOnClickListener(v -> {
             int currentItem = viewPager.getCurrentItem();
             if (currentItem > 0) {
@@ -75,6 +80,10 @@ public class TipsAdvices extends AppFragment implements OnNewGoalSelected {
         updateTips(position);
     }
 
+    /**
+     * Update tips on new goal selected
+     * @param goalIndex
+     */
     private void updateTips(int goalIndex) {
         List<String> tipsNames = Arrays.asList(getContext().getResources().getStringArray(R.array.tips_names));
 

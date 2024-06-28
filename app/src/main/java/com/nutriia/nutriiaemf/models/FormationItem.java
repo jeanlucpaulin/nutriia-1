@@ -1,5 +1,8 @@
 package com.nutriia.nutriiaemf.models;
 
+/**
+ * Model for formation item
+ */
 public class FormationItem {
     private String url;
     private String title;

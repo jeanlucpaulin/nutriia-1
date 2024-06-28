@@ -4,6 +4,10 @@ import androidx.annotation.NonNull;
 
 import java.util.Map;
 
+/**
+ * Model for Day
+ * Contains the nutrient information for a day
+ */
 public class Day {
     private Nutrient calorie;
     private Nutrient fiber;

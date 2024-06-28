@@ -1,5 +1,12 @@
 package com.nutriia.nutriiaemf.interfaces;
 
+/**
+ * Interface for new goal selected
+ */
 public interface OnNewGoalSelected {
-    public void onNewGoalSelected(int position);
+    /**
+     * Method called when a new goal is selected
+     * @param position the position of the new goal
+     */
+    void onNewGoalSelected(int position);
 }

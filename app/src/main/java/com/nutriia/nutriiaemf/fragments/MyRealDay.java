@@ -23,6 +23,7 @@ import com.nutriia.nutriiaemf.interfaces.OnValidateDay;
 import com.nutriia.nutriiaemf.resources.Translator;
 import com.nutriia.nutriiaemf.user.Saver;
 import com.nutriia.nutriiaemf.user.UserSharedPreferences;
+import com.nutriia.nutriiaemf.utils.Date;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +36,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * MyRealDay class
+ * This class is used to create a my real day fragment
+ * Used to create a fragment where the user can enter his meals
+ */
 public class MyRealDay extends AppFragment implements OnValidateDay {
 
     List<Meal> meals;
@@ -66,10 +72,7 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
 
         UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(context);
 
-        Calendar calendar = Calendar.getInstance();
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String currentDate = dateFormat.format(calendar.getTime());
+        String currentDate = Date.getTodayDate();
 
         String date = userSharedPreferences.getMRDDate();
 
@@ -78,6 +81,7 @@ public class MyRealDay extends AppFragment implements OnValidateDay {
             userSharedPreferences.clearDayAnalysis();
         }
 
+        //Load the meals from the shared preferences
         for(int i = 0; i < viewIds.length; i++) {
             TextView textView = view.findViewById(viewIds[i]).findViewById(R.id.textView);
             EditText editText = view.findViewById(viewIds[i]).findViewById(R.id.editText);

@@ -7,6 +7,13 @@ import android.util.Log;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * UserSharedPreferences
+ * Used to save user data to shared preferences
+ * RDA = Recommended Daily Amount
+ * MRD = My Real Day
+ * Clear = Remove all data from shared preferences
+ */
 public class UserSharedPreferences {
     private static final String KEY_WELCOME = "welcome";
     private static final String USER_PREFERENCES = "user_preferences";
@@ -54,9 +61,17 @@ public class UserSharedPreferences {
         return instance;
     }
 
+    /**
+     * @return Check if the welcome screen has been seen by user
+     */
     public boolean isWelcomeDefined() {
         return sharedPreferences.getBoolean(KEY_WELCOME, false);
     }
+
+    /**
+     * Set the welcome screen as seen by user
+     * @param welcome true if the welcome screen has been seen by user
+     */
     public void setWelcomeDefined(boolean welcome) {
         sharedPreferences.edit().putBoolean(KEY_WELCOME, welcome).apply();
     }
@@ -64,10 +79,18 @@ public class UserSharedPreferences {
         return isUserHeightDefined() && isUserWeightDefined();
     }
 
+    /**
+     * Set the user goal
+     * @param goal the user goal
+     */
     public void setGoal(int goal) {
         sharedPreferences.edit().putInt(KEY_GOAL, goal).apply();
     }
 
+    /**
+     * Get the user goal
+     * @return the user goal
+     */
     public int getGoal() {
         return sharedPreferences.getInt(KEY_GOAL, 0);
     }

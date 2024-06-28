@@ -8,6 +8,10 @@ import android.widget.TextView;
 
 import com.nutriia.nutriiaemf.R;
 
+/**
+ * PageTitle class
+ * This class is used to create a page title fragment
+ */
 public class PageTitle extends AppFragment {
 
     public enum ActivityType {

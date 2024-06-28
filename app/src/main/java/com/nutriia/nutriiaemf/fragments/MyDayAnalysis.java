@@ -41,6 +41,10 @@ public class MyDayAnalysis extends AppFragment implements OnValidateDay {
         frameLayout.addView(view);
     }
 
+    /**
+     * This method is called when the user clicks on the validate day button
+     * @param userInput
+     */
     @Override
     public void onValidateDayButtonClick(Map<String, Set<String>> userInput) {
         setLoading();
@@ -63,6 +67,10 @@ public class MyDayAnalysis extends AppFragment implements OnValidateDay {
         view.findViewById(R.id.progressBar).setVisibility(View.GONE);
     }
 
+    /**
+     * This method is called when the day is validated
+     * @param day
+     */
     @Override
     public void onValidateDayResponse(Day day) {
         if(day == null) Log.d("MyDayAnalysis", "Day is null");

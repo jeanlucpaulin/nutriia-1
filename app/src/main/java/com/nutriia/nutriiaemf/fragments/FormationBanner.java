@@ -7,6 +7,10 @@ import android.widget.FrameLayout;
 
 import com.nutriia.nutriiaemf.R;
 
+/**
+ * FormationBanner class
+ * This class is used to create a formation banner fragment
+ */
 public class FormationBanner extends AppFragment {
 
     @Override

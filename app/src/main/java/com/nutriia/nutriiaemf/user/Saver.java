@@ -14,7 +14,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Saver
+ * Used to save data to shared preferences
+ */
 public class Saver {
+
+    /**
+     * Save the user's typical day
+     * @param input the input from the user
+     * @return the dishes saved
+     */
     private static Set<String> getSavedMRDInput(String input) {
         ArrayList<String> inputList = new ArrayList<>(Arrays.asList(input.split("[\n,;.]")));
         Set<String> dishes = new HashSet<>();
@@ -25,6 +35,13 @@ public class Saver {
         }
         return dishes;
     }
+
+    /**
+     * Save the user's typical day breakfast
+     * @param context the context
+     * @param input the input from the user
+     * @return the dishes saved
+     */
     public static Set<String> saveMRDInputBreakfast(Context context, String input) {
         Set<String> dishes = getSavedMRDInput(input);
         Log.d("Saver", "saveMRDInputBreakfast: " + dishes.toString());
@@ -33,6 +50,12 @@ public class Saver {
         return dishes;
     }
 
+    /**
+     * Save the user's typical day lunch
+     * @param context the context
+     * @param input the input from the user
+     * @return the dishes saved
+     */
     public static Set<String> saveMRDInputLunch(Context context, String input) {
         Set<String> dishes = getSavedMRDInput(input);
         UserSharedPreferences.getInstance(context).setMRDALunch(dishes);
@@ -40,6 +63,12 @@ public class Saver {
         return dishes;
     }
 
+    /**
+     * Save the user's typical day dinner
+     * @param context the context
+     * @param input the input from the user
+     * @return the dishes saved
+     */
     public static Set<String> saveMRDInputDinner(Context context, String input) {
         Set<String> dishes = getSavedMRDInput(input);
         Log.d("Saver", "saveMRDInputDinner: " + dishes.toString());
@@ -48,6 +77,12 @@ public class Saver {
         return dishes;
     }
 
+    /**
+     * Save the user's typical day snack
+     * @param context the context
+     * @param input the input from the user
+     * @return the dishes saved
+     */
     public static Set<String> saveMRDInputSnack(Context context, String input) {
         Set<String> dishes = getSavedMRDInput(input);
         Log.d("Saver", "saveMRDInputDinner: " + dishes.toString());
@@ -56,6 +91,11 @@ public class Saver {
         return dishes;
     }
 
+    /**
+     * Save the user day
+     * @param context the context
+     * @param day the day
+     */
     public static void saveMyReadDay(Context context, Day day) {
         UserSharedPreferences userSharedPreferences = UserSharedPreferences.getInstance(context);
         Nutrient calorie = day.getCalorie();
@@ -73,6 +113,11 @@ public class Saver {
         userSharedPreferences.setMRDDate(date);
     }
 
+    /**
+     * Save the user's dish suggestions
+     * @param context
+     * @param suggestions
+     */
     public static void saveDishSuggestions(Context context, List<Dish> suggestions) {
         Set<String> suggestionsString = new HashSet<>();
         for(Dish dish : suggestions) {

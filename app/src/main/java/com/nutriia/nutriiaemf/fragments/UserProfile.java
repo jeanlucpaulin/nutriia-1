@@ -195,6 +195,7 @@ public class UserProfile extends AppFragment {
             userBodyMassIndex.setText(userBodyMassIndexText);
         }
 
+        //Calculate ideal weight
         if(userSharedPreferences.isUserGenderDefined() && userSharedPreferences.isUserHeightDefined()) {
             double divier = userSharedPreferences.getGender() == 0 ? 4.0 : 2.5;
             float idealWeight= (float) ((userSharedPreferences.getHeight() - 100) - (userSharedPreferences.getHeight() - 150)/divier);
@@ -202,6 +203,7 @@ public class UserProfile extends AppFragment {
             userIdealWeightData.setText(String.valueOf(idealWeight).concat(" kg"));
         }
 
+        //Calculate basal metabolism
         if(userSharedPreferences.isUserGenderDefined() && userSharedPreferences.isUserHeightDefined() && userSharedPreferences.isUserAgeDefined()) {
             double multiplier = userSharedPreferences.getGender() == 0 ? 1.083 : 0.963;
             float height = (float) userSharedPreferences.getHeight()/100;
@@ -212,6 +214,9 @@ public class UserProfile extends AppFragment {
 
     }
 
+    /**
+     * save the fields in the shared preferences
+     */
     private void saveFields() {
         UserSharedPreferences sharedPreferences = UserSharedPreferences.getInstance(context);
 

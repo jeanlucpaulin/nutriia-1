@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.nutriia.nutriiaemf.R;
 import com.nutriia.nutriiaemf.user.UserSharedPreferences;
 
+/**
+ * Activity for welcoming the user
+ */
 public class WelcomeActivity extends AppCompatActivity {
 
     @Override

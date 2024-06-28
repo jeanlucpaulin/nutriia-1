@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
-import com.nutriia.nutriiaemf.activities.CoachActivity;
 import com.nutriia.nutriiaemf.activities.DayAnalysisActivity;
 import com.nutriia.nutriiaemf.activities.FormationActivity;
 import com.nutriia.nutriiaemf.activities.MainActivity;

@@ -94,6 +94,10 @@ public class FormationActivity extends AppCompatActivity implements SwipeGesture
         return items;
     }
 
+    /**
+     * Method called when a swipe is detected
+     * @param direction the direction of the swipe
+     */
     @Override
     public void onSwipe(SwipeGestureDetector.SwipeDirection direction) {
         if(Settings.authorizeSwipeOnActivity()) NavBarListener.swipeActivity(this, direction);

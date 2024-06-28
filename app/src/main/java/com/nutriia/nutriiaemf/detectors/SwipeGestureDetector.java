@@ -7,6 +7,10 @@ import androidx.annotation.NonNull;
 
 import com.nutriia.nutriiaemf.interfaces.SwipeGestureCallBack;
 
+/**
+ * SwipeGestureDetector class
+ * This class is used to detect swipe gestures on the screen
+ */
 public class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
 
     public enum SwipeDirection {

@@ -7,7 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * DishBuilder class
+ * This class is used to build a Dish from a UserSharedPreferences object
+ */
 public class DishBuilder {
+
+    /**
+     * Build a list of Dish objects from a UserSharedPreferences object
+     * @param userSharedPreferences UserSharedPreferences object
+     * @return
+     */
     public static List<Dish> buildDish(UserSharedPreferences userSharedPreferences) {
         Set<String> dishes = userSharedPreferences.getDishSuggestions();
         List<Dish> dishList = new ArrayList<>();

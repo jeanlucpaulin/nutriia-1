@@ -35,6 +35,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Activity for the analysis of the day
+ */
 public class DayAnalysisActivity extends AppCompatActivity implements OnValidateDay, SwipeGestureCallBack {
 
     private LinearLayout linearLayout;
@@ -82,6 +85,10 @@ public class DayAnalysisActivity extends AppCompatActivity implements OnValidate
         this.setFragments();
     }
 
+    /**
+     * Set the fragments
+     * Add the fragments to the list
+     */
     private void setFragments() {
         fragments.clear();
 
@@ -98,6 +105,10 @@ public class DayAnalysisActivity extends AppCompatActivity implements OnValidate
         adapter.addAll(fragments);
     }
 
+    /**
+     * Notify the fragments that the user has clicked on the validate day button
+     * @param userInput the user input
+     */
     @Override
     public void onValidateDayButtonClick(Map<String, Set<String>> userInput) {
         APISend.sendValidateDay(this, userInput, this);
@@ -109,6 +120,10 @@ public class DayAnalysisActivity extends AppCompatActivity implements OnValidate
         }
     }
 
+    /**
+     * Notify the fragments that the response from the API has been received
+     * @param day the day
+     */
     @Override
     public void onValidateDayResponse(Day day) {
         for (AppFragment fragment : fragments) {
@@ -118,6 +133,10 @@ public class DayAnalysisActivity extends AppCompatActivity implements OnValidate
         }
     }
 
+    /**
+     * Notify the navbar listener that the user has swiped
+     * @param direction the direction of the swipe
+     */
     @Override
     public void onSwipe(SwipeGestureDetector.SwipeDirection direction) {
         if(Settings.authorizeSwipeOnActivity()) NavBarListener.swipeActivity(this, direction);

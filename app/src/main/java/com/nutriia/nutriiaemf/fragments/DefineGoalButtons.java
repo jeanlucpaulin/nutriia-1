@@ -67,8 +67,10 @@ public class DefineGoalButtons extends AppFragment {
         for(int i = 0; i < goals.size(); i++) {
             Goal goal = goals.get(i);
             LinearLayout layout = layouts.get(i);
+            //set the background of the selected goal
             if (layout.getId() == view.getId()) {
                 layout.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.rounded_text_meal, null));
+                //check to not set the goal to actual if it is already actual
                 if (!goal.isActual()) {
                     goal.setActual(true);
                     selected = i;
@@ -76,10 +78,12 @@ public class DefineGoalButtons extends AppFragment {
             } else {
                 if (goal.isActual()) goal.setActual(false);
 
+                //set the background of the other goals
                 layout.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.rounded_buttons_click, null));
             }
         }
 
+        //call the callback
         if(selected != -1) callBack.onNewGoalSelected(selected);
     }
 }

@@ -37,6 +37,10 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+/**
+ * API send
+ * Construct and send the API requests
+ */
 public class APISend {
     private static final String TAG = "APISend";
     private static boolean rdaDefined = false;
@@ -173,6 +177,7 @@ public class APISend {
 
         rdaDefined = userSharedPreferences.isRDADefined();
 
+        // If the user profile is already defined, we can directly call the listener
         if(rdaDefined) {
             Log.d(TAG, "User profile already defined");
             if(listener != null) addRDAListener(listener);

@@ -60,10 +60,12 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
         layout_fragments = view.findViewById(R.id.linear_layout_fragment);
         TextView textView = view.findViewById(R.id.component_title);
 
+        //Add the title
         if(type == Type.MACRONUTRIENTS) textView.setText(R.string.macronutrients_of_my_day);
         else if(type == Type.MICRONUTRIENTS) textView.setText(R.string.micronutrients_of_my_day);
         else if(type == Type.ENERGY) textView.setVisibility(View.GONE);
 
+        //Obtain the day
         APISend.obtainsNewGoalRDA((Activity) context, this);
 
         LinearLayout detailsLayout = view.findViewById(R.id.details_layout);
@@ -72,6 +74,7 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
 
         detailsLayout.setOnClickListener(v -> reverseDisplayItems());
 
+        //Set the text and the rotation of the arrow
         String text = context.getResources().getString(DISPLAY_ALL_ITEMS ? R.string.less_details : R.string.more_details);
         detailsText.setText(text);
 
@@ -127,6 +130,9 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
         removeLoadingEffect();
     }
 
+    /**
+     * Update the view
+     */
     private void update() {
         if(day == null) {
             Log.w("NutrientsOfMyDay", "Day is null");
@@ -160,6 +166,9 @@ public class NutrientsOfMyDay extends AppFragment implements OnValidateDay, APIR
         else view.findViewById(R.id.details_layout).setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Reverse the display of the items
+     */
     private void reverseDisplayItems() {
         DISPLAY_ALL_ITEMS = !DISPLAY_ALL_ITEMS;
         String text = context.getResources().getString(DISPLAY_ALL_ITEMS ? R.string.less_details : R.string.more_details);

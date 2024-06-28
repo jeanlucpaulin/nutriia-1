@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Model for TypicalDay
+ * Contains the dishes for a typical day
+ */
 public class TypicalDay
 {
     private final String name;

@@ -63,6 +63,7 @@ public class ExampleTypicalDay extends AppFragment implements APIResponseRDA {
         setDishes(dinnerView, new TypicalDay("Diner", new ArrayList<>()));
         setDishes(snackView, new TypicalDay("Collations", new ArrayList<>()));
 
+        // Get the typical day from the API
         APISend.obtainsTypicalDay(getActivity(), this::setTypicalDy, this);
 
         relaunchButton = view.findViewById(R.id.relaunchButton);
@@ -83,6 +84,9 @@ public class ExampleTypicalDay extends AppFragment implements APIResponseRDA {
         frameLayout.addView(view);
     }
 
+    /**
+     * Update the typical day when new Recommended Daily Amounts for the user are available
+     */
     @Override
     public void onAPIRDAResponse() {
         APISend.obtainsTypicalDay(getActivity(), this::setTypicalDy, this);
@@ -138,6 +142,9 @@ public class ExampleTypicalDay extends AppFragment implements APIResponseRDA {
         setLoading();
     }
 
+    /**
+     * Set the loading effect on the view
+     */
     private void setLoading(){
         float radius = 20f;
         RenderEffect renderEffect = null;
@@ -149,6 +156,9 @@ public class ExampleTypicalDay extends AppFragment implements APIResponseRDA {
         view.findViewById(R.id.relaunchButton).setBackgroundColor(getContext().getColor(R.color.grey));
     }
 
+    /**
+     * Remove the loading effect on the view
+     */
     private void removeLoading(){
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
             view.findViewById(R.id.linearLayout).setRenderEffect(null);

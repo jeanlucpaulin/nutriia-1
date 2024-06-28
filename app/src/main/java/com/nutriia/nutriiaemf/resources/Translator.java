@@ -3,13 +3,19 @@ package com.nutriia.nutriiaemf.resources;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class for translating text
+ * Used for translating the text in the app from AI
+ */
 public class Translator {
     public enum LANGUAGES {
         FR_fr,
     }
     private static final Map<String, Map<LANGUAGES, String>> dictionnary;
+    private static final LANGUAGES defaultLanguage;
 
      static {
+        defaultLanguage = LANGUAGES.FR_fr;
         dictionnary = new HashMap<>();
         dictionnary.put("calories", Map.of(LANGUAGES.FR_fr, "Calories"));
         dictionnary.put("proteins", Map.of(LANGUAGES.FR_fr, "Protéines"));
@@ -49,7 +55,7 @@ public class Translator {
         dictionnary.put("snack", Map.of(LANGUAGES.FR_fr, "Collations"));
     }
     public static String translate(String text) {
-        return translate(text, LANGUAGES.FR_fr);
+        return translate(text, defaultLanguage);
     }
 
     public static String translate(String text, LANGUAGES language) {

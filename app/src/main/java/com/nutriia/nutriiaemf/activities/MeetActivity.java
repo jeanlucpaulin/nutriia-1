@@ -18,6 +18,9 @@ import com.nutriia.nutriiaemf.utils.AccountMenu;
 import com.nutriia.nutriiaemf.utils.DrawerMenu;
 import com.nutriia.nutriiaemf.utils.NavBarListener;
 
+/**
+ * Activity for the chatbot
+ */
 public class MeetActivity extends AppCompatActivity implements SwipeGestureCallBack {
 
     private WebView webView;

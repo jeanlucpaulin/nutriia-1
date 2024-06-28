@@ -17,6 +17,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.nutriia.nutriiaemf.R;
 
+/**
+ * Activity for a web view from the web site
+ */
 public class WebViewActivity extends AppCompatActivity {
 
     private class WebAppInterface {

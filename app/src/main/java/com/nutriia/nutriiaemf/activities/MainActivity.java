@@ -96,6 +96,14 @@ public class MainActivity extends AppCompatActivity implements OnNewGoalSelected
         adapter.addAll(fragments);
     }
 
+    /**
+     * Set the new goal
+     * Save the new goal in the shared preferences
+     * Clear the RDA and the typical day
+     * Call the API to get the new RDA
+     * Notify the fragments that the goal has changed
+     * @param position the position of the new goal
+     */
     @Override
     public void onNewGoalSelected(int position) {
         Log.d("DefineGoalButtons", "onNewGoalSelected: " + position);
@@ -111,6 +119,9 @@ public class MainActivity extends AppCompatActivity implements OnNewGoalSelected
         }
     }
 
+    /**
+     * Notify the fragments that the user profile has changed
+     */
     @Override
     public void onUserProfileChanged() {
         UserSharedPreferences sharedPreferences = UserSharedPreferences.getInstance(getApplicationContext());
@@ -125,6 +136,10 @@ public class MainActivity extends AppCompatActivity implements OnNewGoalSelected
         }
     }
 
+    /**
+     * Notify the navBarListener that the user has swiped
+     * @param direction the direction of the swipe
+     */
     @Override
     public void onSwipe(SwipeGestureDetector.SwipeDirection direction) {
         if(Settings.authorizeSwipeOnActivity()) NavBarListener.swipeActivity(this, direction);

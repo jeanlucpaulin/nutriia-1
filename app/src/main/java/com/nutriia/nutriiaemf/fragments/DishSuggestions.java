@@ -62,6 +62,7 @@ public class DishSuggestions extends AppFragment {
 
         LinearLayout listView = view.findViewById(R.id.dish_suggestions_list);
 
+        // Get the dishes from the UserSharedPreferences
         UserSharedPreferences sharedPreferences = UserSharedPreferences.getInstance(getContext());
         String date = Date.getTodayDate();
         String sharedDate = sharedPreferences.getDishSuggestionsDate();
@@ -104,6 +105,11 @@ public class DishSuggestions extends AppFragment {
         frameLayout.addView(view);
     }
 
+    /**
+     * Add dishes to the list view
+     * @param dishes
+     * @param listView
+     */
     private void addDishes(List<Dish> dishes, LinearLayout listView) {
         for (Dish dish : dishes) {
             View itemView = LayoutInflater.from(getContext()).inflate(R.layout.item_component_dish_suggestions, listView, false);

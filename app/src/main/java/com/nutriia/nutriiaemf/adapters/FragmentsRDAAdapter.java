@@ -22,20 +22,27 @@ public class FragmentsRDAAdapter {
         this.linearLayout = linearLayout;
     }
 
+    /**
+     * Add all fragments to the layout
+     * @param fragments
+     */
     public void addAll(List<AppFragment> fragments) {
         for (AppFragment fragment : fragments) {
             add(fragment);
         }
     }
 
+    /**
+     * Add a fragment to the layout
+     * @param fragment
+     */
     public void add(AppFragment fragment) {
         fragments.add(fragment);
 
         FrameLayout frameLayout = new FrameLayout(context);
         frameLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
         linearLayout.addView(frameLayout);
-
-
 
         fragment.create(frameLayout);
     }

@@ -10,6 +10,9 @@ import com.nutriia.nutriiaemf.models.Nutrient;
 import com.nutriia.nutriiaemf.R;
 import com.nutriia.nutriiaemf.resources.Translator;
 
+/**
+ * Create a fragment for a nutrient (Recommended Daily Amount)
+ */
 public class NutrientAJR extends AppFragment {
 
     private Nutrient nutrient;

@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.nutriia.nutriiaemf.R;
 
+/**
+ * Activity for launching the app
+ */
 public class AppLaunchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +20,7 @@ public class AppLaunchActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
+        // Splash screen
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             Intent intent = new Intent(AppLaunchActivity.this, MainActivity.class);

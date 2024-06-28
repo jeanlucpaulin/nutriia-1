@@ -7,6 +7,9 @@ import com.nutriia.nutriiaemf.user.UserSharedPreferences;
 
 import okhttp3.*;
 
+/**
+ * API request
+ */
 public class APIRequest {
 
     private static final OkHttpClient client = new OkHttpClient();
@@ -21,6 +24,10 @@ public class APIRequest {
         this.context = context;
     }
 
+    /**
+     * Send the request to the API
+     * @param callback
+     */
     public void send(Callback callback) {
         try {
             String encodedData = data == null ? "" : data;

@@ -24,12 +24,20 @@ public class FragmentsLayoutAdapter {
         this.linearLayout = linearLayout;
     }
 
+    /**
+     * Add all fragments to the layout
+     * @param fragments
+     */
     public void addAll(List<AppFragment> fragments) {
         for (AppFragment fragment : fragments) {
             add(fragment);
         }
     }
 
+    /**
+     * Add a fragment to the layout
+     * @param fragment
+     */
     public void add(AppFragment fragment) {
         fragments.add(fragment);
 
@@ -40,17 +48,18 @@ public class FragmentsLayoutAdapter {
                 ViewGroup.LayoutParams.WRAP_CONTENT
         );
 
+        //Add style to the fragment
         if (fragment instanceof FormationBanner){
             layoutParams.setMargins(0, 0, 0, 0);
         } else layoutParams.setMargins(40, 20, 40, 20);
 
         frameLayout.setLayoutParams(layoutParams);
 
-
+        //Add the fragment to the layout
         linearLayout.addView(frameLayout);
 
 
-
+        //create the fragment
         fragment.create(frameLayout);
     }
 }

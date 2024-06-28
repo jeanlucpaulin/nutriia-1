@@ -12,6 +12,11 @@ import com.nutriia.nutriiaemf.models.FormationItem;
 import com.nutriia.nutriiaemf.R;
 import com.nutriia.nutriiaemf.activities.WebViewActivity;
 
+/**
+ * Formation class
+ * This class is used to create a formation fragment linked to the website
+
+ */
 public class Formation extends AppFragment {
 
     private final FormationItem formationItem;

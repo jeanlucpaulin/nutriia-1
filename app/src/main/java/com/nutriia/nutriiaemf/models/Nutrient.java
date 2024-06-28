@@ -4,10 +4,20 @@ import android.content.Context;
 
 public class Nutrient {
     private String name;
+
+    /**
+     * Goal value of the nutrient
+     */
     private int value;
 
+    /**
+     * Unit of the nutrient
+     */
     private String unit;
 
+    /**
+     * Progress of the nutrient
+     */
     private int progress;
 
     public Nutrient(String name, int value, String unit) {
@@ -28,14 +38,26 @@ public class Nutrient {
         return name;
     }
 
+    /**
+     * Get the goal value of the nutrient
+     * @return
+     */
     public int getValue() {
         return value;
     }
 
+    /**
+     * Get the unit of the nutrient
+     * @return
+     */
     public String getUnit() {
         return unit;
     }
 
+    /**
+     * Get the progress of the nutrient
+     * @return
+     */
     public int getProgress() {
         return progress;
     }

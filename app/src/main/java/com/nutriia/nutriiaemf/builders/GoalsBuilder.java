@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * GoalsBuilder class
+ * This class is used to build a list of Goal objects from resources
+ */
 public class GoalsBuilder {
     private final Resources resources;
     private final String packageName;
@@ -30,7 +34,9 @@ public class GoalsBuilder {
         List<String> goalsNames = Arrays.asList(resources.getStringArray(R.array.goals));
         List<String> goalsDescriptions = Arrays.asList(resources.getStringArray(R.array.goals_descriptions));
 
-        for(int i = excludeFirst ? 1 : 0; i < icons.size(); i++) goals.add(new Goal(resources.getIdentifier(icons.get(i), "drawable", packageName), goalsNames.get(i), goalsDescriptions.get(i), userSharedPreferences.getGoal() == i));
+        for(int i = excludeFirst ? 1 : 0; i < icons.size(); i++) {
+            goals.add(new Goal(resources.getIdentifier(icons.get(i), "drawable", packageName), goalsNames.get(i), goalsDescriptions.get(i), userSharedPreferences.getGoal() == i));
+        }
 
         return goals;
     }
