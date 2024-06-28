@@ -210,7 +210,7 @@
         <item>menu_icon_nutrition</item>
     </string-array>
     <string name="formation_page_title">Documentez-vous …</string>
-    <string name="share_app_message">Hey, j\'utilise Nutriia ! Viens décourvrir l\'application ! https://nutriia.fr</string>
+    <string name="share_app_message">Hey, j\'utilise Nutriia ! Viens décourvrir l\'application ! https://nutriia.fr/app</string>
     <string name="no_goal_selected">Bienvenue sur l\'application ! Vous n\'avez pas encore sélectionné d\'objectif. Pour obtenir des indications plus précises, vous pouvez cliquer sur l\'un des objectifs ci-dessus. Nous serons ravis de vous guider dans votre découverte.!</string>
     <string name="api_client_url">https://nutriia.fr/api</string>
     <string name="email_ou_nom_d_utilisateur">Email ou nom d\'utilisateur</string>
